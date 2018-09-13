@@ -1,11 +1,8 @@
 package com.assetManagement;
 
 import com.assetManagement.entities.*;
-/**
- * Hello world!
- *
- */
-public class App 
+
+ public class App 
 {
    public static void main(String args[])
     {
