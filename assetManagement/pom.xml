@@ -86,14 +86,20 @@
         <groupId>org.hibernate</groupId>
         <artifactId>hibernate-annotations</artifactId>
         <version>3.5.4-Final</version>
-    </dependency>
+	    <type>jar</type>
+	</dependency>
     
      <dependency>
         <groupId>org.hibernate</groupId>
         <artifactId>hibernate-entitymanager</artifactId>
         <version>3.5.4-Final</version>
     </dependency>
-    
+    <dependency>
+      <groupId>com</groupId>
+      <artifactId>assetManagement</artifactId>
+      <version>0.0.1-SNAPSHOT</version>
+      <type>jar</type>
+    </dependency>
   </dependencies>
 
   <build>
