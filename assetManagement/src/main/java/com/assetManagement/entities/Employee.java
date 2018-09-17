@@ -52,8 +52,5 @@ public class Employee implements Serializable {
     
     public Long EmployeeID(){
     return EmployeeID;
-    
-
-    
     }
 }
