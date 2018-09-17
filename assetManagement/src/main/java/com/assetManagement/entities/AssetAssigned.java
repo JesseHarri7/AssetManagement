@@ -1,6 +1,7 @@
 package com.assetManagement.entities;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -16,6 +17,7 @@ public class AssetAssigned implements Serializable
 	
 	private Asset assets;
 	private Employee employees;
+	private Date moveDate;
 	
 	public AssetAssigned() {}
 
@@ -50,6 +52,13 @@ public class AssetAssigned implements Serializable
 		this.employees = employees;
 	}
 
-	
+	public Date getMoveDate() {
+		return moveDate;
+	}
+
+	public void setMoveDate(Date moveDate) 
+	{
+		this.moveDate = moveDate;
+	}
 	
 }
