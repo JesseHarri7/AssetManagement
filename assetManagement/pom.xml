@@ -86,15 +86,17 @@
         <groupId>org.hibernate</groupId>
         <artifactId>hibernate-annotations</artifactId>
         <version>3.5.4-Final</version>
-    </dependency>
+	    <type>jar</type>
+	</dependency>
     
      <dependency>
         <groupId>org.hibernate</groupId>
         <artifactId>hibernate-entitymanager</artifactId>
         <version>3.5.4-Final</version>
-    </dependency>    
+    </dependency>
     
-  </dependencies>
+   </dependencies>    
+    
 
   <build>
     <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
