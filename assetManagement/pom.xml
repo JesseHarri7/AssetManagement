@@ -7,7 +7,7 @@
   <groupId>com</groupId>
   <artifactId>assetManagement</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-
+  
   <name>assetManagement</name>
   <!-- FIXME change it to the project's website -->
   <url>http://www.example.com</url>
@@ -92,7 +92,7 @@
         <groupId>org.hibernate</groupId>
         <artifactId>hibernate-entitymanager</artifactId>
         <version>3.5.4-Final</version>
-    </dependency>
+    </dependency>    
     
   </dependencies>
 
