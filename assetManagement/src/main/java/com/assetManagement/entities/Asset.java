@@ -20,13 +20,13 @@ public class Asset implements Serializable
 	private String name;
 	private String description;
 	private String brand;
-	private Date datePurchased;
+	private String datePurchased;
 	private String status;
 	private Set<AssetAssigned> assigned = new HashSet<AssetAssigned>(0);
 	
 	public Asset() {}
 
-	public Asset(String name, String desc, String brand, Date datePur, String status)
+	public Asset(String name, String desc, String brand, String datePur, String status)
 	{
 		this.name = name;
 		this.description = desc;
@@ -76,12 +76,12 @@ public class Asset implements Serializable
 		this.brand = brand;
 	}
 
-	public Date getDatePurchased() 
+	public String getDatePurchased() 
 	{
 		return datePurchased;
 	}
 
-	public void setDatePurchased(Date datePurchased) 
+	public void setDatePurchased(String datePurchased) 
 	{
 		this.datePurchased = datePurchased;
 	}
