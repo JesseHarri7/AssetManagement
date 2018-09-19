@@ -26,6 +26,6 @@ public class App
 	   Session session = HibernateUtil.getSessionFactory().openSession();
 	   
        Employee employee = new Employee();
-
+       
     }
 }
