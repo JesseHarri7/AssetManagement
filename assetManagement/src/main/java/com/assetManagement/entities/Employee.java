@@ -8,49 +8,101 @@ import java.io.Serializable;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import org.hibernate.mapping.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @Entity
 @Table(name = "Employee")
 
 public class Employee implements Serializable {
-    String name,surname,email;
-    LocalDate startDate;
+    
     @Id
-    Long EmployeeID;
-    private Long id;
-
-    public Employee() {
+    private Long employeeID;
+    
+    @Column(name = "Name")
+    private String name;
+    
+    @Column(name = "Surname")
+    private String surname;
+    
+    @Column(name = "Email")
+    private String email;
+    
+    @Column(name = "Start_Date")
+    private LocalDate startDate;
+    
+    private Employee employee;
+    
+	public Employee() {
     }
     
-    public Employee(String name,String surname, String email,LocalDate startDate,Long EmployeeID){
-    this.name = name;
-    this.surname =  surname;
-    this.email = email;
-    this.startDate = startDate;
-    this.EmployeeID = EmployeeID;
+    public Employee(String name,String surname, String email,LocalDate startDate,Long employeeID){
+	    this.name = name;
+	    this.surname =  surname;
+	    this.email = email;
+	    this.startDate = startDate;
+	    this.employeeID = employeeID;
     }
+    
     
     public String getName(){
-    return name;
+    	return name;
+    }
+    
+    public void setName(String name) {
+    this.name = name;		
     }
     
     public String getSurname(){
-    return surname;
+    	return surname;
     }
     
+    public void setSurname(String surname) {
+        this.surname = surname;		
+        }
+    
     public String getEmail(){
-    return email;
+    	return email;
     }
+    
+    public void setEmail(String email) {
+        this.email = email;		
+        }
     
     public LocalDate getStartDate(){
         return startDate;
     }
     
-    public Long EmployeeID(){
-    return EmployeeID;
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;		
     }
+    
+    public Long employeeID(){
+    	return employeeID;
+    }
+    public void setEmployeeID(Long employeeID) {
+        this.employeeID = employeeID;		
+    }
+    
+    public Employee getEmployee() {
+    	return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+    	this.employee = employee;
+    }
+  
+  
+  
+    
 }
