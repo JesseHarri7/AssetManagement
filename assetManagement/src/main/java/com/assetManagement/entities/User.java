@@ -15,6 +15,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.mapping.Set;
+import org.junit.Test;
 
 import java.io.Serializable;
 @Entity
@@ -22,10 +23,10 @@ import java.io.Serializable;
 public class User implements Serializable{
 
 @Id
-    Long userID;
+    
     
 	@Column(name = "User_ID")
-    private Long id;
+    private long userID;
     
 	@Column(name = "Username")
     private String username;
@@ -48,14 +49,13 @@ public class User implements Serializable{
     
 public User(){}
 
-public User(String name,String email,String password,Long userID,String username){
+public User(String name,String email,String password,long userID,String username){
 this.name = name;
 this.email = email;
 this.password = password;
 this.userID  = userID;
 this.username = username;
 }
-
 
 public String getName(){
 return name;
@@ -65,7 +65,6 @@ return name;
 public void setName(String name) {
     this.name = name;		
 }
-
 
 public String getEmail(){
 return email;
@@ -83,21 +82,17 @@ public void setPassword(String password) {
     this.password = password;		
 }
 
-public Long userID(){
-return userID;
+public long getUserID()
+{
+	return this.userID;
 }
 
-public void setUserID(Long userID) {
+public void setUserID(long userID) {
     this.userID = userID;		
     }
 
-public User getUser() {
-	return user;
-}
 
-public void setEmployee(Employee employee) {
-	this.user = user;
-}
+
 
 
 }
