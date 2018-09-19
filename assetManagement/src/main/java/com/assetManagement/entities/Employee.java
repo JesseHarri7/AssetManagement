@@ -27,7 +27,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class Employee implements Serializable {
     
     @Id
-    private Long employeeID;
+    private long employeeID;
     
     @Column(name = "Name")
     private String name;
@@ -46,7 +46,7 @@ public class Employee implements Serializable {
 	public Employee() {
     }
     
-    public Employee(String name,String surname, String email,LocalDate startDate,Long employeeID){
+    public Employee(String name,String surname, String email,LocalDate startDate,long employeeID){
 	    this.name = name;
 	    this.surname =  surname;
 	    this.email = email;
@@ -88,11 +88,11 @@ public class Employee implements Serializable {
         this.startDate = startDate;		
     }
     
-    public Long employeeID(){
+    public long getEmployeeID(){
     	return employeeID;
     }
     
-    public void setEmployeeID(Long employeeID) {
+    public void setEmployeeID(long employeeID) {
         this.employeeID = employeeID;		
     }
     
