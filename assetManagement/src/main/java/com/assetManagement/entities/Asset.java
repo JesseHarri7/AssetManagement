@@ -97,7 +97,7 @@ public class Asset implements Serializable
 	}
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "assets")
-	public Set<AssetAssigned> getAssigne()
+	public Set<AssetAssigned> getAssigned()
 	{
 		return assigned;
 	}
