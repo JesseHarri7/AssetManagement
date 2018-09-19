@@ -53,7 +53,8 @@ public class AssetAssigned implements Serializable
 		this.employees = employees;
 	}
 
-	public String getMoveDate() {
+	public String getMoveDate() 
+	{
 		return moveDate;
 	}
 
