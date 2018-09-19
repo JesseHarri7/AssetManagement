@@ -17,14 +17,15 @@ public class AssetAssigned implements Serializable
 	
 	private Asset assets;
 	private Employee employees;
-	private Date moveDate;
+	private String moveDate;
 	
 	public AssetAssigned() {}
 
-	public AssetAssigned(Asset assets, Employee employees) 
+	public AssetAssigned(Asset assets, Employee employees, String moveDate) 
 	{
 		this.assets = assets;
 		this.employees = employees;
+		this.moveDate = moveDate;
 	}
 
 	@Id
@@ -52,11 +53,11 @@ public class AssetAssigned implements Serializable
 		this.employees = employees;
 	}
 
-	public Date getMoveDate() {
+	public String getMoveDate() {
 		return moveDate;
 	}
 
-	public void setMoveDate(Date moveDate) 
+	public void setMoveDate(String moveDate) 
 	{
 		this.moveDate = moveDate;
 	}

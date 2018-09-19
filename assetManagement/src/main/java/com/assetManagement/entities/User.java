@@ -21,7 +21,7 @@ import java.io.Serializable;
 @Table(name = "User")
 public class User implements Serializable{
 
-	@Id
+@Id
     Long userID;
     
 	@Column(name = "User_ID")
