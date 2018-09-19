@@ -29,7 +29,6 @@ public class AssetTest
 		assertEquals("HP Pavilion", asset.getName());
 		assertEquals("Good Condition", asset.getStatus());
 		
-		
 	}
 
 	

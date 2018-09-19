@@ -1,15 +1,20 @@
 package com.assetManagement;
 
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
 import com.assetManagement.entities.*;
-/**
- * Hello world!
- *
- */
+
+@SpringBootApplication
 public class App 
 {
    public static void main(String args[])
     {
-        System.out.print("test");
+	   SpringApplication.run(App.class, args);
+	   
+	   System.out.print("test");
+	   
+       Employee employee = new Employee();
 
     }
 }

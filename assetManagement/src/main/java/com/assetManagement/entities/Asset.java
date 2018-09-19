@@ -16,6 +16,7 @@ import javax.persistence.Table;
 @Table(name = "asset", catalog = "management")
 public class Asset implements Serializable
 {
+	
 	private long assetId;
 	private String name;
 	private String description;
@@ -106,5 +107,5 @@ public class Asset implements Serializable
 	{
 		this.assigned = assigned;
 	}
-	
+
 }
