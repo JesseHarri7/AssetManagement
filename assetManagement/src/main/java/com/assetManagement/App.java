@@ -5,9 +5,8 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
-import util.HibernateUtil;
 import com.assetManagement.entities.*;
+import com.assetManagement.util.HibernateUtil;
 
 @SpringBootApplication
 public class App 
@@ -16,7 +15,7 @@ public class App
     {
 	   SpringApplication.run(App.class, args); 
 	   System.out.print("test");
-	  
+	   
 	   /*
 	   Configuration config = new Configuration().configure().addAnnotatedClass(Asset.class);
 	   SessionFactory sf = config.buildSessionFactory();
