@@ -22,6 +22,7 @@ import org.hibernate.mapping.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @Entity
+
 @Table(name = "Employee")
 
 public class Employee implements Serializable {
@@ -40,8 +41,10 @@ public class Employee implements Serializable {
     
     @Column(name = "Start_Date")
     private LocalDate startDate;
-    
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "AssetAssigned")
     private Employee employee;
+    
     
 	public Employee() {
     }
@@ -96,14 +99,14 @@ public class Employee implements Serializable {
         this.employeeID = employeeID;		
     }
     
-    public Employee getEmployee() {
+    /*public Employee getEmployee() {
     	return employee;
     }
 
     public void setEmployee(Employee employee) {
     	this.employee = employee;
     	
-    }
+    }*/
   
   
   
