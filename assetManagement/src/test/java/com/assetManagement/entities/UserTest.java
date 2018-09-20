@@ -10,7 +10,7 @@ public class UserTest {
 	 User user = new User();
 	
 	@Test
-	public void testEmployee() 
+	public void testUser() 
 	{
 		user.setName("Lutho");
 		user.setPassword("Mvinjelwa");

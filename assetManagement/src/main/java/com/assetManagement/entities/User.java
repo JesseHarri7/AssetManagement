@@ -42,9 +42,8 @@ public class User implements Serializable{
     
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "employeeID")
-    private Employee employee;
-    
     private User user;
+    
 	
     
 public User(){}
