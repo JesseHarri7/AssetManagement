@@ -16,12 +16,16 @@ import javax.persistence.Table;
 @Table(name = "asset", catalog = "management")
 public class Asset implements Serializable
 {
+
+	@Id
 	private long assetId;
 	private String name;
 	private String description;
 	private String brand;
 	private String datePurchased;
 	private String status;
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "assets")
 	private Set<AssetAssigned> assigned = new HashSet<AssetAssigned>(0);
 	
 	public Asset() {}
@@ -35,7 +39,6 @@ public class Asset implements Serializable
 		this.status = status;
 	}
 
-	@Id
 	public long getAssetId() 
 	{
 		return assetId;
@@ -96,7 +99,6 @@ public class Asset implements Serializable
 		this.status = status;
 	}
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "assets")
 	public Set<AssetAssigned> getAssigned()
 	{
 		return assigned;
@@ -106,5 +108,5 @@ public class Asset implements Serializable
 	{
 		this.assigned = assigned;
 	}
-	
+
 }
