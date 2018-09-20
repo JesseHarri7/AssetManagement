@@ -6,13 +6,14 @@ import org.hibernate.cfg.Configuration;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import com.assetManagement.entities.*;
+
 import com.assetManagement.util.HibernateUtil;
 
-@SpringBootApplication
 public class App 
 {
    public static void main(String args[])
     {
+
 	   SpringApplication.run(App.class, args); 
 	   System.out.print("test");
 	   
