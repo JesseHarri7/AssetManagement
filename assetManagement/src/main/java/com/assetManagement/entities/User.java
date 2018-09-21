@@ -8,8 +8,6 @@ package com.assetManagement.entities;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
@@ -20,82 +18,80 @@ import org.hibernate.mapping.Set;
 import org.junit.Test;
 
 import java.io.Serializable;
-
 @Entity
-@Table(name = "USERS")
-public class User implements Serializable {
+@Table(name = "User")
+public class User implements Serializable{
 
-	@Id
+@Id
+    
+    
 	@Column(name = "User_ID")
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long userID;
-
+    private long userID;
+    
 	@Column(name = "Username")
-	private String username;
-
+    private String username;
+    
 	@Column(name = "Password")
-	private String password;
-
+    private String password;
+    
 	@Column(name = "Email")
-	private String email;
-
+    private String email;
+    
 	@Column(name = "Name")
-	private String name;
+    private String name;
+    
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "employeeID")
+    private User user;
+    
+	
+    
+public User(){}
 
-	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "employeeID")
-	private User user;
+public User(String name,String email,String password,long userID,String username){
+this.name = name;
+this.email = email;
+this.password = password;
+this.userID  = userID;
+this.username = username;
+}
 
-	public User() {
-	}
+public String getName(){
+return name;
 
-	public User(String name, String email, String password, long userID, String username) {
-		this.name = name;
-		this.email = email;
-		this.password = password;
-		this.userID = userID;
-		this.username = username;
-	}
+}
 
-	public String getName() {
-		return name;
+public void setName(String name) {
+    this.name = name;		
+}
 
-	}
+public String getEmail(){
+return email;
+}
 
-	public void setUserName(String username) {
-		this.username = username;
-	}
-	public String getUserName() {
-		return username;
+public void setEmail(String email) {
+    this.email = email;		
+}
 
-	}
+public String getPassword(){
+	return password;
+}
 
-	public void setName(String name) {
-		this.name = name;
-	}
+public void setPassword(String password) {
+    this.password = password;		
+}
 
-	public String getEmail() {
-		return email;
-	}
+public long getUserID()
+{
+	return this.userID;
+}
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+public void setUserID(long userID) {
+    this.userID = userID;		
+    }
 
-	public String getPassword() {
-		return password;
-	}
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
 
-	public long getUserID() {
-		return this.userID;
-	}
 
-	public void setUserID(long userID) {
-		this.userID = userID;
-	}
 
 }

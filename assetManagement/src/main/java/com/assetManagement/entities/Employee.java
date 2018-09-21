@@ -58,6 +58,7 @@ public class Employee implements Serializable {
 
     }
     
+    
     public String getName(){
     	return name;
     }
@@ -97,4 +98,17 @@ public class Employee implements Serializable {
     public void setEmployeeID(long employeeID) {
         this.employeeID = employeeID;		
     }
+    
+    /*public Employee getEmployee() {
+    	return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+    	this.employee = employee;
+    	
+    }*/
+  
+  
+  
+    
 }
