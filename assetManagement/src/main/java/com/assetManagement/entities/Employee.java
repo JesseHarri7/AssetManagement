@@ -5,25 +5,19 @@ package com.assetManagement.entities;
  * and open the template in the editor.
  */
 import java.io.Serializable;
-import java.time.*;
-import java.time.format.DateTimeFormatter;
-import java.time.format.FormatStyle;
+import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import org.hibernate.mapping.Set;
-import org.springframework.beans.factory.annotation.Autowired;
-
 @Entity
 
-@Table(name = "Employee")
+@Table(name = "Employees")
 
 public class Employee implements Serializable {
     
