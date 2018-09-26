@@ -37,20 +37,19 @@ public abstract class UserServiceImpl implements UserService {
 	}
 	
 	@Override
-	public List<User> findBySurname(String surname) throws ResourceNotFoundException {
-		List<User> list = userRepo.findByName(surname);
-		if (list != null && !list.isEmpty()) {
-			return list;
-		}else {
-			throw new ResourceNotFoundException("User is not found");
-		}
-		}
-	
-	@Override
 	public String findByEmail(String email) throws ResourceNotFoundException {
 		User user=  userRepo.findByUsername(email);
 		if (email != null && !email.isEmpty()) {
 		return email;
+		}else {
+			throw new ResourceNotFoundException("User is not found");	
+	}
+	}
+	@Override
+	public String findByPassword(String password) throws ResourceNotFoundException {
+		User user=  userRepo.findByPassword(password);
+		if (password != null && !password.isEmpty()) {
+		return password;
 		}else {
 			throw new ResourceNotFoundException("User is not found");	
 	}

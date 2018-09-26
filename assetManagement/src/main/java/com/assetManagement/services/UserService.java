@@ -9,6 +9,6 @@ public interface UserService {
 	
 	List<User> findByName(String name) throws ResourceNotFoundException;
 	String findByEmail(String email) throws ResourceNotFoundException;
-    List<User> findBySurname(String surname) throws ResourceNotFoundException;
     String findByUsername(String username) throws ResourceNotFoundException;
+	String findByPassword(String password) throws ResourceNotFoundException;
 }
