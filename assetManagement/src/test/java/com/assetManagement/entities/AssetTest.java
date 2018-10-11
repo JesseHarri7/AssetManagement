@@ -11,7 +11,7 @@ public class AssetTest
 	
 	Asset asset = new Asset();
 
-	@Test
+	//@Test
 	public void testCreateAsset() 
 	{
 		asset.setAssetId(123L);

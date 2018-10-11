@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import com.assetManagement.entities.AssetAssigned;
 
 @Repository
-public interface AssetAssignedRepo extends CrudRepository<AssetAssigned, Long>
+public interface AssetAssignedRepo /*extends CrudRepository<AssetAssigned, Long>*/
 {
 	
 	List<AssetAssigned> findByEmployeeEmployeeId(Long empId);

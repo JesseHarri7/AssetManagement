@@ -1,22 +1,31 @@
 package com.assetManagement.services.impl;
 
-import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.assetManagement.entities.Employee;
-import com.assetManagement.entities.User;
 import com.assetManagement.excptions.ResourceNotFoundException;
 import com.assetManagement.repositories.EmployeeRepo;
 import com.assetManagement.services.EmployeeService;
 
 @Service
-public abstract class EmployeeServiceImpl implements EmployeeService {
-
-	@Autowired
+public class EmployeeServiceImpl implements EmployeeService {
+	
 	private EmployeeRepo employeeRepo;
+	
+	@Autowired
+	public EmployeeServiceImpl(EmployeeRepo employeeRepo) {
+		this.employeeRepo = employeeRepo;
+	}
+	
+	@Override
+	public Employee addEmployee(Employee employee) {
+		employee = employeeRepo.save(employee);
+		return employee;
+	}
 	
 	@Override
 	public List<Employee> findByName(String name) throws ResourceNotFoundException {
@@ -49,7 +58,7 @@ public abstract class EmployeeServiceImpl implements EmployeeService {
 	}
 
 	@Override
-	public List<Employee> findByStartDate(LocalDate startDate) throws ResourceNotFoundException{
+	public List<Employee> findByStartDate(Date startDate) throws ResourceNotFoundException{
 		List <Employee> list =  employeeRepo.findByStartDate(startDate);
 		if (list != null && !list.isEmpty()) {
 		return list;
@@ -58,6 +67,26 @@ public abstract class EmployeeServiceImpl implements EmployeeService {
 	}
 	}
 
+	@Override
+	public Employee saveEmployee(Employee employee) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void deleteAllEmployee() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public List<Employee> findEmployee(String string) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
+	
 
 
 }

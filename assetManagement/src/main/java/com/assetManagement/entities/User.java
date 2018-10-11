@@ -21,10 +21,9 @@ import java.io.Serializable;
 @Entity
 @Table(name = "User")
 public class User implements Serializable{
+	
 
-@Id
-    
-    
+	@Id
 	@Column(name = "User_ID")
     private long userID;
     
@@ -79,6 +78,14 @@ public String getPassword(){
 
 public void setPassword(String password) {
     this.password = password;		
+}
+
+public void setUsername(String username) {
+    this.username = username;		
+}
+
+public String getUsername(){
+	return username;
 }
 
 public long getUserID()

@@ -13,7 +13,7 @@ import javax.persistence.Table;
 
 
 @Entity
-@Table(name = "asset", catalog = "management")
+@Table(name = "asset")
 public class Asset implements Serializable
 {
 
@@ -102,10 +102,10 @@ public class Asset implements Serializable
 	public Set<AssetAssigned> getAssigned()
 	{
 		return assigned;
-	}
+}
 	
-	public void setAssigned(Set<AssetAssigned> assigned)
-	{
+public void setAssigned(Set<AssetAssigned> assigned)
+{
 		this.assigned = assigned;
 	}
 
