@@ -11,11 +11,13 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "assetAssigned", catalog = "management")
+@Table(name = "ASSET_ASSIGNED")
 public class AssetAssigned implements Serializable
 {
 	
 	@Id
+	private long id;
+	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "assetId", nullable = false)
 	private Asset assets;
@@ -23,6 +25,7 @@ public class AssetAssigned implements Serializable
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "employeeId", nullable = false)
 	private Employee employees;
+	
 	private String moveDate;
 	
 	public AssetAssigned() {}
@@ -62,6 +65,5 @@ public class AssetAssigned implements Serializable
 	public void setMoveDate(String moveDate) 
 	{
 		this.moveDate = moveDate;
-	}
-	
+	}	
 }

@@ -5,26 +5,21 @@
  */
 package com.assetManagement.entities;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-
-import org.hibernate.mapping.Set;
-import org.junit.Test;
-
-import java.io.Serializable;
 @Entity
 @Table(name = "User")
 public class User implements Serializable{
+	
 
-@Id
-    
-    
+	@Id
 	@Column(name = "User_ID")
     private long userID;
     
@@ -41,12 +36,12 @@ public class User implements Serializable{
     private String name;
     
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "employeeID")
+    @JoinColumn(name = "userID")
     private User user;
     
 	
     
-public User(){}
+
 
 public User(String name,String email,String password,long userID,String username){
 this.name = name;
@@ -79,6 +74,14 @@ public String getPassword(){
 
 public void setPassword(String password) {
     this.password = password;		
+}
+
+public void setUsername(String username) {
+    this.username = username;		
+}
+
+public String getUsername(){
+	return username;
 }
 
 public long getUserID()
