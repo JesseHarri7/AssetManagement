@@ -4,15 +4,17 @@ import java.util.List;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
+
 import com.assetManagement.entities.AssetAssigned;
 
 @Repository
-public interface AssetAssignedRepo /*extends CrudRepository<AssetAssigned, Long>*/
+public interface AssetAssignedRepo extends CrudRepository<AssetAssigned, Long>
 {
+	AssetAssigned findByAssetAssignedId(Long id);
 	
-	List<AssetAssigned> findByEmployeeEmployeeId(Long empId);
+	AssetAssigned findByAssetsAssetId(Long Asset);
 	
-	List<AssetAssigned> findByAssetAssetId(Long assetId);
+	AssetAssigned findByEmployeesEmployeeID(Long emp);
 	
 	List<AssetAssigned> findByMoveDate(String date);
 	
