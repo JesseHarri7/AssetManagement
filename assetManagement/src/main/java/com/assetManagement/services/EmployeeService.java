@@ -12,8 +12,6 @@ public interface EmployeeService {
 		List<Employee> findByName(String name) throws ResourceNotFoundException;
 	    List<Employee> findBySurname(String surname) throws ResourceNotFoundException;
 	    List<Employee> findByStartDate(Date startDate) throws ResourceNotFoundException;
-		String findByEmail(String email) throws ResourceNotFoundException;
+		Employee findByEmail(String email) throws ResourceNotFoundException;
 		Employee saveEmployee(Employee employee);
-		void deleteAllEmployee();
-		List<Employee> findEmployee(String string);
 }

@@ -34,7 +34,7 @@ public class Employee implements Serializable {
 	@Column(name = "Surname")
 	private String surname;
 
-	@Column(name = "Email")
+	@Column(name = "Email", unique = true)
 	private String email;
 
 	@Temporal(TemporalType.DATE)

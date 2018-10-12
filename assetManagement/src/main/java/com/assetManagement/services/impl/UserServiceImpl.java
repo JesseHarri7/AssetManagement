@@ -11,7 +11,7 @@ import com.assetManagement.repositories.UserRepo;
 import com.assetManagement.services.UserService;
 
 @Service
-public abstract class UserServiceImpl implements UserService {
+public  class UserServiceImpl implements UserService {
 
 	@Autowired
 	private UserRepo userRepo;
@@ -19,40 +19,46 @@ public abstract class UserServiceImpl implements UserService {
 	@Override
 	public List<User> findByName(String name) throws ResourceNotFoundException {
 		List<User> list = userRepo.findByName(name);
-		if (list != null && !list.isEmpty()) {
-			return list;
-		}else {
-			throw new ResourceNotFoundException("User is not found");
-		}
+			if (list != null && !list.isEmpty()) {
+				return list;
+			}else {
+				return null;
+			}
 		}
 	
 	@Override
-	public String findByUsername(String username) throws ResourceNotFoundException {
+	public User findByUsername(String username) throws ResourceNotFoundException {
 		User user=  userRepo.findByUsername(username);
-		if (username != null && !username.isEmpty()) {
-		return username;
+		if (username != null ) {
+		return user;
 		}else {
 			throw new ResourceNotFoundException("User is not found");	
 	}
 	}
 	
 	@Override
-	public String findByEmail(String email) throws ResourceNotFoundException {
+	public User findByEmail(String email) throws ResourceNotFoundException {
 		User user=  userRepo.findByUsername(email);
-		if (email != null && !email.isEmpty()) {
-		return email;
+		if (email != null) {
+		return user;
 		}else {
 			throw new ResourceNotFoundException("User is not found");	
 	}
 	}
 	@Override
-	public String findByPassword(String password) throws ResourceNotFoundException {
+	public User findByPassword(String password) throws ResourceNotFoundException {
 		User user=  userRepo.findByPassword(password);
-		if (password != null && !password.isEmpty()) {
-		return password;
+		if (password != null) {
+		return user;
 		}else {
 			throw new ResourceNotFoundException("User is not found");	
 	}
+	}
+
+	@Override
+	public User saveUser(User user) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }
