@@ -1,50 +1,65 @@
 package com.assetManagement.entities;
 
 import java.io.Serializable;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.GenericGenerator;
+
 
 @Entity
-@Table(name = "asset")
+@Table(name = "asset", catalog = "management")
 public class Asset implements Serializable
 {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+ 
 	@Id
-	private long assetId;
+	//@GeneratedValue
+	private Long assetId;
+	
 	private String name;
 	private String description;
 	private String brand;
 	private String datePurchased;
 	private String status;
-	
+
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "assets")
 	private Set<AssetAssigned> assigned = new HashSet<AssetAssigned>(0);
 	
 	public Asset() {}
 
-	public Asset(String name, String desc, String brand, String datePur, String status)
+	public Asset(Long id, String name, String desc, String brand, String datePur, String status)
 	{
+		this.assetId = id;
 		this.name = name;
 		this.description = desc;
 		this.brand = brand;
 		this.datePurchased = datePur;
 		this.status = status;
 	}
+	
+	public Asset(String name)
+	{
+		this.name = name;
+	}
 
-	public long getAssetId() 
+	public Long getAssetId() 
 	{
 		return assetId;
 	}
 
-	public void setAssetId(long assetId) 
+	public void setAssetId(Long assetId) 
 	{
 		this.assetId = assetId;
 	}
@@ -102,10 +117,10 @@ public class Asset implements Serializable
 	public Set<AssetAssigned> getAssigned()
 	{
 		return assigned;
-}
+	}
 	
-public void setAssigned(Set<AssetAssigned> assigned)
-{
+	public void setAssigned(Set<AssetAssigned> assigned)
+	{
 		this.assigned = assigned;
 	}
 

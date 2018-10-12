@@ -5,19 +5,24 @@ import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.GenericGenerator;
+
 @Entity
-@Table(name = "ASSET_ASSIGNED")
+@Table(name = "assetAssigned", catalog = "management")
 public class AssetAssigned implements Serializable
 {
 	
 	@Id
-	private long id;
-	
+	@GeneratedValue(generator="increment")
+	@GenericGenerator(name="increment", strategy = "increment")
+	private Long assetAssignedId;
+	 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "assetId", nullable = false)
 	private Asset assets;
@@ -35,6 +40,16 @@ public class AssetAssigned implements Serializable
 		this.assets = assets;
 		this.employees = employees;
 		this.moveDate = moveDate;
+	}
+	
+	public Long getId()
+	{
+		return assetAssignedId;
+	}
+	
+	public void setId(Long id)
+	{
+		this.assetAssignedId = id;
 	}
 
 	public Asset getAssets() 
@@ -65,5 +80,6 @@ public class AssetAssigned implements Serializable
 	public void setMoveDate(String moveDate) 
 	{
 		this.moveDate = moveDate;
-	}	
+	}
+	
 }
