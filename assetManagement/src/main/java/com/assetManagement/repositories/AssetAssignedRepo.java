@@ -17,5 +17,5 @@ public interface AssetAssignedRepo extends CrudRepository<AssetAssigned, Long>
 	AssetAssigned findByEmployeesEmployeeID(Long emp);
 	
 	List<AssetAssigned> findByMoveDate(String date);
-	
+	 
 }

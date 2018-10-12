@@ -22,7 +22,7 @@ public class AssetAssigned implements Serializable
 	@GeneratedValue(generator="increment")
 	@GenericGenerator(name="increment", strategy = "increment")
 	private Long assetAssignedId;
-	
+	 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "assetId", nullable = false)
 	private Asset assets;

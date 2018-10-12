@@ -11,7 +11,7 @@ public interface Service<E, ID>
 		E readById(ID id);
 
 		List<E> readAll();
-
+ 
 		E update(E entity);
 
 		void delete(E entity);

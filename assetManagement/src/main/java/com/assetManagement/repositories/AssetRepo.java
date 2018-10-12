@@ -18,5 +18,5 @@ public interface AssetRepo extends CrudRepository<Asset, Long>
 	List<Asset> findByDatePurchased(String date);
 	
 	List<Asset> findByName(String assetName);
-	
+	 
 }
