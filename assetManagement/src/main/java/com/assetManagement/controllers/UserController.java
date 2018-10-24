@@ -42,7 +42,7 @@ public class UserController {
 			}
 			
 			// find by username
-			@RequestMapping(value = "username/{username}", method = RequestMethod.POST)
+			@RequestMapping(value = "username/{username}", method = RequestMethod.GET)
 			public ResponseEntity<User> findByUsername(@PathVariable String username) {
 				User user = userService.findByUsername(username);
 				
@@ -55,14 +55,14 @@ public class UserController {
 			
 			// find by name
 			@RequestMapping(value = "name/{name}", method = RequestMethod.POST)
-			public ResponseEntity<List> findByName(@PathVariable String name) {
+			public ResponseEntity<List<User>> findByName(@PathVariable String name) {
 				List<User> user = userService.findByName(name);
 				
 				if (user == null) {
-					return (ResponseEntity<List>) new ResponseEntity<List>(HttpStatus.NOT_FOUND);
+					return  new ResponseEntity<List<User>>(HttpStatus.NOT_FOUND);
 				}
 				
-				return new ResponseEntity<List>(user, HttpStatus.OK);
+				return new ResponseEntity<List<User>>(user, HttpStatus.OK);
 			}
 			// find by password
 			@RequestMapping(value = "password/{password}", method = RequestMethod.POST)

@@ -24,7 +24,7 @@ public class EmployeeTest {
 	assertEquals("Mvinjelwa", emp.getSurname());
 	assertEquals("Alulutho2010@saratoga.com", emp.getEmail());
 	//assertEquals(990720093L, emp.getEmployeeID());
-	//assertEquals("", emp.getStartDate());
+	//assertEquals(new Date(), emp.getStartDate());
 	}
 
 }
