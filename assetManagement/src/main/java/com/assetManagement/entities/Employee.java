@@ -36,10 +36,15 @@ public class Employee implements Serializable {
 
 	@Column(name = "Email", unique = true)
 	private String email;
-
+	
 	@Temporal(TemporalType.DATE)
-	@Column(name = "Start_Date")
+	@Column(name = "Date")
 	private Date startDate;
+
+
+	
+	//@Column(name = "Start_Date")
+	//private Date startDate;*/
 //    @OneToOne(fetch = FetchType.LAZY)
 //    @JoinColumn(name = "AssetAssigned")
 //    private Employee employee;

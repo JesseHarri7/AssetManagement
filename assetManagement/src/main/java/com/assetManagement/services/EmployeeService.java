@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.assetManagement.entities.Employee;
+import com.assetManagement.entities.User;
 import com.assetManagement.excptions.ResourceNotFoundException;
 
 public interface EmployeeService {

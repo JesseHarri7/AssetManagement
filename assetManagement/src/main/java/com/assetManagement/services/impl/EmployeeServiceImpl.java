@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.assetManagement.entities.Employee;
+import com.assetManagement.entities.User;
 import com.assetManagement.excptions.ResourceNotFoundException;
 import com.assetManagement.repositories.EmployeeRepo;
 import com.assetManagement.services.EmployeeService;
@@ -29,7 +30,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 		if (list != null && !list.isEmpty()) {
 			return list;
 		} else {
-			throw new ResourceNotFoundException("User is not found");
+			throw new ResourceNotFoundException("Employee is not found");
 		}
 
 	}
@@ -64,7 +65,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 		}
 	}
 
-	@Override
+	/*@Override
 	public Employee saveEmployee(Employee employee) {
 		 employee = employeeRepo.save(employee);
 		if (employee != null) {
@@ -72,8 +73,12 @@ public class EmployeeServiceImpl implements EmployeeService {
 		} else {
 			throw new ResourceNotFoundException("Unexpected error while creating employee");
 		}
-	}
+	}*/
 
+	@Override
+	public Employee saveEmployee(Employee employee) {
+		return employeeRepo.save(employee);
+	}
 	
 		
 	

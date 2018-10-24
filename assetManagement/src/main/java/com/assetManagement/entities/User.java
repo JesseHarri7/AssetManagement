@@ -35,11 +35,13 @@ public class User implements Serializable{
 	@Column(name = "Name")
     private String name;
     
-    @OneToOne(fetch = FetchType.LAZY)
+    /*@OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userID")
-    private User user;
+    private User user;*/
     
-	
+	public User() {
+		// TODO Auto-generated constructor stub
+	}
     
 
 
