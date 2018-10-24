@@ -1,0 +1,129 @@
+package com.assetManagement.services.impl;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.assetManagement.entities.Asset;
+import com.assetManagement.repositories.AssetRepo;
+import com.assetManagement.services.AssetService;
+
+@Service
+public class AssetServiceImpl implements AssetService
+{
+	
+	@Autowired
+	AssetRepo repo;	
+
+	@Override
+	public Asset create(Asset entity) 
+	{
+		Asset asset = repo.findByAssetId(entity.getAssetId());
+		if(asset == null)
+		{
+			return repo.save(entity);
+		}
+		else
+		{
+			return null;
+		}
+
+	}
+
+	@Override
+	public Asset readById(Long id) 
+	{
+		Asset asset = repo.findByAssetId(id);
+		if (asset == null)
+		{
+			return null;
+		}
+		else
+		{	
+			return repo.findByAssetId(id);
+		}
+		
+	}
+
+	@Override
+	public List<Asset> readAll() 
+	{
+		List<Asset> assetList = new ArrayList<Asset>();
+		Iterable<Asset> assets = repo.findAll();
+		for (Asset a : assets)
+		{
+			assetList.add(a);
+		}
+		return assetList;
+	}
+
+	@Override
+	public Asset update(Asset entity)
+	{
+		Asset asset = repo.findByAssetId(entity.getAssetId());
+		if (asset == null)
+		{
+			return null;
+		}
+		else
+		{
+			return repo.save(entity);
+		}
+	}
+
+	@Override
+	public void delete(Asset entity) 
+	{
+		if (entity != null)
+		{
+			repo.delete(entity);
+		}
+		
+	}
+
+	@Override
+	public List<Asset> findByAssetBrand(String brand) 
+	{
+		List<Asset> asset = repo.findByBrand(brand);
+		if (asset == null)
+		{
+			return null;
+		}
+		else
+		{
+			return asset;
+		}
+	}
+
+	@Override
+	public List<Asset> findByDatePurchased(String date)
+	{
+		List<Asset> asset = repo.findByDatePurchased(date);
+		if (asset == null) 
+		{
+			return null;
+		}
+		else
+		{
+			return repo.findByDatePurchased(date);
+		}
+	}
+
+	@Override
+	public List<Asset> findByName(String assetName) 
+	{
+		List<Asset> asset = repo.findByName(assetName);
+		if (asset == null)
+		{
+			return null;
+		}
+		else
+		{
+			return repo.findByName(assetName);
+		}
+	}
+
+}

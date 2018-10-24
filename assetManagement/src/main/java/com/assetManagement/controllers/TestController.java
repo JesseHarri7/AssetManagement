@@ -9,13 +9,11 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-@RequestMapping("/")
 public class TestController {
 	
-	@RequestMapping(value = "/test2", method= {RequestMethod.GET})
-    public ModelAndView getTest() {
-		ModelAndView page = new ModelAndView("test");
-		return page;
+	@RequestMapping(value = "/")
+    public String index() {
+		return "index.html";
 	}
 }
 
