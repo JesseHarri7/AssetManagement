@@ -28,7 +28,7 @@ public class AssetAssigned implements Serializable
 	private Asset assets;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "employeeId", nullable = false)
+	@JoinColumn(name = "employeeID", nullable = false)
 	private Employee employees;
 	
 	private String moveDate;

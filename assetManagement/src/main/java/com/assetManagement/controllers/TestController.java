@@ -12,15 +12,13 @@ import org.springframework.web.servlet.ModelAndView;
 import com.assetManagement.services.impl.UserServiceImpl;
 
 @Controller
-@RequestMapping("/")
 public class TestController {
 	@Autowired
 	private UserServiceImpl service;
 	
-	@RequestMapping(value = "/test2", method= {RequestMethod.GET})
-    public ModelAndView getTest() {
-		ModelAndView page = new ModelAndView("test");
-		return page;
+	@RequestMapping(value = "/")
+    public String index() {
+		return "index.html";
 	}
 	
 	@RequestMapping(value = "/loginPage", method= {RequestMethod.GET})

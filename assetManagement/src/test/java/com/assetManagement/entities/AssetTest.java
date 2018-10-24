@@ -3,18 +3,19 @@ package com.assetManagement.entities;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
-
 import junit.framework.Assert;
 
-public class AssetTest 
+public class AssetTest
 {
 	
 	Asset asset = new Asset();
 
-	//@Test
+	@Test
 	public void testCreateAsset() 
 	{
-		asset.setAssetId(123L);
+		Long assetId = new Long(123L);
+		
+		asset.setAssetId(assetId);
 		asset.setBrand("HP");
 		asset.setDatePurchased("2018/09/18");
 		asset.setDescription("Test");
@@ -22,7 +23,7 @@ public class AssetTest
 		asset.setStatus("Good Condition");
 		
 		assertNotNull(asset);
-		assertEquals(123L, asset.getAssetId());
+		assertEquals(assetId, asset.getAssetId());
 		assertEquals("HP", asset.getBrand());
 		assertEquals("2018/09/18", asset.getDatePurchased());
 		assertEquals("Test", asset.getDescription());
@@ -30,7 +31,5 @@ public class AssetTest
 		assertEquals("Good Condition", asset.getStatus());
 		
 	}
-
-	
 
 }
