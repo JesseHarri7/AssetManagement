@@ -7,6 +7,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
 
+import java.util.Date;
 import java.util.List;
 
 import org.hamcrest.collection.IsEmptyCollection;
@@ -45,9 +46,12 @@ public class AssetAssignedServiceTest
 	@Before
 	public void testCreateAA()
 	{
+		// LocalDate date = LocalDate.of(2018, 8, 19);
+		Date date = new Date();
+				
 		Asset asset = new Asset(1L, "HP Pav", "Test", "HP", "01/10/2018", "Good");
 		
-		Employee emp = new Employee("Bob", "Marley", "Bob.Marley", "01/10/2018", 1L);
+		Employee emp = new Employee("Bob", "Marley", "Bob.Marley", date, 1L);
 		
 		AssetAssigned assetAssign = new AssetAssigned();
 		
@@ -99,9 +103,12 @@ public class AssetAssignedServiceTest
 	@Test
 	public void testDeleteAssetAssign()
 	{
+		// LocalDate date = LocalDate.of(2018, 8, 19);
+		Date date = new Date();
+				
 		Asset asset = new Asset(3L, "HP Pav", "Test", "HP", "01/10/2018", "Good");
 		
-		Employee emp = new Employee("Bob", "Marley", "Bob.Marley", "01/10/2018", 4L);
+		Employee emp = new Employee("Bob", "Marley", "Bob.Marley", date, 4L);
 		
 		AssetAssigned delAssetAssign = new AssetAssigned();
 		

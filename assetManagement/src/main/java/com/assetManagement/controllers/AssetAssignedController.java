@@ -28,7 +28,7 @@ public class AssetAssignedController
 			return service.readById(id);
 		}
 		
-		//insert
+		//create
 		@RequestMapping(value = "/assetAssigned/create", method = RequestMethod.POST)
 		@ResponseStatus(HttpStatus.CREATED)
 		public AssetAssigned create(@RequestBody AssetAssigned assetAssign)

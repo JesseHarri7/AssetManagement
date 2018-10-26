@@ -17,5 +17,11 @@ public class WebAssetController
 	{
 		return "employee.html";
 	}
+	
+	@RequestMapping(value = "/assetAssigned")
+    public String assetAssigned() 
+	{
+		return "assetAssigned.html";
+	}
 
 }
