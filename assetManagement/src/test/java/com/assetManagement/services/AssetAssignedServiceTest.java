@@ -46,12 +46,9 @@ public class AssetAssignedServiceTest
 	@Before
 	public void testCreateAA()
 	{
-		// LocalDate date = LocalDate.of(2018, 8, 19);
-		Date date = new Date();
-				
 		Asset asset = new Asset(1L, "HP Pav", "Test", "HP", "01/10/2018", "Good");
 		
-		Employee emp = new Employee("Bob", "Marley", "Bob.Marley", date, 1L);
+		Employee emp = new Employee("Bob", "Marley", "Bob.Marley", new Date(), 1L);
 		
 		AssetAssigned assetAssign = new AssetAssigned();
 		
@@ -103,12 +100,9 @@ public class AssetAssignedServiceTest
 	@Test
 	public void testDeleteAssetAssign()
 	{
-		// LocalDate date = LocalDate.of(2018, 8, 19);
-		Date date = new Date();
-				
 		Asset asset = new Asset(3L, "HP Pav", "Test", "HP", "01/10/2018", "Good");
 		
-		Employee emp = new Employee("Bob", "Marley", "Bob.Marley", date, 4L);
+		Employee emp = new Employee("Bob", "Marley", "Bob.Marley", new Date(), 4L);
 		
 		AssetAssigned delAssetAssign = new AssetAssigned();
 		
