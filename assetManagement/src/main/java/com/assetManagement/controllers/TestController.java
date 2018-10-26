@@ -18,8 +18,9 @@ public class TestController {
 	
 	@RequestMapping(value = "/")
     public String index() {
-		return "index.html";
+		return "user.html";
 	}
+	
 	
 	@RequestMapping(value = "/loginPage", method= {RequestMethod.GET})
     public ModelAndView getLoginPage() {

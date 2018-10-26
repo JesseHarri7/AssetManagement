@@ -1,16 +1,67 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<link rel="stylesheet"
+	href="/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css" />
+<link rel="stylesheet"
+	href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" />
+<link rel="stylesheet"
+	href="https://cdn.datatables.net/select/1.2.0/css/select.dataTables.min.css"
+	type="text/css" />
 </head>
+
+
 <body>
-<form action="/action_page.php">
-  First name:<br>
-  <input type="text" value="Mickey"><br>
-  Last name:<br>
-  <input type="text" name="lastname" value="Mouse"><br><br>
-  <input type="submit" value="Submit">
-</form>
+
+	<form>
+		<h1>Personal information:</h1>
+
+		<div class="row">
+			<div class="col-md-4">
+				<div class="form-group">
+					<label for="firstName">First Name</label> <input type="text"
+						name="firstname" id="firstName" class="form-control"><br>
+				</div>
+			</div>
+
+			<div class="col-md-4">
+				<div class="form-group">
+					<label for="lastName">Last name</label> <input type="text"
+						name="lastname" id="lastname" class="form-control"><br>
+				</div>
+			</div>
+			
+			<!-- Added the rest below -->
+			
+		</div>
+
+
+
+
+
+
+		<br> User name:<br> <input type="text" name="username"><br>
+		<br> Pas:<br> <input type="text" name="password"><br>
+		<br> Confirm the password:<br> <input type="text"
+			name="password"><br> <br> Email:<br> <input
+			type="text" name="email"><br> <br> <input
+			type="button" class="btn btn-primary" value="Submit">
+	</form>
+	
+	<!-- Add Button below eg Create, Delete, Update -->
+	
+	<table class="table">
+		<caption>Users</caption>
+		<tr>
+			<th>ID</th>
+			<th>Name</th>
+			<th>Surname</th>
+			<th>Email</th>
+		</tr>
+	</table>
+
+	<script src="/webjars/jquery/3.1.1/jquery.min.js"></script>
+	<script src="/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js"></script>
+	<script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 </body>
 </html>
