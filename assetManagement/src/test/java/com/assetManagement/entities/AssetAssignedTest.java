@@ -10,9 +10,11 @@ import org.junit.Test;
 public class AssetAssignedTest 
 {
 	//LocalDate date = LocalDate.of(2018, 8, 19);
+	Date date = new Date();
 	
 	Asset asset = new Asset(123L, "HP Pavlion", "Test", "HP", "2018/09/18", "Good Condition");
 	Employee emp = new Employee("Bob", "Marley", "Bob.Marley@gmail.com", new Date(), 1452L);
+
 	AssetAssigned AA = new AssetAssigned();
 
 	@Test
