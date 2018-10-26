@@ -11,21 +11,15 @@ $(document).ready(function()
 		if ( $(this).hasClass('selected') ) 
 		{
             $(this).removeClass('selected');
+            $('#setEmp-btn').prop('disabled', true);
 		}
 		else 
 		{
             $('tr.selected').removeClass('selected');
             $(this).addClass('selected');
+            $('#setEmp-btn').prop('disabled', false);
         }
 	} );
-	
-	//refresh
-	$('#refresh-btn').click(function(event) 
-	{
-		var table = $('#emp-table').DataTable();
-		findAll();
-		table.draw( false );
-	});
 	
 	//Delete
 	$('#delete-btn').click(function(event) 
@@ -37,21 +31,18 @@ $(document).ready(function()
 		
 	});
 	
-	//select asset 
-	$('#setEmp-btn').click( function () 
+	//Clear local storage
+	$('#clear-btn').click( function()
 	{
-		var empData;
-		var table = $('#emp-table').DataTable();
-		console.log(empData = table.row( '.selected' ).data() );
-		console.log("works: " + empData.employeeID);
-		
-//		localStorage.setItem('asset', JSON.stringify(assetData));
-		
-//		var asset = JSON.parse(localStorage.getItem('asset'));
-		
-//		localStorage.removeItem('asset');
-		
-		
+		localStorage.removeItem('asset');
+		localStorage.removeItem('emp');
+		alert("Cleared");
+	})
+	
+	//select Employee 
+	$('#setEmp-btn').click( function () 
+	{	
+		selectEmp();
     } );
 	
 	//Search
@@ -93,7 +84,7 @@ $(document).ready(function()
 			{
 				dataSet = data;
 				
-				assetList(dataSet);
+				empList(dataSet);
 				
 			}
 		});
@@ -101,17 +92,17 @@ $(document).ready(function()
 	
 	function remove()
 	{
-		var table = $('#asset-table').DataTable();
+		var table = $('#emp-table').DataTable();
 
 		var rowToDelete = table.row( '.selected' ).data();
 		
 		if (rowToDelete)
 		{
 			$.ajax({
-				url:"assetManagement/asset/delete/" + rowToDelete.assetId, 
+				url:"assetManagement/employee/delete/" + rowToDelete.employeeID, 
 				dataType: "json",
 				type: "DELETE",
-				success: alert("Asset " + rowToDelete.assetId + " was removed") + findAll()
+				success: alert("Asset " + rowToDelete.employeeID + " was removed")
 			});
 			
 			table.row('.selected').remove().draw( false );
@@ -121,6 +112,30 @@ $(document).ready(function()
 			alert("Please select a asset to remove");
 		}	
 		
+	}
+	
+	function selectEmp()
+	{
+		var empData;
+		var table = $('#emp-table').DataTable();
+		console.log(empData = table.row( '.selected' ).data() );
+		
+		if(empData)
+		{
+			console.log("works: " + empData.employeeID);
+			
+			localStorage.setItem('emp', JSON.stringify(empData));
+			
+			window.location = "http://localhost:8080/assetAssigned";
+			
+//			var asset = JSON.parse(localStorage.getItem('asset'));
+			
+//			localStorage.removeItem('asset');
+		}
+		else
+		{
+			alert("Please select a employee");
+		}	
 	}
 
 });

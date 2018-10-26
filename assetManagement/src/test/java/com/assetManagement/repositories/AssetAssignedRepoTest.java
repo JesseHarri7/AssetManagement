@@ -2,18 +2,16 @@ package com.assetManagement.repositories;
 
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 
-import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import org.hamcrest.collection.IsEmptyCollection;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -45,9 +43,12 @@ public class AssetAssignedRepoTest
 	@Before
 	public void setup() throws Exception
 	{
+		//LocalDate date = LocalDate.of(2018, 8, 19);
+		Date date = new Date();
+		
 		Asset asset = new Asset(1L, "HP Pav", "Test", "HP", "01/10/2018", "Good");
 		
-		Employee emp = new Employee("Bob", "Marley", "Bob.Marley", "01/10/2018", 1L);
+		Employee emp = new Employee("Bob", "Marley", "Bob.Marley", date, 1L);
 		
 		AssetAssigned assetAssign = new AssetAssigned();
 		

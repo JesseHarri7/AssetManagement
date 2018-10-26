@@ -31,8 +31,8 @@ public class Asset implements Serializable
 	private String datePurchased;
 	private String status;
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "assets")
-	private Set<AssetAssigned> assigned = new HashSet<AssetAssigned>(0);
+	/*@OneToMany(fetch = FetchType.LAZY, mappedBy = "assets")
+	private Set<AssetAssigned> assigned = new HashSet<AssetAssigned>(0);*/
 	
 	public Asset() {}
 
@@ -111,7 +111,7 @@ public class Asset implements Serializable
 		this.status = status;
 	}
 	
-	public Set<AssetAssigned> getAssigned()
+	/*public Set<AssetAssigned> getAssigned()
 	{
 		return assigned;
 	}
@@ -119,6 +119,6 @@ public class Asset implements Serializable
 	public void setAssigned(Set<AssetAssigned> assigned)
 	{
 		this.assigned = assigned;
-	}
+	}*/
 
 }
