@@ -31,6 +31,7 @@ public class AssetServiceTest
 	@Autowired
 	private AssetService service;
 	
+	@SuppressWarnings("unused")
 	private Asset result;
 	
 	@Before

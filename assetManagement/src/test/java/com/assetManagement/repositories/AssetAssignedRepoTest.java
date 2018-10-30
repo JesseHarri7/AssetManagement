@@ -48,7 +48,7 @@ public class AssetAssignedRepoTest
 		
 		Asset asset = new Asset(1L, "HP Pav", "Test", "HP", "01/10/2018", "Good");
 
-		Employee emp = new Employee("Bob", "Marley", "Bob.Marley", new Date(), 1L);
+		Employee emp = new Employee("Bob", "Marley", "Bob.Marley", date, 1L);
 
 		
 		AssetAssigned assetAssign = new AssetAssigned();
