@@ -8,37 +8,34 @@
 </head>
 <body>
 	
-	
-	<h2>Asset - Assigned</h2>
+	<img src="resources/Saratoga_logo.png" width="250px">
+<!-- 	<h2>Saratoga</h2> -->
 	<nav class="navbar navbar-default">
 		<div class="container-fluid">
 			<div class="navbar-header">
-				<a class="navbar-brand" href="#">Saratoga</a>
+				<a class="navbar-brand" href="#">Asset Management</a>
 			</div>
 			<ul class="nav navbar-nav">
 				<li><a href="http://localhost:8080/asset">Asset</a></li>
 				<li><a href="http://localhost:8080/employee">Employee</a></li>
 				<li><a href="#">User</a></li>
-				<li class="active"><a href="#">AssetAssigned</a></li>
+				<li class="active"><a href="#">Assign</a></li>
 			</ul>
 		</div>
 	</nav>
 
-	<form>
-		<div id="login-container">
-			<div class="row">
-				<div class="col-md-4 col-md-offset-4">
-				
-					<input type="button" value="Create" id="create-btn" class="btn btn-primary">
-					<input type="button" value="Delete" id="delete-btn" class="btn btn-primary">
-					
-					<input type="button" value="Clear local storage" id="clear-btn" class="btn btn-primary">
-					
-				</div>
-			</div>
-		</div>
-	</form>
-	
+	<div id="nav-buttons">
+
+		<input type="button" value="Create" id="create-btn"
+			class="btn btn-primary"> <input type="button" value="Delete"
+			id="delete-btn" class="btn btn-primary"> <input type="button"
+			value="Find asset" id="asset-btn" class="btn btn-primary"
+			data-target="#assetModal"> <input type="button"
+			value="Find employee" id="emp-btn" class="btn btn-primary"
+			data-target="#empModal">
+
+	</div>
+
 	<table class="display" id = "AA-table">
 		<thead>
 			<tr>
@@ -50,10 +47,73 @@
 		<tbody>
 		</tbody>
 	</table>
+
+	<!-- Asset modal view -->
+	<!-- Modal -->
+	<div class="modal fade" id="assetModal" role="dialog">
+		<div class="modal-dialog">
+
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h2 class="modal-title">Asset Details</h2>
+				</div>
+				<div class="modal-body">
+					Asset ID:<div id="mAssetId"></div><br>
+					Name:<div id="mName"></div><br>
+					Description:<div id="mDesc"></div><br>
+					Brand:<div id="mBrand"></div><br>
+					Date Purchased:<div id="mDate"></div><br>
+					Status:<div id="mStatus"></div><br>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+
+		</div>
+	</div>
 	
+	<!-- Employee modal view -->
+	<!-- Modal -->
+	<div class="modal fade" id="empModal" role="dialog">
+		<div class="modal-dialog">
+
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h2 class="modal-title">Employee Details</h2>
+				</div>
+				<div class="modal-body">
+					Employee ID:<div id="mEmpId"></div><br>
+					Name:<div id="mEmpName"></div><br>
+					Surname:<div id="mSur"></div><br>
+					Email:<div id="mEmail"></div><br>
+					Start Date:<div id="mStartDate"></div><br>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
 	<script src="/webjars/jquery/3.1.1/jquery.min.js"></script>
 	<script src="/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js"></script>
 	<script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 	<script src="js/assetAssigned.js"></script>
 </body>
+<!-- Footer -->
+<div id="footer">
+
+	<p class="h6">
+		&copy All rights Reversed.<a class="text-green ml-2"
+			href="http://saratoga.co.za/" target="_blank">Saratoga</a>
+	</p>
+
+</div>
+<!-- ./Footer -->
 </html>
