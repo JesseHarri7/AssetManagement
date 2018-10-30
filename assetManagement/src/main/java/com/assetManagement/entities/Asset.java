@@ -1,13 +1,9 @@
 package com.assetManagement.entities;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 
@@ -31,9 +27,6 @@ public class Asset implements Serializable
 	private String datePurchased;
 	private String status;
 
-	/*@OneToMany(fetch = FetchType.LAZY, mappedBy = "assets")
-	private Set<AssetAssigned> assigned = new HashSet<AssetAssigned>(0);*/
-	
 	public Asset() {}
 
 	public Asset(Long id, String name, String desc, String brand, String datePur, String status)
@@ -110,15 +103,5 @@ public class Asset implements Serializable
 	{
 		this.status = status;
 	}
-	
-	/*public Set<AssetAssigned> getAssigned()
-	{
-		return assigned;
-	}
-	
-	public void setAssigned(Set<AssetAssigned> assigned)
-	{
-		this.assigned = assigned;
-	}*/
 
 }

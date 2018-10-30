@@ -3,7 +3,6 @@ package com.assetManagement.entities;
 import java.io.Serializable;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -11,8 +10,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name = "assetAssigned", catalog = "management")
@@ -30,13 +27,11 @@ public class AssetAssigned implements Serializable
 	private Long assetAssignedId;
 	 
 	@ManyToOne//(fetch = FetchType.LAZY)
-//	@JsonBackReference
 	@JoinColumn(name = "assetId", nullable = false)
 	private Asset assets;
 	
 	@ManyToOne//(fetch = FetchType.LAZY)
 	@JoinColumn(name = "employeeID", nullable = false)
-//	@JsonBackReference
 	private Employee employees;
 	
 	private String moveDate;

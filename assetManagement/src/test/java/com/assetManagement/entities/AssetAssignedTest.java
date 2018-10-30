@@ -1,8 +1,8 @@
 package com.assetManagement.entities;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertSame;
 
-import java.time.LocalDate;
 import java.util.Date;
 
 import org.junit.Test;
