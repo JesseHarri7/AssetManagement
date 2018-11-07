@@ -1,7 +1,8 @@
 $(document).ready(function()
 {
 	var dataSet = [];
-	var dataSetAsset = [];
+	//var dataSetA = [];
+	//var dataSetEmp = [];
 	var asset;
 	var emp;
 
@@ -47,6 +48,10 @@ $(document).ready(function()
 			$('#assetModal').modal('show');
 			displayAsset(assetInfo);			
 		}
+		else
+		{
+			alert("Please select an asset Code")
+		}
 	});	
 	
 	//Get Emp info
@@ -59,6 +64,10 @@ $(document).ready(function()
 		{
 			$('#empModal').modal('show');
 			displayEmp(empInfo);			
+		}
+		else
+		{
+			alert("Please select an Employee ID")
 		}
 	});
 	
@@ -163,8 +172,9 @@ $(document).ready(function()
 			columns: 
 			[
 				//{data: 'id'},
-				{data: 'assets.assetId'},
+				{data: 'assets.assetCode'},
 				{data: 'employees.employeeID'},
+				{data: 'employees.name'},
 				{data: 'moveDate'}
 			]
 		});
@@ -184,7 +194,7 @@ $(document).ready(function()
 				url:"assetManagement/assetAssigned/delete/" + rowToDelete.id, 
 				dataType: "json",
 				type: "DELETE",
-				success: alert("Asset " + rowToDelete.assets.assetId + " and employee" + rowToDelete.employees.employeeID + " is now unassigned")
+				success: alert("Asset " + rowToDelete.assets.assetCode + " and employee " + rowToDelete.employees.employeeID + " is now unassigned")
 			});
 			
 			table.row('.selected').remove().draw( false );
@@ -205,54 +215,46 @@ $(document).ready(function()
 	
 	function findAsset(id)
 	{
-		if(id)
-		{
-			$.ajax({
-				url:"assetManagement/asset/" + id,
-				async: false,
-				dataType: "json",
-				type: "GET",
-				success: function(data)
-				{
-					dataSet = data
-				}			
-			});
-			return dataSet;
-		}
-		else
-		{
-			alert("Please select an asset ID");
-			return null;
-		}
+		var dataSetA = [];
+
+		$.ajax({
+			url:"assetManagement/asset/" + id,
+			async: false,
+			dataType: "json",
+			type: "GET",
+			success: function(data)
+			{
+				dataSetA = data
+			},
+			error: dataSetA = null
+		});
+		return dataSetA;
+	
 	}
 	
 	function findEmp(id)
 	{
-		if(id)
-		{
-			$.ajax({
-				url:"/employee/" + id,
-				async: false,
-				dataType: "json",
-				type: "GET",
-				success: function(data)
-				{
-					dataSet = data
-				}			
-			});
-			return dataSet;
-		}
-		else
-		{
-			alert("Please select an employee ID");
-			return null;
-		}
+		var dataSetEmp = [];
+
+		$.ajax({
+			url:"assetManagement/employee/" + id,
+			async: false,
+			dataType: "json",
+			type: "GET",
+			success: function(data)
+			{
+				dataSetEmp = data
+			},
+			error: dataSetEmp = null
+		});
+		return dataSetEmp;
+
 	}
 	
 	function displayAsset(asset)
 	{
 		
-			document.getElementById("mAssetId").innerHTML = asset.assetId;
+			document.getElementById("mAssetId").innerHTML = asset.assetCode;
 			document.getElementById("mName").innerHTML = asset.name;
 			document.getElementById("mDesc").innerHTML = asset.description;
 			document.getElementById("mBrand").innerHTML = asset.brand;

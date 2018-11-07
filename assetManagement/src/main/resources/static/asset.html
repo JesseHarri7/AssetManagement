@@ -29,14 +29,14 @@
 		<input type="button" value="Create" class="btn btn-primary" data-toggle="modal" data-target="#createModal"> 
 		<input type="button" value="Edit" id="edit-btn" class="btn btn-primary"	data-target="#updateModal"> 
 		<input type="button" value="Delete" id="delete-btn" class="btn btn-primary"> 
-		<input type="button" value="Set Asset" id="setAsset-btn" class="btn btn-primary" disabled>
+		<input type="button" value="Set Asset" id="setAsset-btn" class="btn btn-primary">
 
 	</div>
 
 	<table class="display" id = "asset-table">
 		<thead>
 			<tr>
-				<th>ID</th>
+				<th>Asset_Code</th>
 				<th>Name</th>
 				<th>Description</th>
 				<th>Brand</th>
@@ -64,10 +64,10 @@
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
 				</div>
 				<div class="modal-body">
-					<form name="create">
+					<form name="create" id="create">
 						<div >
-							<label for="assetId">Asset ID:</label> <input type="text"
-								name="id" class="form-control" id="id" placeholder="Enter Asset ID" >
+							<label for="assetId">Asset Code:</label> <input type="text"
+								name="id" class="form-control" id="id" placeholder="Enter Asset code" >
 						</div>
 
 						<div class="form-group">
@@ -122,8 +122,8 @@
 				<div class="modal-body">
 					<form name="update">
 						<div >
-							<label for="assetId">Asset ID:</label> <input type="text"
-								name="uId" class="form-control" id="uId" placeholder="Enter Asset ID" disabled>
+							<label for="assetId">Asset Code:</label> <input type="text"
+								name="uId" class="form-control" id="uId" placeholder="Enter Asset code" disabled>
 						</div>
 
 						<div class="form-group">
@@ -171,8 +171,8 @@
 <div id="footer">
 
 	<p class="h6">
-		&copy All rights Reversed.<a class="text-green ml-2"
-			href="http://saratoga.co.za/" target="_blank">Saratoga</a>
+		<a class="text-green ml-2"
+			href="http://saratoga.co.za/" target="_blank">Saratoga Software</a> &bull; &copy Copyright 2018 &bull; v1-Testing
 	</p>
 
 </div>
