@@ -51,7 +51,7 @@ public class AssetRepoTest
 	@Test
 	public void testUpdateAsset() throws Exception
 	{
-		Asset asset = repo.findByAssetId(123L);
+		Asset asset = repo.findByAssetCode(123L);
 		
 		if(asset != null)
 		{

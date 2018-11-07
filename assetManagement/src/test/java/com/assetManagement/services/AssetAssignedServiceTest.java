@@ -130,7 +130,7 @@ public class AssetAssignedServiceTest
 	@Test
 	public void findAssetId()
 	{
-		AssetAssigned assetId = service.findByAssetId(1L);
+		AssetAssigned assetId = service.findByAssetCode(1L);
 		assertNotNull(assetId);
 	}
 	

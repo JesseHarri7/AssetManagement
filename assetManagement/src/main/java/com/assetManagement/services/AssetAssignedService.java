@@ -7,7 +7,7 @@ import com.assetManagement.entities.AssetAssigned;
 public interface AssetAssignedService extends Service<AssetAssigned, Long>
 {
 	
-	AssetAssigned findByAssetId(Long asset);
+	AssetAssigned findByAssetCode(Long asset);
 	
 	AssetAssigned findByEmployeeID(Long emp);
 	

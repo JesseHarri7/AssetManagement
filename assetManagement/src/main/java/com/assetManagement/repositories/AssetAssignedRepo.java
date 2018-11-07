@@ -12,7 +12,7 @@ public interface AssetAssignedRepo extends CrudRepository<AssetAssigned, Long>
 {
 	AssetAssigned findByAssetAssignedId(Long id);
 	
-	AssetAssigned findByAssetsAssetId(Long Asset);
+	AssetAssigned findByAssetsAssetCode(Long Asset);
 	
 	AssetAssigned findByEmployeesEmployeeID(Long emp);
 	

@@ -96,7 +96,7 @@ public class AssetAssignedRepoTest
 	@Test
 	public void testFindAssetId() throws Exception
 	{
-		AssetAssigned assetId = AARepo.findByAssetsAssetId(1L);
+		AssetAssigned assetId = AARepo.findByAssetsAssetCode(1L);
 		assertNotNull(assetId);
 	}
 	
