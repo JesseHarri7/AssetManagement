@@ -8,7 +8,10 @@ $(document).ready(function()
 	//Select
 	$('#asset-table tbody').on('click','tr', function()
 	{
-		if ( $(this).hasClass('selected') )
+		
+		$(this).toggleClass('selected');
+		
+		/*if ( $(this).hasClass('selected') )
 		{
             $(this).removeClass('selected');
             $('#setAsset-btn').prop('disabled', true);
@@ -18,7 +21,7 @@ $(document).ready(function()
             $('tr.selected').removeClass('selected');
             $(this).addClass('selected');
             $('#setAsset-btn').prop('disabled', false);
-        }
+        }*/
 	} );
 	
 	//Delete
@@ -27,7 +30,7 @@ $(document).ready(function()
 		var table = $('#asset-table').DataTable();
 		remove();
 		
-		table.row('.selected').remove().draw( false );
+		table.rows('.selected').remove().draw( false );
 		
 	});
 	
@@ -69,17 +72,33 @@ $(document).ready(function()
 	//select asset 
 	$('#setAsset-btn').click( function () 
 	{
-		selectAsset();
+		var table = $('#asset-table').DataTable();
+		var assetData = table.rows( '.selected' ).data();
+		
+		if(assetData.length != 0)
+		{
+			emp = JSON.parse(localStorage.getItem('emp'));
+			if(emp)
+			{
+				//Create asset assigned table if there is employee data
+				selectAsset();
+				assign();
+			}
+			else
+			{
+				//Send to employee table if there is no employee data
+				clearLocal();
+				selectAsset();
+				window.location = "http://localhost:8080/employee";
+				alert("Please select an employee to assign to the selected asset");
+			}
+		}
+		else
+		{
+			alert("Please select an asset to assign to an employee");
+		}
 		
     } );
-	
-	//Clear local storage
-	$('#clear-btn').click( function()
-	{
-		localStorage.removeItem('asset');
-		localStorage.removeItem('emp');
-		alert("Cleared");
-	})
 	
 	//Search
 	$('#assetId').on( 'keyup', function () 
@@ -99,7 +118,7 @@ $(document).ready(function()
 			data: dataSet,
 			columns: 
 			[
-				{data: 'assetId'},
+				{data: 'assetCode'},
 				{data: 'name'},
 				{data: 'description'},
 				{data: 'brand'},
@@ -115,7 +134,7 @@ $(document).ready(function()
 	{
 		
 		$.ajax({
-			url:"assetManagement/asset/findAll", 
+			url:"assetManagement/asset/findAll",
 			dataType: "json",
 			type: "GET",
 			success: function(data)
@@ -132,18 +151,22 @@ $(document).ready(function()
 	{
 		var table = $('#asset-table').DataTable();
 
-		var rowToDelete = table.row( '.selected' ).data();
+		var rowToDelete = table.rows( '.selected' ).data();
+		var items = rowToDelete.length;
 		
 		if (rowToDelete)
 		{
-			$.ajax({
-				url:"assetManagement/asset/delete/" + rowToDelete.assetId, 
-				dataType: "json",
-				type: "DELETE",
-				success: alert("Asset " + rowToDelete.assetId + " was removed")
-			});
-			
-			table.row('.selected').remove().draw( false );
+			for (i = 0; i < items; i++)
+			{
+				$.ajax({
+					url:"assetManagement/asset/delete/" + rowToDelete[i].assetCode, 
+					dataType: "json",
+					type: "DELETE",
+					success: alert("Asset " + rowToDelete[i].assetCode + " was removed")
+				});
+				
+			}
+			table.rows('.selected').remove().draw( false );
 		}
 		else
 		{
@@ -154,27 +177,36 @@ $(document).ready(function()
 	
 	function selectAsset()
 	{
-		var assetData;
 		var table = $('#asset-table').DataTable();
-		assetData = table.row( '.selected' ).data();
+		var assetData = table.rows( '.selected' ).data();
+		var items = assetData.length;
 		
 		if (assetData)
 		{
-			console.log("works: " + assetData.assetId);
-			
-			localStorage.setItem('asset', JSON.stringify(assetData));
-			
-			window.location = "http://localhost:8080/employee";
+			for (i = 0; i < items; i++)
+			{
+				localStorage.setItem('asset'+ [i], JSON.stringify(assetData[i]));
+			}
 			
 //			var asset = JSON.parse(localStorage.getItem('asset'));
 			
 //			localStorage.removeItem('asset');
+			
+			
 		}
 		else
 		{
 			alert("Please select a asset");
 		}	
 
+	}
+	
+	function assign()
+	{
+		createTable();
+		clearLocal();
+		
+		window.location = "http://localhost:8080/assetAssigned";
 	}
 	
 	function create()
@@ -188,17 +220,17 @@ $(document).ready(function()
 		var month = dOP.getMonth() + 1;
 		var year = dOP.getFullYear();
 		
-		var assetId = $('#id').val();
+		var assetCode = $('#id').val();
 		var name = $('#name').val();
 		var description = $('#desc').val();
 		var brand = $('#brand').val();
 		var datePurchased = [year, month, day].join('/');
 		var status = $('#status').val();
 		
-		var asset = {assetId, name, description, brand, datePurchased, status};
+		var asset = {assetCode, name, description, brand, datePurchased, status};
 		
 		var data_json = JSON.stringify(asset);
-		var exists = findId(assetId);
+		var exists = findId(assetCode);
 		
 		if(exists.length == 0)
 		{
@@ -212,12 +244,15 @@ $(document).ready(function()
 					dataType: "json",
 					data: data_json,
 					type: "POST",
-					success: alert("Asset " + assetId + " has been created") + table.row.add(asset).draw()
+					success: alert("Asset " + assetCode + " has been created") + table.row.add(asset).draw()
 				});
+			
+			document.getElementById("create").reset();
+			$('#createModal').modal('hide');
 		}
 		else
 		{
-			alert("The Asset "+ assetId + " you're trying to create already exists");
+			alert("The Asset "+ assetCode + " you're trying to create already exists");
 		}
 
 	}
@@ -308,7 +343,7 @@ $(document).ready(function()
 			dataType: "json",
 			data: data_json,
 			type: "PUT",
-			success: alert("Asset " + assetId + " has been updated") + table.row( '.selected' ).data(asset).draw()
+			success: alert("Asset " + assetCode + " has been updated") + table.row( '.selected' ).data(asset).draw()
 		});		
 	}
 	
@@ -320,14 +355,78 @@ $(document).ready(function()
 		var year = dOP.getFullYear();
 		var datePurchased = new Date([year, month, day].join('/'));
 		
-		document.forms["update"]["uId"].value = asset.assetId;
+		document.forms["update"]["uId"].value = asset.assetCode;
 		document.forms["update"]["uName"].value = asset.name;
 		document.forms["update"]["uDesc"].value = asset.description;
 		document.forms["update"]["uBrand"].value = asset.brand;
-		//document.getElementById("uDatePurchased").value = asset.datePurchased;
 		document.forms["update"]["uDate"].valueAsDate = datePurchased;
 		document.forms["update"]["uStatus"].value = asset.status;
 			 
+	}
+	
+	function createTable()
+	{
+		var assetStorage = localStorage.length - 1;
+		
+		asset = JSON.parse(localStorage.getItem('asset0'));
+		emp = JSON.parse(localStorage.getItem('emp'));
+		
+		if(asset && emp)
+		{
+			for(i = 0; i < assetStorage; i++)
+			{
+				asset = JSON.parse(localStorage.getItem('asset' + [i]));
+				
+				var assetAssigned = {assets: asset, employees: emp};
+				
+				var today = new Date();
+				var dd = today.getDate();
+				var mm = today.getMonth()+1; 
+				var yyyy = today.getFullYear();
+				
+				today = dd + '-' + mm + '-' + yyyy;
+				assetAssigned.moveDate = today;
+				//assetAssigned.moveDate = new Date(dd,mm,yyyy);
+			
+				var data_json = JSON.stringify(assetAssigned);
+		
+				$.ajax(
+				{
+					headers: {
+				        'Accept': 'application/json',
+				        'Content-Type': 'application/json'
+				    },
+					url:"assetManagement/assetAssigned/create",
+					dataType: "json",
+					data: data_json,
+					type: "POST"
+				});
+			}
+			alert("Data successfully assigned");
+		}
+		else
+		{
+			alert("Neither an asset or employee was selected");
+		}
+	}
+	
+	function clearLocal()
+	{
+		if(emp)
+		{
+			var assetStorage = localStorage.length - 1;
+		}
+		else
+		{
+			var assetStorage = localStorage.length;
+		}
+		
+		for(i = 0; i < assetStorage; i++)
+		{
+			localStorage.removeItem('asset' + [i]);
+		}
+		
+		localStorage.removeItem('emp');
 	}
 
 

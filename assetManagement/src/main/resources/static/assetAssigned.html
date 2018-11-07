@@ -7,8 +7,8 @@
 	<link rel="stylesheet" href="https://cdn.datatables.net/select/1.2.0/css/select.dataTables.min.css" type="text/css" />
 </head>
 <body>
-	
-	<img src="resources/Saratoga_logo.png" width="250px">
+
+	<img src="resources/Saratoga_logo.png" width="250px">	
 <!-- 	<h2>Saratoga</h2> -->
 	<nav class="navbar navbar-default">
 		<div class="container-fluid">
@@ -16,9 +16,9 @@
 				<a class="navbar-brand" href="#">Asset Management</a>
 			</div>
 			<ul class="nav navbar-nav">
-				<li><a href="http://localhost:8080/asset">Asset</a></li>
-				<li><a href="http://localhost:8080/employee">Employee</a></li>
-				<li><a href="#">User</a></li>
+				<li><a href="http://localhost:8080/asset">Assets</a></li>
+				<li><a href="http://localhost:8080/employee">Employees</a></li>
+				<li><a href="#">Users</a></li>
 				<li class="active"><a href="#">Assign</a></li>
 			</ul>
 		</div>
@@ -26,21 +26,19 @@
 
 	<div id="nav-buttons">
 
-		<input type="button" value="Create" id="create-btn"
-			class="btn btn-primary"> <input type="button" value="Delete"
-			id="delete-btn" class="btn btn-primary"> <input type="button"
-			value="Find asset" id="asset-btn" class="btn btn-primary"
-			data-target="#assetModal"> <input type="button"
-			value="Find employee" id="emp-btn" class="btn btn-primary"
-			data-target="#empModal">
+		<input type="button" value="Create" id="create-btn" class="btn btn-primary"> 
+		<input type="button" value="Delete" id="delete-btn" class="btn btn-primary"> 
+		<input type="button" value="Find asset" id="asset-btn" class="btn btn-primary" data-target="#assetModal"> 
+		<input type="button" value="Find employee" id="emp-btn" class="btn btn-primary" data-target="#empModal">
 
 	</div>
 
 	<table class="display" id = "AA-table">
 		<thead>
 			<tr>
-				<th>Asset_ID</th>
+				<th>Asset_Code</th>
 				<th>Employee_ID</th>
+				<th>Emp_Name</th>
 				<th>Date_Assigned</th>
 			</tr> 
 		</thead>
@@ -60,7 +58,7 @@
 					<h2 class="modal-title">Asset Details</h2>
 				</div>
 				<div class="modal-body">
-					Asset ID:<div id="mAssetId"></div><br>
+					Asset Code:<div id="mAssetId"></div><br>
 					Name:<div id="mName"></div><br>
 					Description:<div id="mDesc"></div><br>
 					Brand:<div id="mBrand"></div><br>
@@ -110,8 +108,8 @@
 <div id="footer">
 
 	<p class="h6">
-		&copy All rights Reversed.<a class="text-green ml-2"
-			href="http://saratoga.co.za/" target="_blank">Saratoga</a>
+		<a class="text-green ml-2"
+			href="http://saratoga.co.za/" target="_blank">Saratoga Software</a> &bull; &copy Copyright 2018 &bull; v1-Testing
 	</p>
 
 </div>

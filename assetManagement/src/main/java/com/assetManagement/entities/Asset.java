@@ -2,13 +2,19 @@ package com.assetManagement.entities;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 @Entity
 @Table(name = "asset", catalog = "management")
+@SQLDelete(sql = "UPDATE Asset set state = 'D' WHERE asset_id = ?")
+@Where(clause="state <> 'D'")
 public class Asset implements Serializable
 {
 
@@ -18,20 +24,25 @@ public class Asset implements Serializable
 	private static final long serialVersionUID = 1L;
  
 	@Id
-	//@GeneratedValue
+	@GeneratedValue
 	private Long assetId;
+
+	@Column(unique=true)
+	private Long assetCode;
 	
 	private String name;
 	private String description;
 	private String brand;
 	private String datePurchased;
 	private String status;
+	
+	private String state = "A";
 
 	public Asset() {}
 
 	public Asset(Long id, String name, String desc, String brand, String datePur, String status)
 	{
-		this.assetId = id;
+		this.assetCode = id;
 		this.name = name;
 		this.description = desc;
 		this.brand = brand;
@@ -52,6 +63,16 @@ public class Asset implements Serializable
 	public void setAssetId(Long assetId) 
 	{
 		this.assetId = assetId;
+	}
+	
+	public Long getAssetCode() 
+	{
+		return assetCode;
+	}
+
+	public void setAssetCode(Long assetCode) 
+	{
+		this.assetCode = assetCode;
 	}
 
 	public String getName() 
@@ -102,6 +123,16 @@ public class Asset implements Serializable
 	public void setStatus(String status) 
 	{
 		this.status = status;
+	}
+
+	public String getState() 
+	{
+		return state;
+	}
+
+	public void setState(String state) 
+	{
+		this.state = state;
 	}
 
 }
