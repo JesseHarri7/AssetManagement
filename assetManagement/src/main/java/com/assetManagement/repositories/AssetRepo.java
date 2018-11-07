@@ -9,14 +9,15 @@ import com.assetManagement.entities.Asset;
 
 
 @Repository
+
 public interface AssetRepo extends CrudRepository<Asset, Long>
 {	
-	Asset findByAssetId(Long id);
+	Asset findByAssetCode(Long id);
 	
 	List<Asset> findByBrand(String brand);
 	
 	List<Asset> findByDatePurchased(String date);
 	
 	List<Asset> findByName(String assetName);
-	 
+	
 }

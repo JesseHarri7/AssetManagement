@@ -20,7 +20,7 @@ public class AssetServiceImpl implements AssetService
 	@Override
 	public Asset create(Asset entity) 
 	{
-		Asset asset = repo.findByAssetId(entity.getAssetId());
+		Asset asset = repo.findByAssetCode(entity.getAssetCode());
 		if(asset == null)
 		{
 			return repo.save(entity);
@@ -35,14 +35,14 @@ public class AssetServiceImpl implements AssetService
 	@Override
 	public Asset readById(Long id) 
 	{
-		Asset asset = repo.findByAssetId(id);
+		Asset asset = repo.findByAssetCode(id);
 		if (asset == null)
 		{
 			return null;
 		}
 		else
 		{	
-			return repo.findByAssetId(id);
+			return repo.findByAssetCode(id);
 		}
 		
 	}
@@ -62,7 +62,7 @@ public class AssetServiceImpl implements AssetService
 	@Override
 	public Asset update(Asset entity)
 	{
-		Asset asset = repo.findByAssetId(entity.getAssetId());
+		Asset asset = repo.findByAssetCode(entity.getAssetId());
 		if (asset == null)
 		{
 			return null;

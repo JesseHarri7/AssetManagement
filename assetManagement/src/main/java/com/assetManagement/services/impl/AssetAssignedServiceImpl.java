@@ -81,16 +81,16 @@ public class AssetAssignedServiceImpl implements AssetAssignedService
 	}
 
 	@Override
-	public AssetAssigned findByAssetId(Long asset) 
+	public AssetAssigned findByAssetCode(Long asset) 
 	{
-		AssetAssigned assetId = repo.findByAssetsAssetId(asset);
+		AssetAssigned assetId = repo.findByAssetsAssetCode(asset);
 		if (assetId == null)
 		{
 			return null;
 		}
 		else
 		{
-			return repo.findByAssetsAssetId(asset);
+			return repo.findByAssetsAssetCode(asset);
 		}
 	}
 
