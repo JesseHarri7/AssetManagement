@@ -18,3 +18,27 @@
 	left: 10px;
 	
 }
+
+.login-error::before
+{
+	  visibility: hidden;
+}
+
+.alert-account {
+  content: attr(data-validate);
+
+  display: block;
+  background-color: #fff;
+  border: 1px solid #c80000;
+  border-radius: 3px;
+  padding: 4px 25px 5px 10px;
+  top: 50%;
+  right: 12px;
+  font-family: Ubuntu-Regular;
+  color: #c80000;
+  font-size: 14px;
+  line-height: 1.4;
+  text-align: left;
+  visibility: visible;
+
+}
