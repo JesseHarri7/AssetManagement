@@ -62,7 +62,7 @@ public class AssetServiceImpl implements AssetService
 	@Override
 	public Asset update(Asset entity)
 	{
-		Asset asset = repo.findByAssetCode(entity.getAssetId());
+		Asset asset = repo.findByAssetCode(entity.getAssetCode());
 		if (asset == null)
 		{
 			return null;

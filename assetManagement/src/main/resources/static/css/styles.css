@@ -42,3 +42,15 @@
   visibility: visible;
 
 }
+
+.table-width-outter{
+	width: 100%;
+	position: relative;
+	align: center;
+}
+
+.table-width-inner{
+	padding: 5px 5px;
+	position: relative;
+	align: center;
+}
