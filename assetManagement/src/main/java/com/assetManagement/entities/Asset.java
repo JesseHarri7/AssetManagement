@@ -40,9 +40,9 @@ public class Asset implements Serializable
 
 	public Asset() {}
 
-	public Asset(Long id, String name, String desc, String brand, String datePur, String status)
+	public Asset(Long assetCode, String name, String desc, String brand, String datePur, String status)
 	{
-		this.assetCode = id;
+		this.assetCode = assetCode;
 		this.name = name;
 		this.description = desc;
 		this.brand = brand;

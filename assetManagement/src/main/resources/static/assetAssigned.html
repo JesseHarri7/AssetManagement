@@ -26,25 +26,28 @@
 
 	<div id="nav-buttons">
 
-		<input type="button" value="Create" id="create-btn" class="btn btn-primary"> 
 		<input type="button" value="Delete" id="delete-btn" class="btn btn-primary"> 
 		<input type="button" value="Find asset" id="asset-btn" class="btn btn-primary" data-target="#assetModal"> 
 		<input type="button" value="Find employee" id="emp-btn" class="btn btn-primary" data-target="#empModal">
 
 	</div>
 
-	<table class="display" id = "AA-table">
-		<thead>
-			<tr>
-				<th>Asset_Code</th>
-				<th>Employee_ID</th>
-				<th>Emp_Name</th>
-				<th>Date_Assigned</th>
-			</tr> 
-		</thead>
-		<tbody>
-		</tbody>
-	</table>
+	<div class = "table-width-outter">
+		<div class = "table-width-inner">
+			<table class="display" id = "AA-table">
+				<thead>
+					<tr>
+						<th>Asset_Code</th>
+						<th>Employee_ID</th>
+						<th>Emp_Name</th>
+						<th>Date_Assigned</th>
+					</tr> 
+				</thead>
+				<tbody>
+				</tbody>
+			</table>
+		</div>
+	</div>
 
 	<!-- Asset modal view -->
 	<!-- Modal -->

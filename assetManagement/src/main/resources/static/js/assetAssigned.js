@@ -71,21 +71,6 @@ $(document).ready(function()
 		}
 	});
 	
-	function test()
-	{
-		createTable();
-		clearLocal();
-//		location.reload();
-	}
-	
-	//Create table
-	$('#create-btn').click(function(event)
-	{
-		createTable();
-		clearLocal();
-		location.reload();
-	});
-	
 	//Delete
 	$('#delete-btn').click(function(event)
 	{
@@ -96,54 +81,12 @@ $(document).ready(function()
 		
 	});
 	
-	//Clear local storage
-	$('#clear-btn').click( function()
-	{
-		clearLocal();
-		alert("Cleared");
-	})
-	
 	$('#assetT-btn').click( function()
 	{
 		var table = $('#AA-table').DataTable();
 		var findAssetId = table.cell('.selected').data();
 		var assetInfo = findAsset(findAssetId);
 	})
-			
-	
-	function createTable()
-	{
-		asset = JSON.parse(localStorage.getItem('asset'));
-		emp = JSON.parse(localStorage.getItem('emp'));
-		
-		if(asset && emp)
-		{
-			var assetAssigned = {assets: asset, employees: emp};
-			assetAssigned.moveDate = new Date();
-		
-			var data_json = JSON.stringify(assetAssigned);
-	
-			$.ajax(
-			{
-				headers: {
-			        'Accept': 'application/json',
-			        'Content-Type': 'application/json'
-			    },
-				url:"assetManagement/assetAssigned/create",
-				dataType: "json",
-				data: data_json,
-				type: "POST",
-				success: alert("AssetAssigned table has been created")
-			});
-		}
-		else
-		{
-			alert("Neither an asset or employee was selected");
-		}
-		
-		
-		
-	}
 	
 	function findAll()
 	{
@@ -205,12 +148,6 @@ $(document).ready(function()
 		}	
 		
 		
-	}
-	
-	function clearLocal()
-	{
-		localStorage.removeItem('asset');
-		localStorage.removeItem('emp');
 	}
 	
 	function findAsset(id)
