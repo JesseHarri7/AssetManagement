@@ -87,7 +87,8 @@ $(document).ready(function()
 		}
 		else
 		{
-			alert("Username or password is incorrect");
+			showNoAccount();
+			//alert("Username or password is incorrect");
 		}
 	}
 	
