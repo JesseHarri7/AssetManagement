@@ -1,5 +1,6 @@
 $(document).ready(function()
 {	
+	var count = 0;
 	var dataSet = [];
 	
 	//All data fields on start up
@@ -217,15 +218,6 @@ $(document).ready(function()
 
 	}
 	
-	//If there is emp data then set asset and emp values to assetAssigned table and then clear the local storage
-	function assign()
-	{
-		createTable();
-		clearLocal();
-		
-		window.location = "http://localhost:8080/assetAssigned";
-	}
-	
 	function create()
 	{
 		dataSet = [];
@@ -399,50 +391,76 @@ $(document).ready(function()
 		
 	}
 	
+	//If there is emp data then set asset and emp values to assetAssigned table and then clear the local storage
+	function assign()
+	{
+		createTable();
+		if(count > 0)
+		{
+			alert("Data successfully assigned");
+			window.location = "http://localhost:8080/assetAssigned";
+		}
+
+		clearLocal();
+		
+	}
+	
 	function createTable()
 	{
 		var assetStorage = localStorage.length - 1;
 		
 		asset = JSON.parse(localStorage.getItem('asset0'));
 		emp = JSON.parse(localStorage.getItem('emp'));
-		
+
 		if(asset && emp)
 		{
 			for(i = 0; i < assetStorage; i++)
 			{
 				asset = JSON.parse(localStorage.getItem('asset' + [i]));
 				
-				var assetAssigned = {assets: asset, employees: emp};
-				
-				var today = new Date();
-				var dd = today.getDate();
-				var mm = today.getMonth()+1; 
-				var yyyy = today.getFullYear();
-				
-				today = dd + '-' + mm + '-' + yyyy;
-				assetAssigned.moveDate = today;
-				//assetAssigned.moveDate = new Date(dd,mm,yyyy);
-			
-				var data_json = JSON.stringify(assetAssigned);
-		
-				$.ajax(
+				if(alreadySet(asset.assetCode))
 				{
-					headers: {
-				        'Accept': 'application/json',
-				        'Content-Type': 'application/json'
-				    },
-					url:"assetManagement/assetAssigned/create",
-					dataType: "json",
-					data: data_json,
-					type: "POST"
-				});
+					alert("Asset " + asset.assetCode + " is already assigned");
+					//return false;
+				}
+				else
+				{
+					count++;
+					asset = JSON.parse(localStorage.getItem('asset' + [i]));
+					
+					var assetAssigned = {assets: asset, employees: emp};
+					
+					var today = new Date();
+					var dd = today.getDate();
+					var mm = today.getMonth()+1; 
+					var yyyy = today.getFullYear();
+					
+					today = yyyy + '-' + mm + '-' + dd;
+					assetAssigned.moveDate = today;
+					//assetAssigned.moveDate = new Date(dd,mm,yyyy);
+				
+					var data_json = JSON.stringify(assetAssigned);
+			
+					$.ajax(
+					{
+						headers: {
+					        'Accept': 'application/json',
+					        'Content-Type': 'application/json'
+					    },
+						url:"assetManagement/assetAssigned/create",
+						dataType: "json",
+						data: data_json,
+						type: "POST"
+					});
+					
+				}
 			}
-			alert("Data successfully assigned");
 		}
 		else
 		{
 			alert("Neither an asset or employee was selected");
 		}
+	
 	}
 	
 	function clearLocal()
@@ -462,6 +480,33 @@ $(document).ready(function()
 		}
 		
 		localStorage.removeItem('emp');
+	}
+	
+	function alreadySet(id)
+	{
+		var dataSetA = [];
+
+		$.ajax({
+			url:"assetManagement/assetAssigned/findAllAsset/" + id,
+			async: false,
+			dataType: "json",
+			type: "GET",
+			success: function(data)
+			{
+				dataSetA = data
+			},
+			error: dataSetA = null
+		});
+		
+		if(dataSetA)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+
 	}
 
 
