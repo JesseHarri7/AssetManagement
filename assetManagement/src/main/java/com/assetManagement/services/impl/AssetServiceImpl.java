@@ -20,8 +20,9 @@ public class AssetServiceImpl implements AssetService
 	@Override
 	public Asset create(Asset entity) 
 	{
+		List<Asset> allAssets = findAllHistory();
 		Asset asset = repo.findByAssetCode(entity.getAssetCode());
-		if(asset == null)
+		if(asset == null && allAssets.size() == 0)
 		{
 			return repo.save(entity);
 		}
@@ -123,6 +124,18 @@ public class AssetServiceImpl implements AssetService
 		{
 			return repo.findByName(assetName);
 		}
+	}
+	
+	@Override	
+	public List<Asset> findAllHistory()
+	{
+		List<Asset> assetList = new ArrayList<Asset>();
+		Iterable<Asset> assets = repo.findAllHistory();
+		for (Asset a : assets)
+		{
+			assetList.add(a);
+		}
+		return assetList;
 	}
 
 }

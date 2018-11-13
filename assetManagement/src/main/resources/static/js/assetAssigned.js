@@ -5,6 +5,9 @@ $(document).ready(function()
 	//var dataSetEmp = [];
 	var asset;
 	var emp;
+	
+	//Global div declaration for alerts
+	var div = document.getElementById('boot-alert');
 
 	//All data fields on start up
 	findAll();
@@ -46,11 +49,15 @@ $(document).ready(function()
 		if(assetInfo)
 		{
 			$('#assetModal').modal('show');
-			displayAsset(assetInfo);			
+			displayAsset(assetInfo);
 		}
 		else
 		{
-			alert("Please select an asset Code")
+			div.innerHTML = displayAlert("<strong>Warning!</strong> Please select an asset Code.", "alert-warning");
+			$('#boot-alert').show();
+			slide();
+			
+			//alert("Please select an asset Code")
 		}
 	});	
 	
@@ -67,7 +74,11 @@ $(document).ready(function()
 		}
 		else
 		{
-			alert("Please select an Employee ID")
+			div.innerHTML = displayAlert("<strong>Warning!</strong> Please select an Employee ID.", "alert-warning");
+			$('#boot-alert').show();
+			slide();
+			
+			//alert("Please select an Employee ID")
 		}
 	});
 	
@@ -75,10 +86,37 @@ $(document).ready(function()
 	$('#delete-btn').click(function(event)
 	{
 		var table = $('#AA-table').DataTable();
-		remove();
+
+		var rowToDelete = table.row( '.selected' ).data();
 		
-		table.row('.selected').remove().draw( false );
+		if (rowToDelete)
+		{
+			div.innerHTML = displayAlert("Are you sure you want to delete? <a id='delYes' data-id='Yes' class='alert-link' href='#'>Yes</a>  <a id='delNo' data-id='No' href='#' class='alert-link' >No</a>.", "alert-info");
+			$('#boot-alert').show();
+		}
+		else
+		{
+			div.innerHTML = displayAlert("<strong>Warning!</strong> Please select a item to remove.", "alert-warning");
+			$('#boot-alert').show();
+			slide();
+			
+			//alert("Please select a item to remove");
+		}	
 		
+	});
+	
+	$('#boot-alert').on('click','a', function() 
+	{
+		var $el = $(this);
+		
+		if($el.data('id') == 'Yes')
+		{
+			remove();
+		}
+		else
+		{
+			$('#boot-alert').hide();
+		}		
 	});
 	
 	$('#assetT-btn').click( function()
@@ -137,14 +175,23 @@ $(document).ready(function()
 				url:"assetManagement/assetAssigned/delete/" + rowToDelete.id, 
 				dataType: "json",
 				type: "DELETE",
-				success: alert("Asset " + rowToDelete.assets.assetCode + " and employee " + rowToDelete.employees.employeeID + " is now unassigned")
+				success: success()//alert("Asset " + rowToDelete.assets.assetCode + " and employee " + rowToDelete.employees.employeeID + " is now unassigned")
 			});
-			
 			table.row('.selected').remove().draw( false );
+			function success()
+			{
+				div.innerHTML = displayAlert("<strong>Success!</strong> Asset " + rowToDelete.assets.assetCode + " and employee " + rowToDelete.employees.employeeID + " is now unassigned.", "alert-success");
+				$('#boot-alert').show();
+				//slide();
+			}
 		}
 		else
 		{
-			alert("Please select a item to remove");
+			div.innerHTML = displayAlert("<strong>Warning!</strong> Please select a item to remove.", "alert-warning");
+			$('#boot-alert').show();
+			slide();
+			
+			//alert("Please select a item to remove");
 		}	
 		
 		
@@ -209,6 +256,20 @@ $(document).ready(function()
 			document.getElementById("mEmail").innerHTML = emp.email;
 			document.getElementById("mStartDate").innerHTML = emp.startDate;
 		
+	}
+	
+	function slide()
+	{
+		$('#boot-alert').fadeTo(5000, 900).slideUp(900, function(){
+			$('#boot-alert').slideUp(900);
+		});
+	}
+	
+	function displayAlert(msg, type)
+	{
+		var alert = "<div class='alert " + type + " alert-dismissible fade in'> <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a> "
+						+ msg + "</div>";
+		return alert;
 	}
 	
 });

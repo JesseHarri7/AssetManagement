@@ -3,8 +3,14 @@ $(document).ready(function()
 	var count = 0;
 	var dataSet = [];
 	
+	//Global div declaration for alerts
+	var div = document.getElementById('boot-alert');
+	
 	//All data fields on start up
 	findAll();
+	
+	//Show cancel button if there is data in local storage
+	showBtn();
 	
 	//Click to select row from the table
 	$('#asset-table tbody').on('click','tr', function()
@@ -29,10 +35,37 @@ $(document).ready(function()
 	$('#delete-btn').click(function(event) 
 	{
 		var table = $('#asset-table').DataTable();
-		remove();
+
+		//Returns an array of the selected rows
+		var rowToDelete = table.rows( '.selected' ).data();
 		
-		table.rows('.selected').remove().draw( false );
+		if (rowToDelete.length != 0)
+		{		
+			div.innerHTML = displayAlert("Are you sure you want to delete? <a id='delYes' data-id='Yes' class='alert-link' href='#'>Yes</a>  <a id='delNo' data-id='No' href='#' class='alert-link' >No</a>.", "alert-info");
+			$('#boot-alert').show();
+		}
+		else
+		{
+			div.innerHTML = displayAlert("<strong>Warning!</strong> Please select an asset to remove.", "alert-warning");
+			$('#boot-alert').show();
+			slide();
+			
+			//alert("Please select a asset to remove");
+		}	
+	});
+
+	$('#boot-alert').on('click','a', function() 
+	{
+		var $el = $(this);
 		
+		if($el.data('id') == 'Yes')
+		{
+			remove();
+		}
+		else
+		{
+			$('#boot-alert').hide();
+		}		
 	});
 	
 	//Modal form create button
@@ -52,6 +85,12 @@ $(document).ready(function()
 		document.getElementById("create").reset();
 	});
 	
+	//Clear local storage to cancel assign 
+	$('#cancel-btn').click(function(event) 
+	{
+		resetLocal();
+	});
+	
 	//Form update button
 	$('#edit-btn').click(function(event) 
 	{
@@ -67,8 +106,12 @@ $(document).ready(function()
 			$('#updateModal').modal('show');
 		}
 		else
-		{
-			alert("Please select an asset to edit");
+		{	
+			div.innerHTML = displayAlert("<strong>Warning!</strong> Please select an asset to edit.", "alert-warning");
+			$('#boot-alert').show();
+			slide();
+			
+			//alert("Please select an asset to edit");
 		}
 	});
 	
@@ -113,7 +156,10 @@ $(document).ready(function()
 		}
 		else
 		{
-			alert("Please select an asset to assign to an employee");
+			div.innerHTML = displayAlert("<strong>Warning!</strong> Please select an asset to assign to an employee.", "alert-warning");
+			$('#boot-alert').show();
+			slide();
+			//alert("Please select an asset to assign to an employee");
 		}
 		
     } );	
@@ -166,28 +212,27 @@ $(document).ready(function()
 
 		//Returns an array of the selected rows
 		var rowToDelete = table.rows( '.selected' ).data();
+
 		var items = rowToDelete.length;
 		
-		if (rowToDelete.length != 0)
+		//For each row selected, delete
+		for (i = 0; i < items; i++)
 		{
-			//For each row selected, delete
-			for (i = 0; i < items; i++)
-			{
-				$.ajax({
-					url:"assetManagement/asset/delete/" + rowToDelete[i].assetCode, 
-					dataType: "json",
-					type: "DELETE",
-					success: alert("Asset " + rowToDelete[i].assetCode + " was removed")
-				});
-				
-			}
-			table.rows('.selected').remove().draw( false );
+			$.ajax({
+				url:"assetManagement/asset/delete/" + rowToDelete[i].assetCode, 
+				dataType: "json",
+				type: "DELETE",
+				success: success()//alert("Asset " + rowToDelete[i].assetCode + " was removed")
+			});
+			
 		}
-		else
+		table.rows('.selected').remove().draw( false );
+		function success()
 		{
-			alert("Please select a asset to remove");
-		}	
-		
+			div.innerHTML = displayAlert("<strong>Success!</strong> Asset" + rowToDelete[i].assetCode + " was removed.", "alert-success");
+			$('#boot-alert').show();
+			slide();
+		}
 	}
 	
 	//Saving selected rows to local storage
@@ -213,7 +258,11 @@ $(document).ready(function()
 		}
 		else
 		{
-			alert("Please select a asset");
+			div.innerHTML = displayAlert("<strong>Warning!</strong> Please select an asset.", "alert-warning");
+			$('#boot-alert').show();
+			slide();
+			
+			//alert("Please select a asset");
 		}	
 
 	}
@@ -257,8 +306,16 @@ $(document).ready(function()
 					dataType: "json",
 					data: data_json,
 					type: "POST",
-					success: alert("Asset " + assetCode + " has been created") + table.row.add(asset).draw()
+					success: success() //alert("Asset " + assetCode + " has been created") + table.row.add(asset).draw()
 				});
+			function success()
+			{
+				div.innerHTML = displayAlert("<strong>Success!</strong> Asset " + assetCode + " has been created.", "alert-success");
+				$('#boot-alert').show();
+				slide();
+				
+				table.row.add(asset).draw()
+			}
 			
 			//Clear data from the modal form
 			document.getElementById("create").reset();
@@ -266,7 +323,13 @@ $(document).ready(function()
 		}
 		else
 		{
-			alert("The Asset "+ assetCode + " you're trying to create already exists");
+			var divM = document.getElementById('boot-alert-m');
+			
+			divM.innerHTML = displayAlert("<strong>Error!</strong> The Asset " + assetCode + " you're trying to create already exists.", "alert-danger");
+			$('#boot-alert-m').show();
+			slideCreateModal();
+			
+			//alert("The Asset "+ assetCode + " you're trying to create already exists");
 		}
 
 	}
@@ -303,7 +366,13 @@ $(document).ready(function()
 		 
 	    if(id == "" || name == "" || desc == "" || brand == "" || date == "" || status == "") 
 	    {
-	        alert("All fields must be filled out");
+	    	var divM = document.getElementById('boot-alert-m');
+	    	
+	    	divM.innerHTML = displayAlert("<strong>Warning!</strong> All fields must be filled out.", "alert-warning");
+			$('#boot-alert-m').show();
+			slideCreateModal();
+						
+	        //alert("All fields must be filled out");
 	        return false;
 	    }
 	    else
@@ -324,7 +393,13 @@ $(document).ready(function()
 		 
 	    if(id == "" || name == "" || desc == "" || brand == "" || date == "" || status == "") 
 	    {
-	        alert("All fields must be filled out");
+	    	var divM = document.getElementById('boot-alert-m-u');
+	    	
+	    	divM.innerHTML = displayAlert("<strong>Warning!</strong> All fields must be filled out.", "alert-warning");
+			$('#boot-alert-m-u').show();
+			slideUpdateModal();
+			
+	        //alert("All fields must be filled out");
 	        return false;
 	    }
 	    else
@@ -368,10 +443,18 @@ $(document).ready(function()
 			dataType: "json",
 			data: data_json,
 			type: "PUT",
-			success: alert("Asset " + assetCode + " has been updated") + table.row( '.selected' ).data(asset).draw()
+			success: success() //alert("Asset " + assetCode + " has been updated") + table.row( '.selected' ).data(asset).draw()
 		});
-		
-		$('#updateModal').modal('hide');
+		function success()
+		{
+			div.innerHTML = displayAlert("<strong>Success!</strong> Asset " + assetCode + " has been updated.", "alert-success");
+			$('#boot-alert').show();
+			slide();
+			
+			table.row( '.selected' ).data(asset).draw();
+			
+			$('#updateModal').modal('hide');
+		}
 	}
 	
 	function displayAsset(asset)
@@ -482,6 +565,27 @@ $(document).ready(function()
 		localStorage.removeItem('emp');
 	}
 	
+	function resetLocal()
+	{
+		localStorage.clear();
+		
+		div.innerHTML = displayAlert("<strong>Success!</strong> Assigning successfully cancelled.", "alert-success");
+		$('#boot-alert').show();
+		slide();
+		
+		//alert("Assigning successfully cancelled");
+		
+		$('#cancel-btn').removeClass('visible');
+	}
+	
+	function showBtn()
+	{
+		if(localStorage.length > 0)
+		{
+			$('#cancel-btn').addClass('visible');
+		}
+	}
+	
 	function alreadySet(id)
 	{
 		var dataSetA = [];
@@ -509,5 +613,32 @@ $(document).ready(function()
 
 	}
 
+	function slide()
+	{
+		$('#boot-alert').fadeTo(5000, 900).slideUp(900, function(){
+			$('#boot-alert').slideUp(900);
+		});
+	}
+	
+	function slideCreateModal()
+	{
+		$('#boot-alert-m').fadeTo(5000, 900).slideUp(900, function(){
+			$('#boot-alert-m').slideUp(900);
+		});
+	}
+	
+	function slideUpdateModal()
+	{
+		$('#boot-alert-m-u').fadeTo(5000, 900).slideUp(900, function(){
+			$('#boot-alert-m-u').slideUp(900);
+		});
+	}
+	
+	function displayAlert(msg, type)
+	{
+		var alert = "<div class='alert " + type + " alert-dismissible fade in'> <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a> "
+						+ msg + "</div>";
+		return alert;
+	}
 
 });

@@ -51,6 +51,13 @@ public class AssetController
 		return service.readAll();
 	}
 	
+	//Find All History
+	@RequestMapping(value = "/asset/findAllHistory", method = RequestMethod.GET)
+	public List<Asset> findAllHistory()
+	{
+		return service.findAllHistory();
+	}
+	
 	//delete
 	@RequestMapping(value = "/asset/delete/{id}", method = {RequestMethod.GET, RequestMethod.DELETE})
 	@ResponseStatus(HttpStatus.OK)

@@ -51,6 +51,13 @@ public class AssetAssignedController
 			return service.readAll();
 		}
 		
+		//Find All History
+		@RequestMapping(value = "/assetAssigned/findAllHistory", method = RequestMethod.GET)
+		public List<AssetAssigned> findAllHistory()
+		{
+			return service.findAllHistory();
+		}
+		
 		//delete
 		@RequestMapping(value = "/assetAssigned/delete/{id}", method = {RequestMethod.GET, RequestMethod.DELETE})
 		@ResponseStatus(HttpStatus.OK)
