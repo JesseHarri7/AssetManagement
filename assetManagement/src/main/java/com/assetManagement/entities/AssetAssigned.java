@@ -31,7 +31,7 @@ public class AssetAssigned implements Serializable
 	private Long assetAssignedId;
 	 
 	@ManyToOne//(fetch = FetchType.LAZY)
-	@JoinColumn(name = "assetCode", nullable = false)
+	@JoinColumn(name = "asset_code", nullable = false, referencedColumnName="assetCode")
 	private Asset assets;
 	
 	@ManyToOne//(fetch = FetchType.LAZY)

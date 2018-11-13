@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<title>Assets</title>
+	
+	<link rel="icon" type="image/png" href="images/icons/S-favicon.png"/>
 	<link rel="stylesheet" href="/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css" />
 	<link rel="stylesheet" href="css/styles.css" />
 	<link rel="stylesheet" href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" />
@@ -13,7 +16,14 @@
 	<nav class="navbar navbar-default">
 		<div class="container-fluid">
 			<div class="navbar-header">
-				<a class="navbar-brand" href="#">Asset Management</a>
+
+				<div class="dropdown"><a class="dropdown-toggle navbar-brand" data-toggle="dropdown" href="#">Asset Management<span class="caret"></span></a>
+					<ul class="dropdown-menu">
+						<li><a href="http://localhost:8080/asset-history">History</a></li>
+					</ul>
+				</div> 
+
+<!-- 					<a class="navbar-brand" href="#">Asset Management</a> -->
 			</div>
 			<ul class="nav navbar-nav">
 				<li class="active"><a href="#">Assets</a></li>
@@ -21,6 +31,9 @@
 				<li><a href="#">Users</a></li>
 				<li><a href="http://localhost:8080/assetAssigned">Assign</a></li>
 			</ul>
+			<ul class="nav navbar-nav navbar-right">
+		    	<li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Log-out</a></li>
+		    </ul>
 		</div>
 	</nav>
 
@@ -30,8 +43,12 @@
 		<input type="button" value="Edit" id="edit-btn" class="btn btn-primary"	data-target="#updateModal"> 
 		<input type="button" value="Delete" id="delete-btn" class="btn btn-primary"> 
 		<input type="button" value="Set Asset" id="setAsset-btn" class="btn btn-primary">
+		<input type="button" value="Cancel" id="cancel-btn" class="btn btn-primary-c">
 
 	</div>
+	</br>
+
+	<div id="boot-alert"></div>
 
 	<div class = "table-width-outter">
 		<div class = "table-width-inner">
@@ -59,10 +76,12 @@
 			<!-- Modal content-->
 			<div class="modal-content">
 				<div class="modal-header">
-					<h2 class="modal-title">Add Asset</h2>
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h2 class="modal-title">Add Asset</h2>
 				</div>
 				<div class="modal-body">
+					<div id="boot-alert-m"></div>
+					
 					<form name="create" id="create">
 						<div >
 							<label for="assetId">Asset Code:</label> <input type="text"
@@ -118,6 +137,8 @@
 					<h2 class="modal-title">Asset Details</h2>
 				</div>
 				<div class="modal-body">
+					<div id="boot-alert-m-u"></div>
+					
 					<form name="update">
 						<div >
 							<label for="assetId">Asset Code:</label> <input type="text"

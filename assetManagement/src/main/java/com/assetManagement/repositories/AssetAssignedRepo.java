@@ -2,6 +2,7 @@ package com.assetManagement.repositories;
 
 import java.util.List;
 
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -17,5 +18,8 @@ public interface AssetAssignedRepo extends CrudRepository<AssetAssigned, Long>
 	AssetAssigned findByEmployeesEmployeeID(Long emp);
 	
 	List<AssetAssigned> findByMoveDate(String date);
+	
+	@Query(value = "SELECT * FROM asset_assigned", nativeQuery = true)
+	List<AssetAssigned> findAllHistory();
 	 
 }
