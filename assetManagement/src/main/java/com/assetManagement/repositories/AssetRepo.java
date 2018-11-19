@@ -10,10 +10,9 @@ import com.assetManagement.entities.Asset;
 
 
 @Repository
-
 public interface AssetRepo extends CrudRepository<Asset, Long>
 {	
-	@Query(value = "SELECT * FROM asset WHERE asset_code = ?", nativeQuery = true)
+	//@Query(value = "SELECT * FROM asset WHERE asset_code = ? && state = 'A'", nativeQuery = true)
 	Asset findByAssetCode(Long id);
 	
 	List<Asset> findByBrand(String brand);
@@ -24,5 +23,8 @@ public interface AssetRepo extends CrudRepository<Asset, Long>
 	
 	@Query(value = "SELECT * FROM asset", nativeQuery = true)
 	List<Asset> findAllHistory();
+	
+	@Query(value = "SELECT * FROM asset WHERE state = 'A'", nativeQuery = true)
+	List<Asset> findAll();
 	
 }

@@ -8,6 +8,7 @@
 	<link rel="stylesheet" href="css/styles.css" />
 	<link rel="stylesheet" href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" />
 	<link rel="stylesheet" href="https://cdn.datatables.net/select/1.2.0/css/select.dataTables.min.css" type="text/css" />
+	<link href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.2.0/animate.min.css" rel="stylesheet">
 </head>
 <body>
 	
@@ -17,14 +18,12 @@
 		<div class="container-fluid">
 			<div class="navbar-header">
 
-				<div class="dropdown"><a class="dropdown-toggle navbar-brand" data-toggle="dropdown" href="#">Asset Management<span class="caret"></span></a>
+					<a class="dropdown-toggle navbar-brand" data-toggle="dropdown" href="#">Asset Management<span class="caret"></span></a>
 					<ul class="dropdown-menu">
-						<li><a href="http://localhost:8080/asset-history">History</a></li>
+						<li><a class="dropdown-item" href="http://localhost:8080/asset-history">History</a></li>
 					</ul>
-				</div> 
-
-<!-- 					<a class="navbar-brand" href="#">Asset Management</a> -->
 			</div>
+			
 			<ul class="nav navbar-nav">
 				<li class="active"><a href="#">Assets</a></li>
 				<li><a href="http://localhost:8080/employee">Employees</a></li>
@@ -44,6 +43,7 @@
 		<input type="button" value="Delete" id="delete-btn" class="btn btn-primary"> 
 		<input type="button" value="Set Asset" id="setAsset-btn" class="btn btn-primary">
 		<input type="button" value="Cancel" id="cancel-btn" class="btn btn-primary-c">
+		<input type="button" value="Test" id="test-btn" class="btn btn-primary">
 
 	</div>
 	</br>
@@ -105,7 +105,7 @@
 						
 						<div class="form-group">
 							<label for="date">Date Purchased:</label> <input type="date"
-								name="date" class="form-control" id="datePurchased" placeholder="Enter the date asset was bought" required>
+								name="date" class="form-control" id="datePurchased" max="2040-12-31" placeholder="Enter the date asset was bought" required>
 						</div>
 						
 						<div class="form-group">
@@ -184,6 +184,8 @@
 	<script src="/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js"></script>
 	<script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 	<script src="js/asset.js"></script>
+	<script src="js/bootstrap-notify.js"></script>
+	<script src="js/bootstrap-notify.min.js"></script>
 </body>
 
 <!-- Footer -->

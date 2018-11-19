@@ -9,12 +9,10 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.Where;
 
 @Entity
 @Table(name = "asset", catalog = "management")
 @SQLDelete(sql = "UPDATE Asset set state = 'D' WHERE asset_id = ?")
-@Where(clause="state <> 'D'")
 public class Asset implements Serializable
 {
 

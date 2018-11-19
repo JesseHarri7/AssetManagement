@@ -59,6 +59,15 @@
 	visibility: hidden;
 }
 
+.btn-primary-r{
+	visibility: hidden;
+}
+
+.visible-r{
+	color: white;
+	visibility: visible;
+}
+
 .visible{
 	background-color: #B22222;
 	color: white;

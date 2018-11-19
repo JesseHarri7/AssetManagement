@@ -123,7 +123,7 @@ public class AssetAssignedServiceImpl implements AssetAssignedService
 	}
 
 	@Override
-	public List<AssetAssigned> findAllHistory() 
+	public List<AssetAssigned> findAllHistory()
 	{
 		List<AssetAssigned> assetAList = new ArrayList<AssetAssigned>();
 		Iterable<AssetAssigned> assigns = repo.findAllHistory();
