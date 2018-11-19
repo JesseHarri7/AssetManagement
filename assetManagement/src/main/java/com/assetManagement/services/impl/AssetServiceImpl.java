@@ -20,9 +20,9 @@ public class AssetServiceImpl implements AssetService
 	@Override
 	public Asset create(Asset entity) 
 	{
-		List<Asset> allAssets = findAllHistory();
+		//List<Asset> allAssets = findAllHistory();
 		Asset asset = repo.findByAssetCode(entity.getAssetCode());
-		if(asset == null && allAssets.size() == 0)
+		if(asset == null)// && allAssets.size() == 0)
 		{
 			return repo.save(entity);
 		}
