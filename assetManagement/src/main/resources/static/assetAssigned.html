@@ -1,28 +1,36 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Assign</title>
-	
-	<link rel="icon" type="image/png" href="images/icons/S-favicon.png"/>
-	<link rel="stylesheet" href="/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css" />
-	<link rel="stylesheet" href="css/styles.css" />
-	<link rel="stylesheet" href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" />
-	<link rel="stylesheet" href="https://cdn.datatables.net/select/1.2.0/css/select.dataTables.min.css" type="text/css" />
-	<link href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.2.0/animate.min.css" rel="stylesheet">
+<title>Assign</title>
+
+<link rel="icon" type="image/png" href="images/icons/S-favicon.png" />
+<link rel="stylesheet"
+	href="/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css" />
+<link rel="stylesheet" href="css/styles.css" />
+<link rel="stylesheet"
+	href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" />
+<link rel="stylesheet"
+	href="https://cdn.datatables.net/select/1.2.0/css/select.dataTables.min.css"
+	type="text/css" />
+<link
+	href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.2.0/animate.min.css"
+	rel="stylesheet">
 </head>
 <body>
 
-	<img src="resources/Saratoga_logo.png" width="250px">	
-<!-- 	<h2>Saratoga</h2> -->
+	<img src="resources/Saratoga_logo.png" width="250px">
+	<!-- 	<h2>Saratoga</h2> -->
 	<nav class="navbar navbar-default">
 		<div class="container-fluid">
 			<div class="navbar-header">
-				<a class="dropdown-toggle navbar-brand" data-toggle="dropdown" href="#">Asset Management<span class="caret"></span></a>
+				<a class="dropdown-toggle navbar-brand" data-toggle="dropdown"
+					href="#">Asset Management<span class="caret"></span></a>
 				<ul class="dropdown-menu">
-					<li><a class="dropdown-item" href="http://localhost:8080/assetAssigned-history">History</a></li>
+					<li><a class="dropdown-item"
+						href="http://localhost:8080/assetAssigned-history">History</a></li>
 				</ul>
 			</div>
-			
+
 			<ul class="nav navbar-nav">
 				<li><a href="http://localhost:8080/asset">Assets</a></li>
 				<li><a href="http://localhost:8080/employee">Employees</a></li>
@@ -30,34 +38,40 @@
 				<li class="active"><a href="#">Assign</a></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
-		    	<li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Log-out</a></li>
-		    </ul>
+				<li><a href="#"><span class="glyphicon glyphicon-log-in"></span>
+						Log-out</a></li>
+			</ul>
 		</div>
 	</nav>
 
 	<div id="nav-buttons">
 
-		<input type="button" value="Unassign" id="delete-btn" class="btn btn-primary">
-		<input type="button" value="Reassign" id="reassign-btn" class="btn btn-primary"> 
-		<input type="button" value="Asset info" id="asset-btn" class="btn btn-primary" data-target="#assetModal"> 
-		<input type="button" value="Employee info" id="emp-btn" class="btn btn-primary" data-target="#empModal">
+		<input type="button" value="Unassign" id="delete-btn"
+			class="btn btn-primary"> <input type="button"
+			value="Reassign" id="reassign-btn" class="btn btn-primary"> <input
+			type="button" value="Asset info" id="asset-btn"
+			class="btn btn-primary" data-target="#assetModal"> <input
+			type="button" value="Employee info" id="emp-btn"
+			class="btn btn-primary" data-target="#empModal"> <input
+			type="button" value="Cancel" id="cancel-btn"
+			class="btn btn-primary-c">
 
 	</div>
-	
+
 	</br>
 
 	<div id="boot-alert"></div>
 
-	<div class = "table-width-outter">
-		<div class = "table-width-inner">
-			<table class="display" id = "AA-table">
+	<div class="table-width-outter">
+		<div class="table-width-inner">
+			<table class="display" id="AA-table">
 				<thead>
 					<tr>
 						<th>Asset_Code</th>
 						<th>Employee_ID</th>
 						<th>Emp_Name</th>
 						<th>Date_Assigned</th>
-					</tr> 
+					</tr>
 				</thead>
 				<tbody>
 				</tbody>
@@ -77,12 +91,19 @@
 					<h2 class="modal-title">Asset Details</h2>
 				</div>
 				<div class="modal-body">
-					Asset Code:<div id="mAssetId"></div><br>
-					Name:<div id="mName"></div><br>
-					Description:<div id="mDesc"></div><br>
-					Brand:<div id="mBrand"></div><br>
-					Date Purchased:<div id="mDate"></div><br>
-					Status:<div id="mStatus"></div><br>
+					Asset Code:
+					<div id="mAssetId"></div>
+					<br> Name:
+					<div id="mName"></div>
+					<br> Description:
+					<div id="mDesc"></div>
+					<br> Brand:
+					<div id="mBrand"></div>
+					<br> Date Purchased:
+					<div id="mDate"></div>
+					<br> Status:
+					<div id="mStatus"></div>
+					<br>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -91,7 +112,7 @@
 
 		</div>
 	</div>
-	
+
 	<!-- Employee modal view -->
 	<!-- Modal -->
 	<div class="modal fade" id="empModal" role="dialog">
@@ -104,11 +125,17 @@
 					<h2 class="modal-title">Employee Details</h2>
 				</div>
 				<div class="modal-body">
-					Employee ID:<div id="mEmpId"></div><br>
-					Name:<div id="mEmpName"></div><br>
-					Surname:<div id="mSur"></div><br>
-					Email:<div id="mEmail"></div><br>
-					Start Date:<div id="mStartDate"></div><br>
+					Employee ID:
+					<div id="mEmpId"></div>
+					<br> Name:
+					<div id="mEmpName"></div>
+					<br> Surname:
+					<div id="mSur"></div>
+					<br> Email:
+					<div id="mEmail"></div>
+					<br> Start Date:
+					<div id="mStartDate"></div>
+					<br>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -122,15 +149,15 @@
 	<script src="/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js"></script>
 	<script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 	<script src="js/assetAssigned.js"></script>
-	<script src="js/bootstrap-notify.js"></script>
-	<script src="js/bootstrap-notify.min.js"></script>
+	<script src="js/plugins/notify.js"></script>
 </body>
 <!-- Footer -->
 <div id="footer">
 
 	<p class="h6">
-		<a class="text-green ml-2"
-			href="http://saratoga.co.za/" target="_blank">Saratoga Software</a> &bull; &copy Copyright 2018 &bull; v1-Testing
+		<a class="text-green ml-2" href="http://saratoga.co.za/"
+			target="_blank">Saratoga Software</a> &bull; &copy Copyright 2018
+		&bull; v1-Testing
 	</p>
 
 </div>
