@@ -1,5 +1,5 @@
-$(document).ready(function()
-{	
+//$(document).ready(function()
+//{	
 	var count = 0;
 	var dataSet = [];
 	
@@ -12,22 +12,109 @@ $(document).ready(function()
 	//Show cancel button if there is data in local storage
 	showBtn();
 	
-	$('#test-btn').click(function(event) 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	/*$('#test-btn').click(function(event) 
 	{
-		$.notify({
-			title: '<strong>Heads up!</strong>',
-			message: 'You can use any of bootstraps other alert styles as well by default.'
-		},{
-			animate: 
+//		$('.notifyjs-wrapper').remove();
+		$('.notifyjs-corner').remove();
+		$('.notifyjs-bootstrap-base.notifyjs-bootstrap-success').remove();
+		for (var i = 0; i < 4; i++)
+		{
+			createNotify(i);
+			//Check to see if the asset isn't already assigned
+			//var assetSet = alreadySet(rowToDelete[i].assetCode);
+			if(true)
+			{	
+				$.notify({
+					  title: 'Are you sure you want to delete asset: ' + i,
+					  button: 'Confirm'
+					}, {
+					  style: 'foo',
+					  autoHide: false,
+					  clickToHide: false
+					});
+				
+				//testing(i);
+			}
+			else
 			{
-				enter: 'animated fadeInRight',
-				exit: 'animated fadeOutRight'
-			},
-			type: 'success'
-			
-		});		
+				alert("Deleted if not assigned");
+			}	
+		}
 	});
+	
+	function testBest(i) {
+		$.notify("Cancelled this asset "+i, "success");
+		//programmatically trigger propogating hide event
+		$('.no'+i).trigger('notify-hide');
+	}
+	
+	function testBestY(i) {
+		$.notify("Delete this asset " + i, "success");
+		//hide notification
+		$('.yes'+i).trigger('notify-hide');
+	}
+	
+	function testing(i)
+	{
+		//listen for click events from this style
+		//If no
+		
+		$(document).on('click', '.notifyjs-foo-base .no'+i, function() 
+		{
+			//function
+				$.notify("Cancelled this asset " + i, "success");
+				//programmatically trigger propogating hide event
+				$(this).trigger('notify-hide');
+		});
 
+		//if Yes
+		$(document).on('click', '.notifyjs-foo-base .yes'+i, function() 
+		{
+			//Function
+			$.notify("Delete this asset " + i, "success");
+			//hide notification
+			$(this).trigger('notify-hide');
+		});
+		
+	}
+	
+	//Notify class
+	function createNotify(i)
+	{
+		//add a new style 'foo'
+
+		$.notify.addStyle('foo', {
+		  html: 
+		    "<div>" +
+		      "<div class='clearfix'>" +
+		        "<div class='title' data-notify-html='title'/>" +
+		        "<div class='buttons'>" +
+		          "<input type='button' onclick='testBest("+i+")' value='Cancel' class='btn btn-secondary no"+i+"'> " +
+		          " <input type='button' onclick='testBestY("+i+")' value='Confirm' class='btn btn-secondary yes"+i+"'>" +
+		        "</div>" +
+		      "</div>" +
+		    "</div>"
+		});
+		
+		
+		
+		
+		
+	}*/
+		
+	
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	/*if(sessionStorage.getItem("userN"))
+	{
+		// Access some stored data	
+		//$.notify( "username = " + sessionStorage.getItem("userN"));
+	}
+	else
+	{
+		window.location = "http://localhost:8080/";
+	}*/
 	
 	//Click to select row from the table
 	$('#asset-table tbody').on('click','tr', function()
@@ -51,32 +138,98 @@ $(document).ready(function()
 	//Form delete button
 	$('#delete-btn').click(function(event) 
 	{
-		var table = $('#asset-table').DataTable();
+		var table = $('#asset-table').DataTable();			
 
 		//Returns an array of the selected rows
 		var rowToDelete = table.rows( '.selected' ).data();
 		
+		$('.notifyjs-corner').remove();
+		
 		if (rowToDelete.length != 0)
 		{
-			displayAlertT("Are you sure you want to delete? <input type='button' value='Yes' id='delYes-btn'> <a id='delNo' data-id='No' href='#' class='alert-link' >No</a>.", "info", "Heads up!")
+			createNotifyD();
+			
+			$.notify({
+				  title: 'Are you sure you want to delete?',
+				  button: 'Confirm'
+				}, {
+				  style: 'foo',
+				  className: 'info',
+				  autoHide: false,
+				  clickToHide: false
+				});
+			
+//			displayAlertT("Are you sure you want to delete? <p><a href='#' class='alert-link' onclick='delYes();'>Yes</a> <a href='#' class='alert-link' onclick='delNo();' >No</a></p>", "info", "Heads up!");
 			
 			/*div.innerHTML = displayAlert("Are you sure you want to delete? <a id='delYes' data-id='Yes' class='alert-link' href='#'>Yes</a>  <a id='delNo' data-id='No' href='#' class='alert-link' >No</a>.", "alert-info");
 			$('#boot-alert').show();*/
+			
 		}
 		else
 		{
-			div.innerHTML = displayAlert("<strong>Warning!</strong> Please select an asset to remove.", "alert-warning");
+			$.notify("Heads up! Please select an asset to remove.", "warn");
+			//displayAlertT("Please select an asset to remove.", "warning", "Heads up!");
+			
+			/*div.innerHTML = displayAlert("<strong>Warning!</strong> Please select an asset to remove.", "alert-warning");
 			$('#boot-alert').show();
-			slide();
+			slide();*/
 			
 			//alert("Please select a asset to remove");
-		}	
+		}
+		
 	});
 	
-	$('#delYes-btn').click(function(event)
+	//listen for click events from this style
+	//If no
+	$(document).on('click', '.notifyjs-foo-base .noD', function() 
 	{
-		console.log("test");
+		//programmatically trigger propogating hide event
+		$(this).trigger('notify-hide');
+		
 	});
+
+	//if Yes
+	$(document).on('click', '.notifyjs-foo-base .yesD', function() 
+	{
+		/*var table = $('#asset-table').DataTable();
+		
+		var test = table.row('.selected').id();
+		table.rows(test).remove().draw( false );*/
+		
+		//Function
+		checkRemove();
+		//hide notification
+		$(this).trigger('notify-hide');
+		
+	});
+
+	//Notify class
+	function createNotifyD()
+	{
+		//add a new style 'foo'
+		$.notify.addStyle('foo', {
+		  html: 
+		    "<div>" +
+		      "<div class='clearfix'>" +
+		        "<div class='title' data-notify-html='title'/>" +
+		        "<div class='buttons'>" +
+		          "<button class='btn btn-secondary noD'>Cancel</button>" +
+		          "<button class='btn btn-secondary yesD' data-notify-text='button'></button>" +
+		        "</div>" +
+		      "</div>" +
+		    "</div>"
+		});
+	}
+	
+/*	function delYes()
+	{
+		checkRemove();
+	}
+
+	function delNo()
+	{	
+		$.notifyClose();
+	}*/
 	
 	/*$('#boot-alert').on('click','a', function() 
 	{
@@ -95,6 +248,7 @@ $(document).ready(function()
 	//Modal form create button
 	$('#form-create-btn').click(function(event) 
 	{
+		$('.notifyjs-corner').remove();
 		//Check to see if all fields are filled in
 		if(validate())
 		{
@@ -112,12 +266,15 @@ $(document).ready(function()
 	//Clear local storage to cancel assign 
 	$('#cancel-btn').click(function(event) 
 	{
+		$('.notifyjs-corner').remove();
 		resetLocal();
 	});
 	
 	//Form update button
 	$('#edit-btn').click(function(event) 
 	{
+		$('.notifyjs-corner').remove();
+		
 		var table = $('#asset-table').DataTable();
 
 		//Get data of the selected row
@@ -131,9 +288,12 @@ $(document).ready(function()
 		}
 		else
 		{	
-			div.innerHTML = displayAlert("<strong>Warning!</strong> Please select an asset to edit.", "alert-warning");
+			$.notify("Heads up! Please select an asset to edit.", "warn");
+//			displayAlertT("Please select an asset to edit.", "warning", "Heads up!");
+			
+			/*div.innerHTML = displayAlert("<strong>Warning!</strong> Please select an asset to edit.", "alert-warning");
 			$('#boot-alert').show();
-			slide();
+			slide();*/
 			
 			//alert("Please select an asset to edit");
 		}
@@ -142,6 +302,7 @@ $(document).ready(function()
 	//Modal form update button
 	$('#form-update-btn').click(function(event) 
 	{
+		$('.notifyjs-corner').remove();
 		//Check to see if all fields are filled in
 		if(validateUpdate())
 		{
@@ -153,6 +314,8 @@ $(document).ready(function()
 	//select asset to be assigned
 	$('#setAsset-btn').click( function () 
 	{
+		$('.notifyjs-corner').remove();
+		
 		var table = $('#asset-table').DataTable();
 		//Get data from the selected row
 		var assetData = table.rows( '.selected' ).data();
@@ -180,9 +343,13 @@ $(document).ready(function()
 		}
 		else
 		{
-			div.innerHTML = displayAlert("<strong>Warning!</strong> Please select an asset to assign to an employee.", "alert-warning");
+			$.notify("Heads up! Please select an asset to assign to an employee.", "warn");
+			
+//			displayAlertT("Please select an asset to assign to an employee.", "warning", "Heads up!");
+			
+			/*div.innerHTML = displayAlert("<strong>Warning!</strong> Please select an asset to assign to an employee.", "alert-warning");
 			$('#boot-alert').show();
-			slide();
+			slide();*/
 			//alert("Please select an asset to assign to an employee");
 		}
 		
@@ -191,11 +358,11 @@ $(document).ready(function()
 	//Create dataTable with JSON data
 	function assetList(dataSet)
 	{
-		
 		var assetTable = $("#asset-table").DataTable({
 			dom: '<f<t>lip>',
 			retrieve: true,
 			select: true,
+			rowId: 'assetCode',
 			data: dataSet,
 			columns: 
 			[
@@ -237,32 +404,82 @@ $(document).ready(function()
 		//Returns an array of the selected rows
 		var rowToDelete = table.rows( '.selected' ).data();
 
-		var items = rowToDelete.length;		
-		
+		var items = rowToDelete.length;
+		$('.notifyjs-corner').remove();
 		//For each row selected, delete
 		for (i = 0; i < items; i++)
 		{
 			//Check to see if the asset isn't already assigned
 			var assetSet = alreadySet(rowToDelete[i].assetCode);
+			
 			if(assetSet)
 			{
-				if(confirm("Asset " + assetSet.assets.assetCode + " is already assigned. This will unassign the asset from the employee, are you sure you want to delete?"))
+				createNotify(assetSet.assets.assetCode, i);
+				
+				$.notify({
+					  title: "Asset " + assetSet.assets.assetCode + " is already assigned. This will unassign the asset from the employee, are you sure you want to delete?",
+					  button: 'Confirm'
+					}, {
+					  style: 'foo',
+					  autoHide: false,
+					  clickToHide: false
+					});
+				
+				/*if(confirm("Asset " + assetSet.assets.assetCode + " is already assigned. This will unassign the asset from the employee, are you sure you want to delete?"))
 				{
 					assignedRemove(assetSet);
 					remove(rowToDelete[i].assetCode);
 				}
 				else
 				{
-					div.innerHTML = displayAlert("<strong>Alert!</strong> Cancelled.", "alert-success");
-					$('#boot-alert').show();
-					slide();
-				}
+					$.notify("Success! Action was cancelled.", "success");
+					
+//					displayAlertT("Action was cancelled.", "success", "Success!");
+				}*/
+				
 			}
 			else
 			{
 				remove(rowToDelete[i].assetCode);
 			}
 		}
+	}
+	
+	function createNotify(code, i)
+	{
+		//add a new style 'foo'
+
+		$.notify.addStyle('foo', {
+		  html: 
+		    "<div>" +
+		      "<div class='clearfix'>" +
+		        "<div class='title' data-notify-html='title'/>" +
+		        "<div class='buttons'>" +
+		          "<button onclick='chkNo("+code+","+i+")' class='btn btn-secondary no"+i+"'>Cancel</button> " +
+		          "<button onclick='chkYes("+code+","+i+")' class='btn btn-secondary yes"+i+"'>Confirm</button>" +
+		        "</div>" +
+		      "</div>" +
+		    "</div>"
+		});
+	}
+	
+	//toast Cancel button
+	function chkNo(code, i) 
+	{
+		$.notify("Success! Action was cancelled.", "success");
+		//programmatically trigger propogating hide event
+		$('.no'+i).trigger('notify-hide');
+	}
+
+	//Toast confirm button
+	function chkYes(code, i) 
+	{
+		//Function
+		var assetSet = alreadySet(code);
+		assignedRemove(assetSet);
+		remove(code);
+		//hide notification
+		$('.yes'+i).trigger('notify-hide');
 	}
 		
 	function remove(assetCode)
@@ -276,11 +493,14 @@ $(document).ready(function()
 			success: success()//alert("Asset " + rowToDelete[i].assetCode + " was removed")
 		});
 		
-		table.rows('.selected').remove().draw( false );
-		$('#boot-alert').hide();
 		function success()
 		{
-			alert("Asset " + assetCode + " was removed.");
+			$.notify("Success! Asset " + assetCode + " was removed.", "success");
+			table.row("#"+assetCode).remove().draw( false );
+			
+//			displayAlertT("Asset " + assetCode + " was removed.", "success", "Success!");
+			
+//			alert("Asset " + assetCode + " was removed.");
 			
 			/*div.innerHTML = displayAlert("<strong>Success!</strong> Asset" + rowToDelete[i].assetCode + " was removed.", "alert-success");
 			$('#boot-alert').show();
@@ -311,9 +531,13 @@ $(document).ready(function()
 		}
 		else
 		{
-			div.innerHTML = displayAlert("<strong>Warning!</strong> Please select an asset.", "alert-warning");
+			$.notify("Heads up! Please select an asset.", "warn");
+			
+//			displayAlertT("Please select an asset.", "warning", "Heads up!");
+			
+			/*div.innerHTML = displayAlert("<strong>Warning!</strong> Please select an asset.", "alert-warning");
 			$('#boot-alert').show();
-			slide();
+			slide();*/
 			
 			//alert("Please select a asset");
 		}	
@@ -363,9 +587,13 @@ $(document).ready(function()
 				});
 			function success()
 			{
-				div.innerHTML = displayAlert("<strong>Success!</strong> Asset " + assetCode + " has been created.", "alert-success");
+				$.notify("Success! Asset " + assetCode + " has been created.", "success");
+				
+//				displayAlertT("Asset " + assetCode + " has been created.", "success", "Success!");
+				
+				/*div.innerHTML = displayAlert("<strong>Success!</strong> Asset " + assetCode + " has been created.", "alert-success");
 				$('#boot-alert').show();
-				slide();
+				slide();*/
 				
 				table.row.add(asset).draw()
 			}
@@ -376,11 +604,15 @@ $(document).ready(function()
 		}
 		else
 		{
-			var divM = document.getElementById('boot-alert-m');
+			$.notify("Error! The Asset " + assetCode + " you're trying to create already exists.", "Error");
+			
+//			displayAlertT("The Asset " + assetCode + " you're trying to create already exists.", "danger", "Error!");
+			
+			/*var divM = document.getElementById('boot-alert-m');
 			
 			divM.innerHTML = displayAlert("<strong>Error!</strong> The Asset " + assetCode + " you're trying to create already exists.", "alert-danger");
 			$('#boot-alert-m').show();
-			slideCreateModal();
+			slideCreateModal();*/
 			
 			//alert("The Asset "+ assetCode + " you're trying to create already exists");
 		}
@@ -419,11 +651,15 @@ $(document).ready(function()
 		 
 	    if(id == "" || name == "" || desc == "" || brand == "" || date == "" || status == "") 
 	    {
-	    	var divM = document.getElementById('boot-alert-m');
+	    	$.notify("Heads up! All fields must be filled out.", "warn");
+	    	
+//	    	displayAlertT("All fields must be filled out.", "warning", "Heads up!");
+	    	
+	    	/*var divM = document.getElementById('boot-alert-m');
 	    	
 	    	divM.innerHTML = displayAlert("<strong>Warning!</strong> All fields must be filled out.", "alert-warning");
 			$('#boot-alert-m').show();
-			slideCreateModal();
+			slideCreateModal();*/
 						
 	        //alert("All fields must be filled out");
 	        return false;
@@ -446,11 +682,15 @@ $(document).ready(function()
 		 
 	    if(id == "" || name == "" || desc == "" || brand == "" || date == "" || status == "") 
 	    {
-	    	var divM = document.getElementById('boot-alert-m-u');
+	    	$.notify("Heads up! All fields must be filled out.", "warn");
+	    	
+//	    	displayAlertT("All fields must be filled out.", "warning", "Heads up!");
+	    	
+	    	/*var divM = document.getElementById('boot-alert-m-u');
 	    	
 	    	divM.innerHTML = displayAlert("<strong>Warning!</strong> All fields must be filled out.", "alert-warning");
 			$('#boot-alert-m-u').show();
-			slideUpdateModal();
+			slideUpdateModal();*/
 			
 	        //alert("All fields must be filled out");
 	        return false;
@@ -500,9 +740,13 @@ $(document).ready(function()
 		});
 		function success()
 		{
-			div.innerHTML = displayAlert("<strong>Success!</strong> Asset " + assetCode + " has been updated.", "alert-success");
+			$.notify("Success! Asset " + assetCode + " has been updated.", "success");
+			
+//			displayAlertT("Asset " + assetCode + " has been updated.", "success", "Success!");
+			
+			/*div.innerHTML = displayAlert("<strong>Success!</strong> Asset " + assetCode + " has been updated.", "alert-success");
 			$('#boot-alert').show();
-			slide();
+			slide();*/
 			
 			table.row( '.selected' ).data(asset).draw();
 			
@@ -557,10 +801,11 @@ $(document).ready(function()
 				
 				if(assetSet)
 				{
-					/*div.innerHTML = displayAlert("<strong>Error!</strong> Asset " + asset.assetCode + " is already assigned to employee " + assetSet.employees.employeeID + ".", "alert-danger");
-					$('#boot-alert').show();
-					slide();*/
-					alert("Asset " + asset.assetCode + " is already assigned to employee " + assetSet.employees.employeeID);
+					$.notify("Error! Asset " + asset.assetCode + " is already assigned to employee " + assetSet.employees.employeeID, "error");
+					
+//					displayAlertT("Asset " + asset.assetCode + " is already assigned to employee " + assetSet.employees.employeeID, "danger", "Error!");
+					
+					//alert("Asset " + asset.assetCode + " is already assigned to employee " + assetSet.employees.employeeID);
 				}
 				else
 				{
@@ -597,7 +842,11 @@ $(document).ready(function()
 		}
 		else
 		{
-			alert("Neither an asset or employee was selected");
+			$.notify("Heads up! Neither an asset or employee was selected", "warn");
+			
+//			displayAlertT("Neither an asset or employee was selected.", "warning", "Heads up!");
+			
+			//alert("Neither an asset or employee was selected");
 		}
 	
 	}
@@ -625,9 +874,13 @@ $(document).ready(function()
 	{
 		localStorage.clear();
 		
-		div.innerHTML = displayAlert("<strong>Success!</strong> Assigning successfully cancelled.", "alert-success");
+		$.notify("Success! Assigning successfully cancelled", "success");
+		
+//		displayAlertT("Assigning successfully cancelled.", "success", "Success!");
+		
+		/*div.innerHTML = displayAlert("<strong>Success!</strong> Assigning successfully cancelled.", "alert-success");
 		$('#boot-alert').show();
-		slide();
+		slide();*/
 		
 		//alert("Assigning successfully cancelled");
 		
@@ -676,12 +929,12 @@ $(document).ready(function()
 			url:"assetManagement/assetAssigned/delete/" + assign.id,
 			dataType: "json",
 			type: "DELETE",
-			success: alert("Asset " + assign.assets.assetCode + " and employee " + assign.employees.employeeID + " is now unassigned")
+			success: $.notify("Success! Asset " + assign.assets.assetCode + " and employee " + assign.employees.employeeID + " is now unassigned.", "success")//displayAlertT("Asset " + assign.assets.assetCode + " and employee " + assign.employees.employeeID + " is now unassigned.", "success", "Success!") //alert("Asset " + assign.assets.assetCode + " and employee " + assign.employees.employeeID + " is now unassigned")
 		});
 
 	}
 	
-	function slide()
+	/*function slide()
 	{
 		$('#boot-alert').fadeTo(5000, 900).slideUp(900, function(){
 			$('#boot-alert').slideUp(900);
@@ -707,7 +960,7 @@ $(document).ready(function()
 		var alert = "<div class='alert " + type + " alert-dismissible fade in'> <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a> "
 						+ msg + "</div>";
 		return alert;
-	}
+	}*/
 	
 	function displayAlertT(msg, type, title)
 	{
@@ -723,8 +976,10 @@ $(document).ready(function()
 			type: type,
 			delay: 10000,
 			timer: 1000,
+			mouse_over: 'pause',
+			z_index: 2000
 			
 		});
 	}
 
-});
+//});

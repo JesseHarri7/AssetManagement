@@ -1,90 +1,116 @@
 #login-container {
-	margin-top:150px;
+	margin-top: 150px;
 }
 
 #footer {
-    position: fixed;
-    left: 0px;
-    bottom: 0px;
-    width: 100%;
-    background-color: #F8F8F8;
-    color:  #36454f;
-    text-align: center;
+	position: fixed;
+	left: 0px;
+	bottom: 0px;
+	width: 100%;
+	background-color: #F8F8F8;
+	color: #36454f;
+	text-align: center;
 }
 
-#nav-buttons{
+#nav-buttons {
 	width: 100%;
 	position: relative;
 	left: 10px;
-	
 }
 
-.login-error::before
-{
-	  visibility: hidden;
+.login-error::before {
+	visibility: hidden;
 }
 
 .alert-account {
-  content: attr(data-validate);
-
-  display: block;
-  background-color: #fff;
-  border: 1px solid #c80000;
-  border-radius: 3px;
-  padding: 4px 25px 5px 10px;
-  top: 50%;
-  right: 12px;
-  font-family: Ubuntu-Regular;
-  color: #c80000;
-  font-size: 14px;
-  line-height: 1.4;
-  text-align: left;
-  visibility: visible;
-
+	content: attr(data-validate);
+	display: block;
+	background-color: #fff;
+	border: 1px solid #c80000;
+	border-radius: 3px;
+	padding: 4px 25px 5px 10px;
+	top: 50%;
+	right: 12px;
+	font-family: Ubuntu-Regular;
+	color: #c80000;
+	font-size: 14px;
+	line-height: 1.4;
+	text-align: left;
+	visibility: visible;
 }
 
-.table-width-outter{
+.table-width-outter {
 	width: 100%;
 	position: relative;
 	align: center;
 }
 
-.table-width-inner{
+.table-width-inner {
 	padding: 5px 5px;
 	position: relative;
 	align: center;
 }
 
-.btn-primary-c{
+.btn-primary-c {
 	visibility: hidden;
 }
 
-.btn-primary-r{
+.btn-primary-r {
 	visibility: hidden;
 }
 
-.visible-r{
+.visible-r {
 	color: white;
 	visibility: visible;
 }
 
-.visible{
+.visible {
 	background-color: #B22222;
 	color: white;
 	visibility: visible;
 }
 
-.center-box{
-    position:absolute;
-    top:0;
-    right:0;
-    bottom:0;
-    left:0;
-    z-index:99;
-    margin:auto;
-    height:200px;
-    width:200px;
-    border:1px solid #000;
-    text-align:center;
-    line-height:200px;
+.center-box {
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	z-index: 99;
+	margin: auto;
+	height: 200px;
+	width: 200px;
+	border: 1px solid #000;
+	text-align: center;
+	line-height: 200px;
+}
+
+.notifyjs-foo-base {
+	width: 310px;
+	background: #F1DEDF;
+	padding: 5px;
+	border-radius: 10px;
+}
+
+.notifyjs-foo-base .title {
+	width: 200px;
+	float: left;
+	margin: 10px 0 0 10px;
+	text-align: center;
+}
+
+.notifyjs-foo-base .buttons {
+	width: 70px;
+	float: right;
+	font-size: 12px;
+	padding: -5px;
+	padding-top: 10px;
+	margin: 2px;
+}
+
+.notifyjs-foo-base button {
+	font-size: 9px;
+	padding: 5px;
+	margin: 2px;
+	width: 70px;
 }

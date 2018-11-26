@@ -1,29 +1,40 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Assets</title>
-	
-	<link rel="icon" type="image/png" href="images/icons/S-favicon.png"/>
-	<link rel="stylesheet" href="/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css" />
-	<link rel="stylesheet" href="css/styles.css" />
-	<link rel="stylesheet" href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" />
-	<link rel="stylesheet" href="https://cdn.datatables.net/select/1.2.0/css/select.dataTables.min.css" type="text/css" />
-	<link href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.2.0/animate.min.css" rel="stylesheet">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<title>Assets</title>
+
+<link rel="icon" type="image/png" href="images/icons/S-favicon.png" />
+<link rel="stylesheet"
+	href="/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css" />
+<link rel="stylesheet" href="css/styles.css" />
+<link rel="stylesheet"
+	href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" />
+<link rel="stylesheet"
+	href="https://cdn.datatables.net/select/1.2.0/css/select.dataTables.min.css"
+	type="text/css" />
+<link
+	href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.2.0/animate.min.css"
+	rel="stylesheet">
 </head>
 <body>
-	
+
 	<img src="resources/Saratoga_logo.png" width="250px">
-<!-- 	<h2>Saratoga</h2> -->
+	<!-- 	<h2>Saratoga</h2> -->
 	<nav class="navbar navbar-default">
 		<div class="container-fluid">
 			<div class="navbar-header">
 
-					<a class="dropdown-toggle navbar-brand" data-toggle="dropdown" href="#">Asset Management<span class="caret"></span></a>
-					<ul class="dropdown-menu">
-						<li><a class="dropdown-item" href="http://localhost:8080/asset-history">History</a></li>
-					</ul>
+				<a class="dropdown-toggle navbar-brand" data-toggle="dropdown"
+					href="#">Asset Management<span class="caret"></span></a>
+				<ul class="dropdown-menu">
+					<li><a class="dropdown-item"
+						href="http://localhost:8080/asset-history">History</a></li>
+				</ul>
 			</div>
-			
+
 			<ul class="nav navbar-nav">
 				<li class="active"><a href="#">Assets</a></li>
 				<li><a href="http://localhost:8080/employee">Employees</a></li>
@@ -31,28 +42,32 @@
 				<li><a href="http://localhost:8080/assetAssigned">Assign</a></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
-		    	<li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Log-out</a></li>
-		    </ul>
+				<li><a href="#"><span class="glyphicon glyphicon-log-in"></span>
+						Log-out</a></li>
+			</ul>
 		</div>
 	</nav>
 
 	<div id="nav-buttons">
 
-		<input type="button" value="Create" class="btn btn-primary" data-toggle="modal" data-target="#createModal"> 
-		<input type="button" value="Edit" id="edit-btn" class="btn btn-primary"	data-target="#updateModal"> 
-		<input type="button" value="Delete" id="delete-btn" class="btn btn-primary"> 
-		<input type="button" value="Set Asset" id="setAsset-btn" class="btn btn-primary">
-		<input type="button" value="Cancel" id="cancel-btn" class="btn btn-primary-c">
-		<input type="button" value="Test" id="test-btn" class="btn btn-primary">
+		<input type="button" value="Create" class="btn btn-primary"
+			data-toggle="modal" data-target="#createModal"> <input
+			type="button" value="Edit" id="edit-btn" class="btn btn-primary"
+			data-target="#updateModal"> <input type="button"
+			value="Delete" id="delete-btn" class="btn btn-primary"> <input
+			type="button" value="Set Asset" id="setAsset-btn"
+			class="btn btn-primary"> <input type="button" value="Cancel"
+			id="cancel-btn" class="btn btn-primary-c">
+
 
 	</div>
 	</br>
 
 	<div id="boot-alert"></div>
 
-	<div class = "table-width-outter">
-		<div class = "table-width-inner">
-			<table class="display" id = "asset-table">
+	<div class="table-width-outter">
+		<div class="table-width-inner">
+			<table class="display" id="asset-table">
 				<thead>
 					<tr>
 						<th>Asset_Code</th>
@@ -61,7 +76,7 @@
 						<th>Brand</th>
 						<th>Date_Purchased</th>
 						<th>Status</th>
-					</tr> 
+					</tr>
 				</thead>
 				<tbody>
 				</tbody>
@@ -81,50 +96,58 @@
 				</div>
 				<div class="modal-body">
 					<div id="boot-alert-m"></div>
-					
+
 					<form name="create" id="create">
-						<div >
+						<div>
 							<label for="assetId">Asset Code:</label> <input type="text"
-								name="id" class="form-control" id="id" placeholder="Enter Asset code" required>
+								name="id" class="form-control" id="id"
+								placeholder="Enter Asset code" required>
 						</div>
 
 						<div class="form-group">
-							<label for="name">Name:</label> <input type="text"
-								name="name" class="form-control" id="name" placeholder="Enter Asset name" required>
+							<label for="name">Name:</label> <input type="text" name="name"
+								class="form-control" id="name" placeholder="Enter Asset name"
+								required>
 						</div>
-						
+
 						<div class="form-group">
 							<label for="desc">Description:</label> <input type="text"
-								name="desc" class="form-control" id="desc" placeholder="Enter description" required>
+								name="desc" class="form-control" id="desc"
+								placeholder="Enter description" required>
 						</div>
-						
+
 						<div class="form-group">
-							<label for="brand">Brand:</label> <input type="text"
-								name="brand" class="form-control" id="brand" placeholder="Enter brand" required>
+							<label for="brand">Brand:</label> <input type="text" name="brand"
+								class="form-control" id="brand" placeholder="Enter brand"
+								required>
 						</div>
-						
+
 						<div class="form-group">
 							<label for="date">Date Purchased:</label> <input type="date"
-								name="date" class="form-control" id="datePurchased" max="2040-12-31" placeholder="Enter the date asset was bought" required>
+								name="date" class="form-control" id="datePurchased"
+								max="2040-12-31" placeholder="Enter the date asset was bought"
+								required>
 						</div>
-						
+
 						<div class="form-group">
 							<label for="date">Status:</label> <input type="text"
-								name="status" class="form-control" id="status" placeholder="Enter the status of the asset" required>
+								name="status" class="form-control" id="status"
+								placeholder="Enter the status of the asset" required>
 						</div>
-						
 
-						 <!-- <button type="submit" class="btn btn-primary">Submit</button> -->
+
+						<!-- <button type="submit" class="btn btn-primary">Submit</button> -->
 					</form>
 					<div class="modal-footer">
 						<button type="submit" class="btn btn-primary" id="form-create-btn">Save</button>
-						<button type="button" class="btn btn-secondary" data-dismiss="modal" id="form-close-btn">Close</button>
+						<button type="button" class="btn btn-secondary"
+							data-dismiss="modal" id="form-close-btn">Close</button>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-	
+
 	<!-- Asset modal view -->
 	<!-- Modal -->
 	<div class="modal fade" id="updateModal" role="dialog">
@@ -138,36 +161,41 @@
 				</div>
 				<div class="modal-body">
 					<div id="boot-alert-m-u"></div>
-					
+
 					<form name="update">
-						<div >
+						<div>
 							<label for="assetId">Asset Code:</label> <input type="text"
-								name="uId" class="form-control" id="uId" placeholder="Enter Asset code" disabled>
+								name="uId" class="form-control" id="uId"
+								placeholder="Enter Asset code" disabled>
 						</div>
 
 						<div class="form-group">
-							<label for="name">Name:</label> <input type="text"
-								name="uName" class="form-control" id="uName" placeholder="Enter Asset name" >
+							<label for="name">Name:</label> <input type="text" name="uName"
+								class="form-control" id="uName" placeholder="Enter Asset name">
 						</div>
-						
+
 						<div class="form-group">
 							<label for="desc">Description:</label> <input type="text"
-								name="uDesc" class="form-control" id="uDesc" placeholder="Enter description" >
+								name="uDesc" class="form-control" id="uDesc"
+								placeholder="Enter description">
 						</div>
-						
+
 						<div class="form-group">
 							<label for="brand">Brand:</label> <input type="text"
-								name="uBrand" class="form-control" id="uBrand" placeholder="Enter brand">
+								name="uBrand" class="form-control" id="uBrand"
+								placeholder="Enter brand">
 						</div>
-						
+
 						<div class="form-group">
 							<label for="date">Date Purchased:</label> <input type="date"
-								name="uDate" class="form-control" id="uDatePurchased" placeholder="Enter the date asset was bought" disabled>
+								name="uDate" class="form-control" id="uDatePurchased"
+								placeholder="Enter the date asset was bought" disabled>
 						</div>
-						
+
 						<div class="form-group">
 							<label for="date">Status:</label> <input type="text"
-								name="uStatus" class="form-control" id="uStatus" placeholder="Enter the status of the asset">
+								name="uStatus" class="form-control" id="uStatus"
+								placeholder="Enter the status of the asset">
 						</div>
 					</form>
 				</div>
@@ -179,21 +207,37 @@
 
 		</div>
 	</div>
-	
+
+	<script type="text/javascript">
+        if('${isAuthorizeAny}' == true){
+             f = function() {
+                alert('hi Admini');
+            }
+        }
+
+        if('${haRoleUser}' == true){
+             f = function() {
+                alert('hi User');
+            }
+        }
+    </script>
+
 	<script src="/webjars/jquery/3.1.1/jquery.min.js"></script>
 	<script src="/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js"></script>
 	<script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 	<script src="js/asset.js"></script>
-	<script src="js/bootstrap-notify.js"></script>
-	<script src="js/bootstrap-notify.min.js"></script>
+	<!-- 	<script src="js/plugins/bootstrap-notify.js"></script> -->
+	<!-- 	<script src="js/plugins/bootstrap-notify.min.js"></script> -->
+	<script src="js/plugins/notify.js"></script>
 </body>
 
 <!-- Footer -->
 <div id="footer">
 
 	<p class="h6">
-		<a class="text-green ml-2"
-			href="http://saratoga.co.za/" target="_blank">Saratoga Software</a> &bull; &copy Copyright 2018 &bull; v1-Testing
+		<a class="text-green ml-2" href="http://saratoga.co.za/"
+			target="_blank">Saratoga Software</a> &bull; &copy Copyright 2018
+		&bull; v1-Testing
 	</p>
 
 </div>

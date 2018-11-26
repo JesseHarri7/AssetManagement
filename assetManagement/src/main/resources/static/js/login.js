@@ -83,7 +83,10 @@ $(document).ready(function()
 		
 		if(userDB == username && passDB == password)
 		{
-			window.location = "http://localhost:8080/asset";
+			// Save data to the current session's store
+			//sessionStorage.setItem("userN", username);
+			
+			//window.location = "http://localhost:8080/asset";
 		}
 		else
 		{
