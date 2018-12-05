@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Employees</title>
+
+<link rel="icon" type="image/png" href="/assetManagement/res/images/icons/S-favicon.png" />
+<link rel="stylesheet"
+	href="/assetManagement/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css" />
+<link rel="stylesheet" href="/assetManagement/res/css/styles.css" />
+<link rel="stylesheet"
+	href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" />
+<link rel="stylesheet"
+	href="https://cdn.datatables.net/select/1.2.0/css/select.dataTables.min.css"
+	type="text/css" />
+<link
+	href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.2.0/animate.min.css"
+	rel="stylesheet">
+</head>
+<body>
+
+
+	<img src="/assetManagement/res/resources/Saratoga_logo.png" width="250px">
+	<!-- 	<h2>Saratoga</h2> -->
+	<nav class="navbar navbar-default">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="#">Asset Management</a>
+			</div>
+			<ul class="nav navbar-nav">
+				<li><a href="/assetManagement/pages/asset">Assets</a></li>
+				<li class="active"><a href="#">Employees</a></li>
+				<li><a href="#">Users</a></li>
+				<li><a href="/assetManagement/pages/assetAssigned">Assign</a></li>
+			</ul>
+		</div>
+	</nav>
+
+
+	<div id="nav-buttons">
+
+		<input type="button" value="Delete" id="delete-btn"
+			class="btn btn-primary"> <input type="button"
+			value="Set Employee" id="setEmp-btn" class="btn btn-primary">
+		<input type="button" value="Reassign" id="reassign-btn"
+			class="btn btn-primary btn-primary-r"> <input type="button"
+			value="Cancel" id="cancel-btn" class="btn btn-primary-c">
+
+	</div>
+
+	<div class="table-width-outter">
+		<div class="table-width-inner">
+			<table class="display" id="emp-table">
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>Name</th>
+						<th>Surname</th>
+						<th>Email</th>
+						<th>Start_Date</th>
+					</tr>
+				</thead>
+				<tbody>
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+	<script src="/assetManagement/webjars/jquery/3.1.1/jquery.min.js"></script>
+	<script src="/assetManagement/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js"></script>
+	<script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+	<script src="/assetManagement/res/js/employee.js"></script>
+</body>
+<!-- Footer -->
+<div id="footer">
+
+	<p class="h6">
+		<a class="text-green ml-2" href="http://saratoga.co.za/"
+			target="_blank">Saratoga Software</a> &bull; &copy Copyright 2018
+		&bull; v1-Testing
+	</p>
+
+</div>
+<!-- ./Footer -->
+</html>
