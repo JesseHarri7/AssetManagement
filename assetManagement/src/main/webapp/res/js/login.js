@@ -1,5 +1,6 @@
 $(document).ready(function()
 {	
+	
 	$('#login-btn').click(function(event) 
 	{
 		var input = $('.validate-input .input100');
@@ -41,7 +42,7 @@ $(document).ready(function()
 		var dataSet = [];
 		
 		$.ajax({
-		  url: "http://localhost:8080/user/username/" + username,
+		  url: "/assetManagement/user/username/" + username,
 		  async: false,
 		  type: "GET",
 		  dataType: "json",
@@ -73,6 +74,7 @@ $(document).ready(function()
 		}
 	}
 	
+	//Successful login
 	function login(user)
 	{
 		var userDB = user.username;
@@ -81,12 +83,15 @@ $(document).ready(function()
 		var username = $('#username').val();
 		var password = $('#password').val();
 		
-		if(userDB == username && passDB == password)
+		if(username && password)//(userDB == username && passDB == password)
 		{
+
+			document.getElementById("loginForm").submit();
+			
 			// Save data to the current session's store
 			//sessionStorage.setItem("userN", username);
 			
-			//window.location = "http://localhost:8080/asset";
+//			window.location = "http://localhost:8080/pages/asset";
 		}
 		else
 		{

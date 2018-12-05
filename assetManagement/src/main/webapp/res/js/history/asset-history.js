@@ -8,40 +8,40 @@ $(document).ready(function()
 		var dataSetHistory = [];
 		
 		$.ajax({
-			url:"assetManagement/assetAssigned/findAllHistory",
+			url:"/assetManagement/asset/findAllHistory",
 			dataType: "json",
 			type: "GET",
 			success: function(data)
 			{
 				dataSetHistory = data;
 				
-				aaList(dataSetHistory);
+				assetList(dataSetHistory);
 				
 			}
 		});
 	}
 	
 	//Create dataTable with JSON data
-	function aaList(dataSet)
+	function assetList(dataSet)
 	{
 		
-		var aaTable = $("#AA-table").DataTable({
+		var assetTable = $("#asset-table").DataTable({
 			dom: '<f<t>lip>',
 			retrieve: true,
 			select: true,
 			data: dataSet,
 			columns: 
 			[
-				//{data: 'id'},
-				{data: 'assets.assetCode'},
-				{data: 'employees.employeeID'},
-				{data: 'employees.name'},
-				{data: 'moveDate'},
+				{data: 'assetCode'},
+				{data: 'name'},
+				{data: 'description'},
+				{data: 'brand'},
+				{data: 'datePurchased'},
+				{data: 'status'},
 				{data: 'state'}
 			]
 		});
 		
-		return aaTable;
+		return assetTable;
 	}
-	
 });

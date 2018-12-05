@@ -182,7 +182,7 @@
 		if(data)
 		{
 			selectAA();
-			window.location = "http://localhost:8080/employee";
+			window.location = "/assetManagement/pages/employee";
 			alert("Please select an employee to reassign to this asset");
 			
 		}
@@ -234,7 +234,7 @@
 	{
 		
 		$.ajax({
-			url:"assetManagement/assetAssigned/findAll", 
+			url:"/assetManagement/assetAssigned/findAll", 
 			dataType: "json",
 			type: "GET",
 			success: function(data)
@@ -276,7 +276,7 @@
 		if (rowToDelete)
 		{
 			$.ajax({
-				url:"assetManagement/assetAssigned/delete/" + rowToDelete.id, 
+				url:"/assetManagement/assetAssigned/delete/" + rowToDelete.id, 
 				dataType: "json",
 				type: "DELETE",
 				success: success()//alert("Asset " + rowToDelete.assets.assetCode + " and employee " + rowToDelete.employees.employeeID + " is now unassigned")
@@ -314,7 +314,7 @@
 		var dataSetA = [];
 
 		$.ajax({
-			url:"assetManagement/asset/" + id,
+			url:"/assetManagement/asset/" + id,
 			async: false,
 			dataType: "json",
 			type: "GET",
@@ -333,7 +333,7 @@
 		var dataSetEmp = [];
 
 		$.ajax({
-			url:"assetManagement/employee/" + id,
+			url:"/assetManagement/employee/" + id,
 			async: false,
 			dataType: "json",
 			type: "GET",

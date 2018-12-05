@@ -337,7 +337,7 @@
 				//Send to employee table if there is no employee data
 				clearLocal();
 				selectAsset();
-				window.location = "http://localhost:8080/employee";
+				window.location = "/assetManagement/pages/employee";
 				alert("Please select an employee to assign to the selected asset");
 			}
 		}
@@ -383,7 +383,7 @@
 	{
 		
 		$.ajax({
-			url:"assetManagement/asset/findAll",
+			url:"/assetManagement/asset/findAll",
 			dataType: "json",
 			type: "GET",
 			success: function(data)
@@ -487,7 +487,7 @@
 		var table = $('#asset-table').DataTable();
 		
 		$.ajax({
-			url:"assetManagement/asset/delete/" + assetCode, 
+			url:"/assetManagement/asset/delete/" + assetCode, 
 			dataType: "json",
 			type: "DELETE",
 			success: success()//alert("Asset " + rowToDelete[i].assetCode + " was removed")
@@ -579,7 +579,7 @@
 				        'Accept': 'application/json',
 				        'Content-Type': 'application/json' 
 				    },
-					url:"assetManagement/asset/create", 
+					url:"/assetManagement/asset/create", 
 					dataType: "json",
 					data: data_json,
 					type: "POST",
@@ -624,7 +624,7 @@
 		var dataSet = [];
 		//var assetId = $('#id').val();
 		$.ajax({
-			url:"assetManagement/asset/" + id,
+			url:"/assetManagement/asset/" + id,
 			async: false,
 			dataType: "json",
 			type: "GET",
@@ -732,7 +732,7 @@
 		        'Accept': 'application/json',
 		        'Content-Type': 'application/json' 
 		    },
-			url:"assetManagement/asset/update", 
+			url:"/assetManagement/asset/update", 
 			dataType: "json",
 			data: data_json,
 			type: "PUT",
@@ -778,7 +778,7 @@
 		if(count > 0)
 		{
 			alert("Data successfully assigned");
-			window.location = "http://localhost:8080/assetAssigned";
+			window.location = "/assetManagement/pages/assetAssigned";
 		}
 
 		clearLocal();
@@ -801,11 +801,11 @@
 				
 				if(assetSet)
 				{
-					$.notify("Error! Asset " + asset.assetCode + " is already assigned to employee " + assetSet.employees.employeeID, "error");
+//					$.notify("Error! Asset " + asset.assetCode + " is already assigned to employee " + assetSet.employees.employeeID, "error");
 					
 //					displayAlertT("Asset " + asset.assetCode + " is already assigned to employee " + assetSet.employees.employeeID, "danger", "Error!");
 					
-					//alert("Asset " + asset.assetCode + " is already assigned to employee " + assetSet.employees.employeeID);
+					alert("Asset " + asset.assetCode + " is already assigned to employee " + assetSet.employees.employeeID);
 				}
 				else
 				{
@@ -831,7 +831,7 @@
 					        'Accept': 'application/json',
 					        'Content-Type': 'application/json'
 					    },
-						url:"assetManagement/assetAssigned/create",
+						url:"/assetManagement/assetAssigned/create",
 						dataType: "json",
 						data: data_json,
 						type: "POST"
@@ -900,7 +900,7 @@
 		var dataSetA = [];
 
 		$.ajax({
-			url:"assetManagement/assetAssigned/findAllAsset/" + id,
+			url:"/assetManagement/assetAssigned/findAllAsset/" + id,
 			async: false,
 			dataType: "json",
 			type: "GET",
@@ -926,7 +926,7 @@
 	{
 		
 		$.ajax({
-			url:"assetManagement/assetAssigned/delete/" + assign.id,
+			url:"/assetManagement/assetAssigned/delete/" + assign.id,
 			dataType: "json",
 			type: "DELETE",
 			success: $.notify("Success! Asset " + assign.assets.assetCode + " and employee " + assign.employees.employeeID + " is now unassigned.", "success")//displayAlertT("Asset " + assign.assets.assetCode + " and employee " + assign.employees.employeeID + " is now unassigned.", "success", "Success!") //alert("Asset " + assign.assets.assetCode + " and employee " + assign.employees.employeeID + " is now unassigned")

@@ -15,7 +15,7 @@ import com.assetManagement.entities.AssetAssigned;
 import com.assetManagement.services.AssetAssignedService;
 
 @RestController
-@RequestMapping(value = "/assetManagement")
+//@RequestMapping(value = "/assetManagement")
 public class AssetAssignedController 
 {
 	@Autowired
