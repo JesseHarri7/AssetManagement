@@ -1,3 +1,14 @@
 #login-container {
 	margin-top:150px;
 }
+
+.select
+	color:#339FFF;
+}
+
+.active {
+	color: green;
+}
+.notActive {
+	color: red;
+}

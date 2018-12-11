@@ -1,9 +1,10 @@
 $(document).ready(function()
 {
 	var dataSet = [];
+	findUsers();
 	
 	//All data fields on start up
-	findAllAssets();
+	//findAllAssets();
 	
 	//Select
 	$('#asset-table tbody').on('click','tr', function()
@@ -34,6 +35,12 @@ $(document).ready(function()
 //		localStorage.removeItem('asset');
 		
 		
+    } );
+	
+	//find all users 
+	$('#findAll-btn').click( function () 
+	{
+		findUsers();
     } );
 	
 	//Search
@@ -92,11 +99,6 @@ $(document).ready(function()
 		login();
 	});
 	
-	$('#findAll-btn').click(function(event) 
-	{
-		event.preventDefault();
-		findAll();
-	});
 	
 	//Delete
 	$('#delete-btn').click(function(event) 
@@ -122,28 +124,49 @@ $(document).ready(function()
 		}
 	}
 	
-	function login()
+	function findUsers()
 	{
 		$.ajax({
-			url:"assetManagement/asset/findAll", 
+			url:"user/findAll", 
 			dataType: "json",
 			type: "GET",
 			success: function(data)
 			{
-				$("#asset-table").DataTable({
+				$("#user-table").DataTable({
 					data: data,
 					columns: [
-						{data: 'assetId'},
+						{data: 'userID'},
 						{data: 'name'},
-						{data: 'description'},
-						{data: 'brand'},
-						{data: 'datePurchased'},
-						{data: 'status'}
+						{data: 'username'},
+						{data: 'email'}
+					]
+				});
+			}
+
+	
+	
+	function findEmployee()
+	{
+		$.ajax({
+			url:"employee/findAll", 
+			dataType: "json",
+			type: "GET",
+			success: function(data)
+			{
+				$("#employee-table").DataTable({
+					data: data,
+					columns: [
+						{data: 'employeeID'},
+						{data: 'name'},
+						{data: 'surname'},
+						{data: 'email'},
+						{data: 'startDate'}
 					]
 				});
 			}
 		});
 	}
+	
 	
 	function findAllAssets()
 	{
@@ -268,6 +291,11 @@ $(document).ready(function()
 		{
 			alert("Please input an asset ID to find");
 		}
-	}	
+	}
+	
+	
+
+	
+}
 
 });

@@ -40,9 +40,9 @@ public class UserRepoTest {
 	public void testCreateUser() throws Exception{
 		
 		
-			User user = new User("Lutho", "Lwethu", "Lutho@gmail.com", 98659843, "Lutholwethu");
+			User user = new User();
 			
-			user.setName("Lutho");
+			user.setFirstName("Lutho");
 			user.setUsername("Lwethu");
 			user.setEmail("Lutho@gmail.com");
 			user.setPassword("Lutholwethu");
@@ -69,12 +69,12 @@ public class UserRepoTest {
 		}
 			
 			public void testDeleteUser() throws Exception{
-				List<User> users = userRepo.findByName("Lwethu");
+				List<User> users = userRepo.findByFirstName("Lwethu");
 				assertNotNull(users);
 				User user = users.get(0);
 				userRepo.delete(user);
 				
-				users = userRepo.findByName("Lwethu");
+				users = userRepo.findByFirstName("Lwethu");
 				assertNull(users);
 			}
 	

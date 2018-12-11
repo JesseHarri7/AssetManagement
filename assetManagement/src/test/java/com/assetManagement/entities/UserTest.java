@@ -7,19 +7,19 @@ import junit.framework.Assert;
 
 public class UserTest {
 
-	 User user = new User(null, null, null, 0, null);
+	 User user = new User();
 	
 	@Test
 	public void testUser()
 	{
-		user.setName("Lutho");
+		user.setFirstName("Lutho");
 		user.setPassword("Mvinjelwa");
 		user.setEmail("Alulutho2010@saratoga.com");
 		user.setUserID(990720093);
 		
 		assertNotNull(user);
 		assertEquals(990720093, user.getUserID());
-		assertEquals("Lutho", user.getName());
+		assertEquals("Lutho", user.getFirstName());
 		assertEquals("Mvinjelwa", user.getPassword());
 		assertEquals("Alulutho2010@saratoga.com", user.getEmail());
 	}
