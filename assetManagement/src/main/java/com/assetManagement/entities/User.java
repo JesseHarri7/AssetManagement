@@ -46,6 +46,8 @@ public class User implements Serializable {
 	
 	@Column
 	private String active = "Active";
+	
+	private int enabled = 1;
 
 	/*
 	 * @OneToOne(fetch = FetchType.LAZY)
@@ -109,6 +111,16 @@ public class User implements Serializable {
 	}
 	public void setActive(String active) {
 		this.active = active;
+	}
+	
+	public int getEnabled() 
+	{
+		return enabled;
+	}
+
+	public void setEnabled(int enabled) 
+	{
+		this.enabled = enabled;
 	}
 
 }
