@@ -5,72 +5,48 @@ $(document).ready(function()
 	//All data fields on start up
 	findAll();
 	
-	//Select
-	$('#emp-table tbody').on('click','tr', function()
-	{
-		if ( $(this).hasClass('selected') ) 
-		{
-            $(this).removeClass('selected');
-            $('#setEmp-btn').prop('disabled', true);
-		}
-		else 
-		{
-            $('tr.selected').removeClass('selected');
-            $(this).addClass('selected');
-            $('#setEmp-btn').prop('disabled', false);
-        }
-	} );
+	//do to example template
 	
-	//Delete
-	$('#delete-btn').click(function(event) 
-	{
-		var table = $('#emp-table').DataTable();
-		remove();
-		
-		table.row('.selected').remove().draw( false );
-		
+	$('#form-create-btn').click(function(event){
+		event.preventDefault();
+		create();
 	});
 	
-	//Clear local storage
-	$('#clear-btn').click( function()
-	{
-		localStorage.removeItem('asset');
-		localStorage.removeItem('emp');
-		alert("Cleared");
-	})
-	
-	//select Employee 
-	$('#setEmp-btn').click( function () 
-	{	
-		selectEmp();
-    } );
-	
-	//Search
-	$('#assetId').on( 'keyup', function () 
-	{
-		var empTable = empList(dataSet);
-		empTable.search( this.value ).draw();
-	} );
-	
-	
-	function empList(dataSet)
-	{
+	function create(){
+        var table = $('#emp-table').DataTable();
 		
-		var empTable = $("#emp-table").DataTable({
-			retrieve: true,
-			select: true,
-			data: dataSet,
-			columns: 
-			[
-				{data: 'employeeID'},
-				{data: 'name'},
-				{data: 'surname'},
-				{data: 'email'},
-				{data: 'startDate'}
-			]
+		
+		var empID = $('#id').val();
+		var firstName = $('#firstname').val();
+		var lastName = $('#lastname').val();
+		var email = $('#email').val();
+		var password = $('#password').val();
+		var empname = $('#empname').val();
+		
+		var emp = {empID, firstName, lastName,email,empname,password};
+		var emp_json = JSON.stringify(emp)
+		console.log(emp_json);
+		$.ajax({
+			headers: { 
+		        'Accept': 'application/json',
+		        'Content-Type': 'application/json' 
+		    },
+		    type:'POST',
+			dataType: 'JSON',
+			url:'assetManagement/employee/create',
+			data:emp_json,
+			success:function(response){
+				
+				table.row.add(emp).draw();
+				$('#exampleModal').modal('hide');
+				
+			},
+		error: function(error){
+			alert("ERROR "+JSON.stringify(error))
+			
+		}
+			
 		});
-		
-		return empTable;
 	}
 	
 	function findAll()
@@ -88,13 +64,61 @@ $(document).ready(function()
 				
 			}
 		});
-	}
-	
-	function remove()
+	}		
+
+	function empList(dataSet)
+	{
+		
+		var empTable = $("#emp-table").DataTable({
+			retrieve: true,
+			select: true,
+			data: dataSet,
+			columns: 
+			[
+				{data: 'employeeID'},
+				{data: 'name'},
+				{data: 'surname'},
+				{data: 'startDate'},
+				{data: 'email'}
+			]
+		});
+
+		return empTable;
+		}
+	//select
+    
+    $('#emp-table tbody').on( 'click', 'tr', function () {
+    	var table = $('#emp-table').DataTable();
+        if ( $(this).hasClass('selected') ) {
+            $(this).removeClass('selected');
+            $('#delete-btn').prop('disabled', true);
+           
+        }
+        else {
+            table.$('tr.selected').removeClass('selected');
+            $(this).addClass('selected');
+            $('#delete-btn').prop('disabled', false);
+        }    
+    });
+ //delete button
+    $('#delete-btn').click( function () {
+    	var table = $('#emp-table').DataTable();
+    	remove();
+        table.row('.selected').remove().draw( false );
+        
+    });
+    
+    function remove()
 	{
 		var table = $('#emp-table').DataTable();
 
 		var rowToDelete = table.row( '.selected' ).data();
+		
+		if(rowToDelete && rowToDelete.active == "Deactivated"){
+			rowToDelete.active = 'Active';
+		}else{
+			rowToDelete.active = 'Deactivated';
+		}
 		
 		if (rowToDelete)
 		{
@@ -102,40 +126,20 @@ $(document).ready(function()
 				url:"assetManagement/employee/delete/" + rowToDelete.employeeID, 
 				dataType: "json",
 				type: "DELETE",
-				success: alert("Asset " + rowToDelete.employeeID + " was removed")
+				
+				if(response.active && response.active=='Deactivated'){
+					rowToDelete.active = "Deactivated";
+				}else{
+					rowToDelete.active = "Active";
+				}
+			},
 			});
 			
 			table.row('.selected').remove().draw( false );
 		}
 		else
 		{
-			alert("Please select a asset to remove");
-		}	
-		
-	}
-	
-	function selectEmp()
-	{
-		var empData;
-		var table = $('#emp-table').DataTable();
-		console.log(empData = table.row( '.selected' ).data() );
-		
-		if(empData)
-		{
-			console.log("works: " + empData.employeeID);
-			
-			localStorage.setItem('emp', JSON.stringify(empData));
-			
-			window.location = "http://localhost:8080/assetAssigned";
-			
-//			var asset = JSON.parse(localStorage.getItem('asset'));
-			
-//			localStorage.removeItem('asset');
-		}
-		else
-		{
-			alert("Please select a employee");
+			alert("Please select a emp to remove");
 		}	
 	}
-
 });

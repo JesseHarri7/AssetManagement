@@ -13,4 +13,7 @@ public interface UserService {
     User findByUsername(String username) throws ResourceNotFoundException;
 	User findByPassword(String password) throws ResourceNotFoundException;
 	User saveUser(User user);
+	User deleteUser(long userID,String active);
+	User findByID(long userID) throws ResourceNotFoundException;
+	List<User> findByActive(String active) throws ResourceNotFoundException;
 }

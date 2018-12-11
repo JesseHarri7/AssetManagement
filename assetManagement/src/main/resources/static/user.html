@@ -1,67 +1,112 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet"
-	href="/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css" />
-<link rel="stylesheet"
-	href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" />
-<link rel="stylesheet"
-	href="https://cdn.datatables.net/select/1.2.0/css/select.dataTables.min.css"
-	type="text/css" />
+	<link rel="stylesheet" href="/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="css/styles.css" />
+	<link rel="stylesheet" href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" />
+	<link rel="stylesheet" href="https://cdn.datatables.net/select/1.2.0/css/select.dataTables.min.css" type="text/css" />
 </head>
-
-
 <body>
+	<h2>Saratoga</h2>
+	<nav class="navbar navbar-default">
+		<div class="container-fluid">
+			<div class="navbar-header">	
+			</div>
+			<ul class="nav navbar-nav">
+			<a class="dropdown-toggle navbar-brand" data-toggle="dropdown" href="#">Asset Management<span class="caret"></span></a>
+					<ul class="dropdown-menu">
+						<li><a class="dropdown-item" href="/userHistory">History</a></li>
+					</ul>
+				<li><a href="http://localhost:8080/asset">Assets</a></li>
+				<li><a href="http://localhost:8080/employee">Employee</a></li>
+				<li class="active"><a href="#">User</a></li>
+				<li><a href="http://localhost:8080/assetAssigned">AssetAssigned</a></li>
+			</ul>
+		</div>
+	</nav>
 
 	<form>
-		<h1>Personal information:</h1>
-
-		<div class="row">
-			<div class="col-md-4">
-				<div class="form-group">
-					<label for="firstName">First Name</label> <input type="text"
-						name="firstname" id="firstName" class="form-control"><br>
+		<div id="login-container">
+			<div class="row">
+				<div class="col-md-4 col-md-offset-4">
+					<input type="button" value="Show Not Active" id = "showActive-btn"class= "btn btn-primary">
+					<input type="button" value="Create"  class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+					<input type="button" value="Activate user" id= "change-btn" class="btn btn-primary" disabled>
+					
 				</div>
 			</div>
-
-			<div class="col-md-4">
-				<div class="form-group">
-					<label for="lastName">Last name</label> <input type="text"
-						name="lastname" id="lastname" class="form-control"><br>
-				</div>
-			</div>
-			
-			<!-- Added the rest below -->
-			
 		</div>
-
-
-
-
-
-
-		<br> User name:<br> <input type="text" name="username"><br>
-		<br> Pas:<br> <input type="text" name="password"><br>
-		<br> Confirm the password:<br> <input type="text"
-			name="password"><br> <br> Email:<br> <input
-			type="text" name="email"><br> <br> <input
-			type="button" class="btn btn-primary" value="Submit">
 	</form>
-	
-	<!-- Add Button below eg Create, Delete, Update -->
-	
-	<table class="table">
-		<caption>Users</caption>
-		<tr>
-			<th>ID</th>
-			<th>Name</th>
-			<th>Surname</th>
-			<th>Email</th>
-		</tr>
-	</table>
 
-	<script src="/webjars/jquery/3.1.1/jquery.min.js"></script>
-	<script src="/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js"></script>
-	<script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+
+	<div class="row">
+		<table class="display" id = "user-table">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Email</th>
+					<th>First Name</th>
+					<th>Last Name</th>
+					<th>Status</th>
+				</tr>
+			</thead>
+			<tbody></tbody>
+		</table>
+	</div>
+	<div class="modal" id="exampleModal" tabindex="-1" role="dialog"
+				aria-labelledby="exampleModalLabel" aria-hidden="true">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h2 class="modal-title" id="exampleModalLabel">Add User</h2>
+							<button type="button" class="close" data-dismiss="modal"
+								aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+							<form>
+							<div class="form-group">
+									<label for="Email">Email:</label> <input type="text" required
+										class="form-control" id="email"
+										placeholder="Enter email">
+								</div>
+								<div class="form-group">
+									<label for="password">password:</label> <input type="password" required
+										class="form-control" id="password"
+										placeholder="Enter password">
+								</div>
+
+								<div class="form-group">
+									<label for="firstname">First name:</label> <input type="text" required
+										class="form-control" id="firstname"
+										placeholder="Enter User name">
+								</div>
+
+								<div class="form-group">
+									<label for="lastname">Last name:</label> <input type="text" required
+										class="form-control" id="lastname"
+										placeholder="Enter lastname">
+								</div>
+
+								
+
+
+								<!-- <button type="submit" class="btn btn-default">Submit</button> -->
+							</form>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-primary"
+									id="form-create-btn">ADD</button>
+								<button type="button" class="btn btn-secondary"
+									data-dismiss="modal">Close</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		<script src="/webjars/jquery/3.1.1/jquery.min.js"></script>
+		<script src="/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js"></script>
+		<script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+		<script src="js/User.js"></script>
 </body>
 </html>

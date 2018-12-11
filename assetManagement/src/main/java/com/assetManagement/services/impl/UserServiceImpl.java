@@ -1,10 +1,15 @@
 package com.assetManagement.services.impl;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.assetManagement.entities.Asset;
 import com.assetManagement.entities.User;
 import com.assetManagement.excptions.ResourceNotFoundException;
 import com.assetManagement.repositories.UserRepo;
@@ -18,7 +23,7 @@ public  class UserServiceImpl implements UserService {
 	
 	@Override
 	public List<User> findByName(String name) throws ResourceNotFoundException {
-		List<User> list = userRepo.findByName(name);
+		List<User> list = userRepo.findByFirstName(name);
 			if (list != null && !list.isEmpty()) {
 				return list;
 			}else {
@@ -38,7 +43,7 @@ public  class UserServiceImpl implements UserService {
 	
 	@Override
 	public User findByEmail(String email) throws ResourceNotFoundException {
-		User user=  userRepo.findByUsername(email);
+		User user=  userRepo.findByEmail(email);
 		if (email != null) {
 		return user;
 		}else {
@@ -57,8 +62,81 @@ public  class UserServiceImpl implements UserService {
 
 	@Override
 	public User saveUser(User user) {
-		// TODO Auto-generated method stub
 		return userRepo.save(user);
 	}
-	
+
+	public List<User> findAll() {
+		List<User> userList = new ArrayList<User>();
+		Iterable<User> users = userRepo.findAll();
+		for (User a : users)
+		{
+			userList.add(a);
+		}
+		return userList;
+	}
+ 
+	/*@Override
+	public void deleteUser(long userID) {
+		userRepo.delete((userID));
+	}
+*/
+	@Transactional
+	@Override
+	public User deleteUser(long userID,String active) {
+		
+		User user = findByID(userID);
+		
+		if (user != null) {
+			
+		Integer result= userRepo.deleteUser(userID, active);
+		if(result.intValue() == 1) {
+			user.setActive(active);
+			
+		}else {
+			user.setActive(active);
+			
+		}
+		return	user;
+		}
+		
+		return null;
+	}
+/*
+	@Override
+	public User findByID(long userID) throws ResourceNotFoundException {
+		User user=  userRepo.findById(userID);
+		if (userID != null ) {
+		return user;
+		}else {
+			throw new ResourceNotFoundException("User is not found");	
+	}
+	}*/
+
+	@Override
+	public User findByID(long userID) throws ResourceNotFoundException {
+		
+		Optional<User> optional = userRepo.findById(userID);
+		if (optional.isPresent()) {
+			return optional.get();
+		}else {
+			return null;
+		
+	}
 }
+	public List<User> findByActive(String active) {
+		return  userRepo.findByActive(active);
+	}
+
+	public List<User> findHistory() {
+		/*List<User> userList = new ArrayList<User>();
+		Iterable<User> user = userRepo.findHistory();
+		for (User a : user)
+		{
+			userList.add(a);
+		}
+		return userList;	
+	}*/
+		return findAll();
+	}
+}
+

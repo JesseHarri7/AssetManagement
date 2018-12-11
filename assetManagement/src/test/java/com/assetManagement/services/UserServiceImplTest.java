@@ -24,13 +24,13 @@ public class UserServiceImplTest {
 	
  	@Before
     public void CreateUser() {
-        User user1 = new User("Lutho", "LuthoL", "Lutho@gmail.com", 99072003, "Lutholwethu");
-        User user2 = new User("Lindo", "LindoK", "Lindo@gmail.com", 99562483, "Lindokuhle");
-        User user3 = new User("Jabu", "JabuL", "Jabu@gmail.com", 99658959, "Jabulile");
-        
-        userService.saveUser(user1);
-        userService.saveUser(user2);
-        userService.saveUser(user3);    
+//        User user1 = new User("Lutho", "LuthoL", "Lutho@gmail.com", 99072003, "Lutholwethu");
+//        User user2 = new User("Lindo", "LindoK", "Lindo@gmail.com", 99562483, "Lindokuhle");
+//        User user3 = new User("Jabu", "JabuL", "Jabu@gmail.com", 99658959, "Jabulile");
+//        
+//        userService.saveUser(user1);
+//        userService.saveUser(user2);
+//        userService.saveUser(user3);    
   }
  	@Test
  	public void testFindByName(){

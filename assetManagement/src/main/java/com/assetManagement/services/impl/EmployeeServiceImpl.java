@@ -1,5 +1,6 @@
 package com.assetManagement.services.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -78,6 +79,17 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Override
 	public Employee saveEmployee(Employee employee) {
 		return employeeRepo.save(employee);
+	}
+
+
+	public List<Employee> findAll() {
+		List<Employee> eList = new ArrayList<Employee>();
+		Iterable<Employee> employees = employeeRepo.findAll();
+		for (Employee e : employees)
+		{
+			eList.add(e);
+		}
+		return eList;
 	}
 	
 		

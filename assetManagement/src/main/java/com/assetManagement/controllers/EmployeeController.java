@@ -20,7 +20,7 @@ import com.assetManagement.entities.User;
 import com.assetManagement.services.EmployeeService;
 import com.assetManagement.services.impl.EmployeeServiceImpl;
 @RestController
-@RequestMapping("/employee/")
+@RequestMapping("assetManagement/employee/")
 public class EmployeeController {
 	@Autowired
 	private EmployeeServiceImpl service;
@@ -78,4 +78,11 @@ public class EmployeeController {
 				
 				return new ResponseEntity<Employee>(employee, HttpStatus.OK);			
 			}
+			
+			// find All
+						@RequestMapping(value = "findAll", method = RequestMethod.GET)
+						@ResponseBody
+						public List<Employee> findAll() {
+							return service.findAll();
+							}
 }
