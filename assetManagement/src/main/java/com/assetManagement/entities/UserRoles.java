@@ -18,15 +18,15 @@ public class UserRoles
 	
 	@OneToOne//(fetch = FetchType.LAZY)
 	@JoinColumn(name = "username", nullable = false, referencedColumnName="username")
-	private User username;
+	private User email;
 	private String role;
 	
 	public UserRoles() {}
 	
-	public UserRoles(Long id, User username, String role)
+	public UserRoles(Long id, User email, String role)
 	{
 		this.userRoleId = id;
-		this.username = username;
+		this.email = email;
 		this.role = role;
 	}
 
@@ -41,12 +41,12 @@ public class UserRoles
 	}
 
 	public User getUsername() {
-		return username;
+		return email;
 	}
 
-	public void setUsername(User username) 
+	public void setUsername(User email) 
 	{
-		this.username = username;
+		this.email = email;
 	}
 
 	public String getRole() 
