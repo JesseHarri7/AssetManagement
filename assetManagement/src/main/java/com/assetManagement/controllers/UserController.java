@@ -18,7 +18,7 @@ import com.assetManagement.excptions.ResourceNotFoundException;
 import com.assetManagement.services.impl.UserServiceImpl;
 
 @RestController
-@RequestMapping("assetManagement/user/")
+@RequestMapping("/user/")
 public class UserController {
 	@Autowired
 	private UserServiceImpl userService;
