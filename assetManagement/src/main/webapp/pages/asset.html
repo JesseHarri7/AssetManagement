@@ -6,22 +6,16 @@
 
 <title>Assets</title>
 
-<link rel="icon" type="image/png" href="/assetManagement/res/images/icons/S-favicon.png" />
-<link rel="stylesheet"
-	href="/assetManagement/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css" />
-<link rel="stylesheet" href="/assetManagement/res/css/styles.css" />
-<link rel="stylesheet"
-	href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" />
-<link rel="stylesheet"
-	href="https://cdn.datatables.net/select/1.2.0/css/select.dataTables.min.css"
-	type="text/css" />
-<link
-	href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.2.0/animate.min.css"
-	rel="stylesheet">
+<link rel="icon" type="image/png" href="../res/images/icons/S-favicon.png" />
+<link rel="stylesheet" href="../webjars/bootstrap/3.3.7-1/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../res/css/styles.css" />
+<link rel="stylesheet" href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" />
+<link rel="stylesheet" href="https://cdn.datatables.net/select/1.2.0/css/select.dataTables.min.css" type="text/css" />
+<link href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.2.0/animate.min.css" rel="stylesheet">
 </head>
 <body>
 
-	<img src="/assetManagement/res/resources/Saratoga_logo.png" width="250px">
+	<img src="../res/resources/Saratoga_logo.png" width="250px">
 	<!-- 	<h2>Saratoga</h2> -->
 	<nav class="navbar navbar-default">
 		<div class="container-fluid">
@@ -31,18 +25,19 @@
 					href="#">Asset Management<span class="caret"></span></a>
 				<ul class="dropdown-menu">
 					<li><a class="dropdown-item"
-						href="/assetManagement/pages/asset-history">History</a></li>
+						href="../pages/asset-history">History</a></li>
 				</ul>
 			</div>
 
 			<ul class="nav navbar-nav">
+				<li><a href="../pages/home">Home</a></li>
 				<li class="active"><a href="#">Assets</a></li>
-				<li><a href="/assetManagement/pages/employee">Employees</a></li>
+				<li><a href="../pages/employee">Employees</a></li>
 				<li><a href="#">Users</a></li>
-				<li><a href="/assetManagement/pages/assetAssigned">Assign</a></li>
+				<li><a href="../pages/assetAssigned">Assign</a></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
-				<li><a href="/assetManagement/pages/logout"><span class="glyphicon glyphicon-log-in"></span>
+				<li><a href="../pages/logout"><span class="glyphicon glyphicon-log-in"></span>
 						Log-out</a></li>
 			</ul>
 		</div>
@@ -50,15 +45,12 @@
 
 	<div id="nav-buttons">
 
-		<input type="button" value="Create" class="btn btn-primary"
-			data-toggle="modal" data-target="#createModal"> <input
-			type="button" value="Edit" id="edit-btn" class="btn btn-primary"
-			data-target="#updateModal"> <input type="button"
-			value="Delete" id="delete-btn" class="btn btn-primary"> <input
-			type="button" value="Set Asset" id="setAsset-btn"
-			class="btn btn-primary"> <input type="button" value="Cancel"
-			id="cancel-btn" class="btn btn-primary-c">
-
+		<input type="button" value="Create" class="btn btn-primary" data-toggle="modal" data-target="#createModal">
+		<input type="button" value="Edit" id="edit-btn" class="btn btn-primary" data-target="#updateModal">
+		<input type="button" value="Delete" id="delete-btn" class="btn btn-primary">
+		<input type="button" value="Set Asset" id="setAsset-btn" class="btn btn-primary">
+		<input type="button" value="Cancel" id="cancel-btn" class="btn btn-primary-c">
+		<input type="button" value="Test" id="test-btn" class="btn btn-primary">
 
 	</div>
 	</br>
@@ -208,13 +200,13 @@
 		</div>
 	</div>
 
-	<script src="/assetManagement/webjars/jquery/3.1.1/jquery.min.js"></script>
-	<script src="/assetManagement/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js"></script>
+	<script src="../webjars/jquery/3.1.1/jquery.min.js"></script>
+	<script src="../webjars/bootstrap/3.3.7-1/js/bootstrap.min.js"></script>
 	<script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-	<script src="/assetManagement/res/js/asset.js"></script>
+	<script src="../res/js/asset.js"></script>
 	<!-- 	<script src="js/plugins/bootstrap-notify.js"></script> -->
 	<!-- 	<script src="js/plugins/bootstrap-notify.min.js"></script> -->
-	<script src="/assetManagement/res/js/plugins/notify.js"></script>
+	<script src="../res/js/plugins/notify.js"></script>
 </body>
 
 <!-- Footer -->

@@ -6,9 +6,6 @@
 	var asset;
 	var emp;
 	
-	//Global div declaration for alerts
-	//var div = document.getElementById('boot-alert');
-	
 	//Show cancel button if there is data in local storage
 	showBtn();
 
@@ -49,10 +46,6 @@
 			
 			//displayAlert("Please select an asset Code.", "warning", "Heads up!");
 			
-			/*div.innerHTML = displayAlert("<strong>Warning!</strong> Please select an asset Code.", "alert-warning");
-			$('#boot-alert').show();
-			slide();*/
-			
 			//alert("Please select an asset Code")
 		}
 	});	
@@ -76,10 +69,6 @@
 			$.notify("Heads up! Please select an Employee ID..", "warn");
 			
 			//displayAlert("Please select an Employee ID.", "warning", "Heads up!");
-			
-			/*div.innerHTML = displayAlert("<strong>Warning!</strong> Please select an Employee ID.", "alert-warning");
-			$('#boot-alert').show();
-			slide();*/
 			
 			//alert("Please select an Employee ID")
 		}
@@ -109,19 +98,13 @@
 				});
 			
 			//displayAlert("Are you sure you want to unassign? <p><a href='#' class='alert-link' onclick='delYes();'>Yes</a> <a href='#' class='alert-link' onclick='delNo();' >No</a></p>", "info", "Heads up!");
-			
-			/*div.innerHTML = displayAlert("Are you sure you want to unassign? <a id='delYes' data-id='Yes' class='alert-link' href='#'>Yes</a>  <a id='delNo' data-id='No' href='#' class='alert-link' >No</a>.", "alert-info");
-			$('#boot-alert').show();*/
+
 		}
 		else
 		{
 			$.notify("Heads up! Please select an item to unassign.", "warn");
 			
 			//displayAlert("Please select a item to unassign.", "warning", "Heads up!");
-			
-			/*div.innerHTML = displayAlert("<strong>Warning!</strong> Please select a item to unassign.", "alert-warning");
-			$('#boot-alert').show();
-			slide();*/
 			
 			//alert("Please select a item to remove");
 		}
@@ -157,12 +140,7 @@
 
 	//if Yes
 	$(document).on('click', '.notifyjs-foo-base .yes', function() 
-	{
-		/*var table = $('#asset-table').DataTable();
-		
-		var test = table.row('.selected').id();
-		table.rows(test).remove().draw( false );*/
-		
+	{	
 		//Function
 		remove();
 		//hide notification
@@ -182,7 +160,7 @@
 		if(data)
 		{
 			selectAA();
-			window.location = "/assetManagement/pages/employee";
+			window.location = "../pages/employee";
 			alert("Please select an employee to reassign to this asset");
 			
 		}
@@ -192,27 +170,9 @@
 			
 			//displayAlert("Please select a item to reassign.", "warning", "Heads up!");
 			
-			/*div.innerHTML = displayAlert("<strong>Warning!</strong> Please select a item to reassign.", "alert-warning");
-			$('#boot-alert').show();
-			slide();*/
-			
 			//alert("Please select a item to remove");
 		}	
 	});
-	
-	/*$('#boot-alert').on('click','a', function() 
-	{
-		var $el = $(this);
-		
-		if($el.data('id') == 'Yes')
-		{
-			remove();
-		}
-		else
-		{
-			$('#boot-alert').hide();
-		}		
-	});*/
 	
 	$('#cancel-btn').click(function(event)
 	{
@@ -279,7 +239,7 @@
 				url:"/assetManagement/assetAssigned/delete/" + rowToDelete.id, 
 				dataType: "json",
 				type: "DELETE",
-				success: success()//alert("Asset " + rowToDelete.assets.assetCode + " and employee " + rowToDelete.employees.employeeID + " is now unassigned")
+				success: success()
 			});
 			table.row('.selected').remove().draw( false );
 			function success()
@@ -288,20 +248,14 @@
 				
 				//displayAlert("Asset " + rowToDelete.assets.assetCode + " and employee " + rowToDelete.employees.employeeID + " is now unassigned.", "success", "Success!");
 				
-				/*div.innerHTML = displayAlert("<strong>Success!</strong> Asset " + rowToDelete.assets.assetCode + " and employee " + rowToDelete.employees.employeeID + " is now unassigned.", "alert-success");
-				$('#boot-alert').show();
-				//slide();
-*/			}
+				//alert("Asset " + rowToDelete.assets.assetCode + " and employee " + rowToDelete.employees.employeeID + " is now unassigned")
+			}
 		}
 		else
 		{
 			$.notify("Heads up! Please select a item to unassign.", "warn");
 			
 			//displayAlert("Please select a item to unassign.", "warning", "Heads up!");
-			
-			/*div.innerHTML = displayAlert("<strong>Warning!</strong> Please select a item to unassign.", "alert-warning");
-			$('#boot-alert').show();
-			slide();*/
 			
 			//alert("Please select a item to remove");
 		}	
@@ -348,25 +302,24 @@
 	}
 	
 	function displayAsset(asset)
-	{
-		
-			document.getElementById("mAssetId").innerHTML = asset.assetCode;
-			document.getElementById("mName").innerHTML = asset.name;
-			document.getElementById("mDesc").innerHTML = asset.description;
-			document.getElementById("mBrand").innerHTML = asset.brand;
-			document.getElementById("mDate").innerHTML = asset.datePurchased;
-			document.getElementById("mStatus").innerHTML = asset.status;
+	{	
+		document.getElementById("mAssetId").innerHTML = asset.assetCode;
+		document.getElementById("mName").innerHTML = asset.name;
+		document.getElementById("mDesc").innerHTML = asset.description;
+		document.getElementById("mBrand").innerHTML = asset.brand;
+		document.getElementById("mDate").innerHTML = asset.datePurchased;
+		document.getElementById("mStatus").innerHTML = asset.status;
 		
 	}
 	
 	function displayEmp(emp)
 	{
 		
-			document.getElementById("mEmpId").innerHTML = emp.employeeID;
-			document.getElementById("mEmpName").innerHTML = emp.name;
-			document.getElementById("mSur").innerHTML = emp.surname;
-			document.getElementById("mEmail").innerHTML = emp.email;
-			document.getElementById("mStartDate").innerHTML = emp.startDate;
+		document.getElementById("mEmpId").innerHTML = emp.employeeID;
+		document.getElementById("mEmpName").innerHTML = emp.name;
+		document.getElementById("mSur").innerHTML = emp.surname;
+		document.getElementById("mEmail").innerHTML = emp.email;
+		document.getElementById("mStartDate").innerHTML = emp.startDate;
 		
 	}
 	
@@ -378,20 +331,13 @@
 		if(data)
 		{
 			localStorage.setItem('assign', JSON.stringify(data));
-			
-//			var asset = JSON.parse(localStorage.getItem('asset'));
-			
-//			localStorage.removeItem('asset');
 		}
 		else
 		{
 			$.notify("Heads up! Please select a item to reassign.", "warn");
 			
 			//displayAlert("Please select a item to reassign.", "warning", "Heads up!");
-			
-			/*div.innerHTML = displayAlert("<strong>Warning!</strong> Please select a item to reassign.", "alert-warning");
-			$('#boot-alert').show();
-			slide();*/
+
 			//alert("Please select a row");
 		}
 	}
@@ -431,14 +377,8 @@
 			z_index: 2000
 			
 		});
-	}*/
-	
-	/*function slide()
-	{
-		$('#boot-alert').fadeTo(5000, 900).slideUp(900, function(){
-			$('#boot-alert').slideUp(900);
-		});
 	}
+
 	
 	function displayAlert(msg, type)
 	{

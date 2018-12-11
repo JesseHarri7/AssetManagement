@@ -83,7 +83,7 @@ $(document).ready(function()
 				clearLocal();
 				selectEmp();
 				window.location = "/assetManagement/pages/asset";
-				alert("Please select an asset to assign to the selected employee");
+				//alert("Please select an asset to assign to the selected employee");
 			}
 		}
 			
@@ -341,6 +341,7 @@ $(document).ready(function()
 		$('#reassign-btn').hide();
 	}
 	
+	//Make cancel button visible
 	function showBtn()
 	{
 		if(localStorage.length > 0)
