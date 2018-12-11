@@ -1,4 +1,4 @@
-package com.assetManagement.test.services;
+package com.assetManagement.services;
 
 import static org.junit.Assert.assertNotNull;
 

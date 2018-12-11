@@ -1,4 +1,4 @@
-package com.assetManagement.test.repositories;
+package com.assetManagement.repositories;
 
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
