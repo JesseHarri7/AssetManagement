@@ -7,6 +7,7 @@ import java.util.Optional;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.assetManagement.entities.Asset;
@@ -20,6 +21,9 @@ public  class UserServiceImpl implements UserService {
 
 	@Autowired
 	private UserRepo userRepo;
+	
+	@Autowired
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
 	
 	@Override
 	public List<User> findByName(String name) throws ResourceNotFoundException {
@@ -62,9 +66,10 @@ public  class UserServiceImpl implements UserService {
 
 	@Override
 	public User saveUser(User user) {
+		// TODO Auto-generated method stub
+		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 		return userRepo.save(user);
 	}
-
 	public List<User> findAll() {
 		List<User> userList = new ArrayList<User>();
 		Iterable<User> users = userRepo.findAll();
