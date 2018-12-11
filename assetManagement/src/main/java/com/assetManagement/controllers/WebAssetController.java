@@ -49,6 +49,18 @@ public class WebAssetController
 		return "/pages/home.html";
 	}
 	
+	@RequestMapping(value = "/pages/user")
+    public String user() 
+	{
+		return "/pages/user.html";
+	}
+	
+	@RequestMapping(value = "/pages/user-history")
+    public String userHistory() 
+	{
+		return "/pages/userHistory.html";
+	}
+	
 	/*@RequestMapping(value = "/assetManagement/error")
     public String Error403() 
 	{
