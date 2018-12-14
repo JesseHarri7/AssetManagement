@@ -1,51 +1,31 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	
 <title>Assets - History</title>
 
 <link rel="icon" type="image/png" href="../res/images/icons/S-favicon.png" />
-<link rel="stylesheet"
-	href="../webjars/bootstrap/3.3.7-1/css/bootstrap.min.css" />
+<!-- <link rel="stylesheet" href="../webjars/bootstrap/3.3.7-1/css/bootstrap.min.css" /> -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" />
+<link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.bootstrap4.min.css" />
+
 <link rel="stylesheet" href="../res/css/styles.css" />
-<link rel="stylesheet"
-	href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" />
-<link rel="stylesheet"
-	href="https://cdn.datatables.net/select/1.2.0/css/select.dataTables.min.css"
-	type="text/css" />
+<link rel="stylesheet" href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" />
+<link rel="stylesheet" href="https://cdn.datatables.net/select/1.2.0/css/select.dataTables.min.css" type="text/css" />
 </head>
 <body>
 
-	<img src="../res/resources/Saratoga_logo.png" width="250px">
-	<!-- 	<h2>Saratoga</h2> -->
-	<nav class="navbar navbar-default">
-		<div class="container-fluid">
-			<div class="navbar-header">
-				<a class="dropdown-toggle navbar-brand" data-toggle="dropdown"
-					href="#">History<span class="caret"></span></a>
-				<ul class="dropdown-menu">
-					<li><a class="dropdown-item"
-						href="../pages/asset">Asset Management</a></li>
-				</ul>
-			</div>
-
-			<ul class="nav navbar-nav">
-				<li><a href="../pages/home">Home</a></li>
-				<li class="active"><a href="#">Assets</a></li>
-				<li><a href="#">Employees</a></li>
-				<li><a href="#">Users</a></li>
-				<li><a href="../pages/assetAssigned-history">Assign</a></li>
-			</ul>
-			<ul class="nav navbar-nav navbar-right">
-				<li><a href="../pages/logout"><span class="glyphicon glyphicon-log-in"></span>
-						Log-out</a></li>
-			</ul>
-		</div>
-	</nav>
-
+	<div w3-include-html="../pages/temps/header.html"></div>
+	<!-- 	<h3>Saratoga</h3> -->
+	<div w3-include-html="../pages/temps/nav-history.html"></div>
 
 	<div class="table-width-outter">
 		<div class="table-width-inner">
-			<table class="display" id="asset-table">
+			<table class="display" id="asset-table" style="width:100%">
 				<thead>
 					<tr>
 						<th>Asset_Code</th>
@@ -53,6 +33,7 @@
 						<th>Description</th>
 						<th>Brand</th>
 						<th>Date_Purchased</th>
+						<th>Date_Removed</th>
 						<th>Status</th>
 						<th>Active/Inactive</th>
 					</tr>
@@ -62,23 +43,19 @@
 			</table>
 		</div>
 	</div>
+	
+	<!-- Footer -->
+	<div w3-include-html="../pages/temps/footer.html"></div>
+	<!-- ./Footer -->
 
 	<script src="../webjars/jquery/3.1.1/jquery.min.js"></script>
-	<script src="../webjars/bootstrap/3.3.7-1/js/bootstrap.min.js"></script>
+<!-- 	<script src="../webjars/bootstrap/3.3.7-1/js/bootstrap.min.js"></script> -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 	<script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+	
+	<script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
+	<script src="https://cdn.datatables.net/responsive/2.2.3/js/responsive.bootstrap.min.js"></script>
+	
 	<script src="../res/js/history/asset-history.js"></script>
 </body>
-
-<!-- Footer -->
-<div id="footer">
-
-	<p class="h6">
-		<a class="text-green ml-2" href="http://saratoga.co.za/"
-			target="_blank">Saratoga Software</a> &bull; &copy Copyright 2018
-		&bull; v1-Testing
-	</p>
-
-</div>
-<!-- ./Footer -->
-
 </html>

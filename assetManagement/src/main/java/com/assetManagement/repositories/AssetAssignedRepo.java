@@ -19,6 +19,8 @@ public interface AssetAssignedRepo extends CrudRepository<AssetAssigned, Long>
 	
 	List<AssetAssigned> findByMoveDate(String date);
 	
+	List<AssetAssigned> findByUnassignDate(String date);
+	
 	@Query(value = "SELECT * FROM asset_assigned", nativeQuery = true)
 	List<AssetAssigned> findAllHistory();
 	 

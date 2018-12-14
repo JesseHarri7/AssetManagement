@@ -12,7 +12,7 @@ import org.hibernate.annotations.SQLDelete;
 
 @Entity
 @Table(name = "asset", catalog = "management")
-@SQLDelete(sql = "UPDATE Asset set state = 'D' WHERE asset_id = ?")
+@SQLDelete(sql = "UPDATE Asset set state = 'D', unassign_date = CURDATE() WHERE asset_id = ?")
 public class Asset implements Serializable
 {
 
@@ -32,7 +32,8 @@ public class Asset implements Serializable
 	private String description;
 	private String brand;
 	private String datePurchased;
-	private String status;
+	private String status = "In-use";
+	private String unassignDate;
 	
 	private String state = "A";
 
@@ -131,6 +132,16 @@ public class Asset implements Serializable
 	public void setState(String state) 
 	{
 		this.state = state;
+	}
+
+	public String getUnassignDate() 
+	{
+		return unassignDate;
+	}
+
+	public void setUnassignDate(String unassignDate) 
+	{
+		this.unassignDate = unassignDate;
 	}
 
 }

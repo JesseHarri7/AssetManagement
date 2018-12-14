@@ -6,11 +6,17 @@
 	var asset;
 	var emp;
 	
+	//Add all temp files
+	includeHTML();
+	
 	//Show cancel button if there is data in local storage
 	showBtn();
 
 	//All data fields on start up
 	findAll();
+	
+	//Show alert when assigning is successful
+	showSelectAlert();
 	
 	//Select row
 	$('#AA-table tbody').on('click','tr', function()
@@ -212,6 +218,7 @@
 		var aaTable = $("#AA-table").DataTable({
 			dom: '<f<t>lip>',
 			retrieve: true,
+			responsive: true,
 			select: true,
 			data: dataSet,
 			columns: 
@@ -244,7 +251,7 @@
 			table.row('.selected').remove().draw( false );
 			function success()
 			{
-				$.notify("Success! Asset " + rowToDelete.assets.assetCode + " and employee " + rowToDelete.employees.employeeID + " is now unassigned.", "success");
+				$.notify("Success! Asset " + rowToDelete.assets.assetCode + " and employee " + rowToDelete.employees.employeeID + " are now unassigned.", "success");
 				
 				//displayAlert("Asset " + rowToDelete.assets.assetCode + " and employee " + rowToDelete.employees.employeeID + " is now unassigned.", "success", "Success!");
 				
@@ -357,6 +364,67 @@
 		{
 			$('#cancel-btn').addClass('visible');
 		}
+	}
+	
+	function showSelectAlert()
+	{
+		var assign = JSON.parse(localStorage.getItem('assigned'));
+		if(assign)
+		{
+			$(document).ready(function()
+			{
+			    $.notify("Data successfully assigned", "info");
+			});
+			localStorage.clear();
+			$('#cancel-btn').hide();
+		}
+	}
+	
+	function showActiveNav()
+	{
+		$('#aaNav').addClass('active');
+		
+		$("a[href='../pages/asset-history']").attr('href', '../pages/assetAssigned-history')
+		/*var url = window.location.pathname;
+		
+		if(url == "/assetManagement/pages/asset")
+		{
+			$('#aNav').addClass('active');
+		}*/
+	}
+	
+	function includeHTML() 
+	{
+		  var z, i, elmnt, file, xhttp;
+		  /*loop through a collection of all HTML elements:*/
+		  z = document.getElementsByTagName("*");
+		  for (i = 0; i < z.length; i++) 
+		  {
+		    elmnt = z[i];
+		    /*search for elements with a certain atrribute:*/
+		    file = elmnt.getAttribute("w3-include-html");
+		    if (file) 
+		    {
+		      /*make an HTTP request using the attribute value as the file name:*/
+		      xhttp = new XMLHttpRequest();
+		      xhttp.onreadystatechange = function() 
+		      {
+		        if (this.readyState == 4) 
+		        {
+		          if (this.status == 200) {elmnt.innerHTML = this.responseText;}
+		          if (this.status == 404) {elmnt.innerHTML = "Page not found.";}
+		          /*remove the attribute, and call this function once more:*/
+		          elmnt.removeAttribute("w3-include-html");
+		          includeHTML();
+		        }
+		      }
+		      xhttp.open("GET", file, true);
+		      xhttp.send();
+		      /*exit the function:*/
+		      return;
+		    }
+		  }
+		  showActiveNav();
 	}
 	
 /*	function displayAlert(msg, type, title)

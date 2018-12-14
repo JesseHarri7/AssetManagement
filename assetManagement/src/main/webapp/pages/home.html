@@ -7,40 +7,16 @@
 <title>Dashboard</title>
 
 <link rel="icon" type="image/png" href="../res/images/icons/S-favicon.png" />
-<link rel="stylesheet" href="../webjars/bootstrap/3.3.7-1/css/bootstrap.min.css" />
+<!-- <link rel="stylesheet" href="../webjars/bootstrap/3.3.7-1/css/bootstrap.min.css" /> -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 <link rel="stylesheet" href="../res/css/styles.css" />
 <link rel="stylesheet" href="../res/css/home.css" />
 <link href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.2.0/animate.min.css" rel="stylesheet">
 </head>
 <body>
-	<img src="../res/resources/Saratoga_logo.png" width="250px">
-	<!-- 	<h2>Saratoga</h2> -->
-	<nav class="navbar navbar-default">
-		<div class="container-fluid">
-			<div class="navbar-header">
-
-				<a class="dropdown-toggle navbar-brand" data-toggle="dropdown"
-					href="#">Asset Management<span class="caret"></span></a>
-				<ul class="dropdown-menu">
-					<li><a class="dropdown-item"
-						href="../pages/asset-history">History</a></li>
-				</ul>
-			</div>
-
-			<ul class="nav navbar-nav">
-				<li class="active"><a href="#">Home</a></li>
-				<li><a href="../pages/asset">Assets</a></li>
-				<li><a href="../pages/employee">Employees</a></li>
-				<li><a href="#">Users</a></li>
-				<li><a href="../pages/assetAssigned">Assign</a></li>
-			</ul>
-			<ul class="nav navbar-nav navbar-right">
-				<li><a href="../pages/logout"><span class="glyphicon glyphicon-log-in"></span>
-						Log-out</a></li>
-			</ul>
-		</div>
-	</nav>
-	
+	<div w3-include-html="../pages/temps/header.html"></div>
+	<!-- 	<h3>Saratoga</h3> -->
+	<div w3-include-html="../pages/temps/nav.html"></div>
 	
 	<!-- 	Page Content -->
 	<div id="page-wrapper">
@@ -52,14 +28,10 @@
 		            <div class="white-box">
 		                <div class="col-in row">
 		                    <div class="col-md-6 col-sm-6 col-xs-6"> <i data-icon="E" class="linea-icon linea-basic"></i>
-		                        <h5 class="text-muted vb">Assets</h5> </div>
+		                        <h3 class="text-muted vb">Assets</h3> </div>
 		                    <div class="col-md-6 col-sm-6 col-xs-6">
 		                        <h3 class="counter text-right m-t-15 text-danger"><div id="totalAssets"></div></h3> </div>
-		                    <div class="col-md-12 col-sm-12 col-xs-12">
-		                        <div class="progress">
-		                            <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 20%"> <span class="sr-only">40% Complete (success)</span> </div>
-		                        </div>
-		                    </div>
+		                    
 		                </div>
 		            </div>
 		        </div>
@@ -69,14 +41,10 @@
 		            <div class="white-box">
 		                <div class="col-in row">
 		                    <div class="col-md-6 col-sm-6 col-xs-6"> <i class="linea-icon linea-basic" data-icon="&#xe01b;"></i>
-		                        <h5 class="text-muted vb">Employees</h5> </div>
+		                        <h3 class="text-muted vb">Employees</h3> </div>
 		                    <div class="col-md-6 col-sm-6 col-xs-6">
 		                        <h3 class="counter text-right m-t-15 text-megna"><div id="totalEmp"></div></h3> </div>
-		                    <div class="col-md-12 col-sm-12 col-xs-12">
-		                        <div class="progress">
-		                            <div class="progress-bar progress-bar-megna" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%"> <span class="sr-only">40% Complete (success)</span> </div>
-		                        </div>
-		                    </div>
+		                   
 		                </div>
 		            </div>
 		        </div>
@@ -86,25 +54,33 @@
 		            <div class="white-box">
 		                <div class="col-in row">
 		                    <div class="col-md-6 col-sm-6 col-xs-6"> <i class="linea-icon linea-basic" data-icon="&#xe00b;"></i>
-		                        <h5 class="text-muted vb">Assigned</h5> </div>
+		                        <h3 class="text-muted vb">Assigned</h3> </div>
 		                    <div class="col-md-6 col-sm-6 col-xs-6">
 		                        <h3 class="counter text-right m-t-15 text-primary"><div id="totalAA"></div></h3> </div>
-		                    <div class="col-md-12 col-sm-12 col-xs-12">
-		                        <div class="progress">
-		                            <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%"> <span class="sr-only">40% Complete (success)</span> </div>
-		                        </div>
-		                    </div>
+		                    
 		                </div>
 		            </div>
 		        </div>
 		        <!-- /.col -->
 		    </div>
 		    <!-- /.row -->
-			
+		    <div class="row">
+		    	<div class="chart-wrapper">
+			    	<div class="center">
+						<canvas id="homeChart"></canvas>
+					</div>
+				</div>
+			</div>	
 		</div>
 	</div>
 	
+	<!-- Footer -->
+	<div w3-include-html="../pages/temps/footer.html"></div>
+	<!-- ./Footer -->
+
 	<script src="../webjars/jquery/3.1.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+	<script src="../res/js/plugins/Chart.bundle.min.js"></script>
 	<script src="../res/js/home.js"></script>
 </body>
 </html>

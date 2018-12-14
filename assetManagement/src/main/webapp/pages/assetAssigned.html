@@ -1,61 +1,38 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	
 <title>Assign</title>
 
 <link rel="icon" type="image/png" href="../res/images/icons/S-favicon.png" />
-<link rel="stylesheet"
-	href="../webjars/bootstrap/3.3.7-1/css/bootstrap.min.css" />
+<!-- <link rel="stylesheet" href="../webjars/bootstrap/3.3.7-1/css/bootstrap.min.css" /> -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" />
+<link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.bootstrap4.min.css" />
+
 <link rel="stylesheet" href="../res/css/styles.css" />
-<link rel="stylesheet"
-	href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" />
-<link rel="stylesheet"
-	href="https://cdn.datatables.net/select/1.2.0/css/select.dataTables.min.css"
-	type="text/css" />
-<link
-	href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.2.0/animate.min.css"
-	rel="stylesheet">
+<link rel="stylesheet" href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" />
+<link rel="stylesheet" href="https://cdn.datatables.net/select/1.2.0/css/select.dataTables.min.css" type="text/css" />
+<link href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.2.0/animate.min.css" rel="stylesheet">
 </head>
 <body>
 
-	<img src="../res/resources/Saratoga_logo.png" width="250px">
-	<!-- 	<h2>Saratoga</h2> -->
-	<nav class="navbar navbar-default">
-		<div class="container-fluid">
-			<div class="navbar-header">
-				<a class="dropdown-toggle navbar-brand" data-toggle="dropdown" href="#">Asset Management<span class="caret"></span></a>
-				<ul class="dropdown-menu">
-					<li><a class="dropdown-item" href="../pages/assetAssigned-history">History</a></li>
-				</ul>
-			</div>
-
-			<ul class="nav navbar-nav">
-				<li><a href="../pages/home">Home</a></li>
-				<li><a href="../pages/asset">Assets</a></li>
-				<li><a href="../pages/employee">Employees</a></li>
-				<li><a href="#">Users</a></li>
-				<li class="active"><a href="#">Assign</a></li>
-			</ul>
-			<ul class="nav navbar-nav navbar-right">
-				<li><a href="../pages/logout"><span class="glyphicon glyphicon-log-in"></span>
-						Log-out</a></li>
-			</ul>
-		</div>
-	</nav>
+	<div w3-include-html="../pages/temps/header.html"></div>
+	<!-- 	<h3>Saratoga</h3> -->
+	<div w3-include-html="../pages/temps/nav.html"></div>
 
 	<div id="nav-buttons">
 
-		<input type="button" value="Unassign" id="delete-btn"
-			class="btn btn-primary"> <input type="button"
-			value="Reassign" id="reassign-btn" class="btn btn-primary"> <input
-			type="button" value="Asset info" id="asset-btn"
-			class="btn btn-primary" data-target="#assetModal"> <input
-			type="button" value="Employee info" id="emp-btn"
-			class="btn btn-primary" data-target="#empModal"> <input
-			type="button" value="Cancel" id="cancel-btn"
-			class="btn btn-primary-c">
+		<input type="button" value="Unassign" id="delete-btn" class="btn btn-primary">
+		<input type="button" value="Reassign" id="reassign-btn" class="btn btn-primary">
+		<input type="button" value="Asset info" id="asset-btn" class="btn btn-primary" data-target="#assetModal">
+		<input type="button" value="Employee info" id="emp-btn" class="btn btn-primary" data-target="#empModal">
+		<input type="button" value="Cancel" id="cancel-btn" class="btn btn-primary-c">
 
-	</div>
+	</div>	
 
 	</br>
 
@@ -63,7 +40,7 @@
 
 	<div class="table-width-outter">
 		<div class="table-width-inner">
-			<table class="display" id="AA-table">
+			<table class="display" id="AA-table" style="width:100%">
 				<thead>
 					<tr>
 						<th>Asset_Code</th>
@@ -79,15 +56,15 @@
 	</div>
 
 	<!-- Asset modal view -->
-	<!-- Modal -->
+	<!-- Asset info Modal -->
 	<div class="modal fade" id="assetModal" role="dialog">
 		<div class="modal-dialog">
 
 			<!-- Modal content-->
 			<div class="modal-content">
 				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
 					<h2 class="modal-title">Asset Details</h2>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
 				</div>
 				<div class="modal-body">
 					Asset Code:
@@ -113,15 +90,15 @@
 	</div>
 
 	<!-- Employee modal view -->
-	<!-- Modal -->
+	<!-- Employee Info Modal -->
 	<div class="modal fade" id="empModal" role="dialog">
 		<div class="modal-dialog">
 
 			<!-- Modal content-->
 			<div class="modal-content">
 				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
 					<h2 class="modal-title">Employee Details</h2>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
 				</div>
 				<div class="modal-body">
 					Employee ID:
@@ -143,22 +120,20 @@
 
 		</div>
 	</div>
+	
+	<!-- Footer -->
+	<div w3-include-html="../pages/temps/footer.html"></div>
+	<!-- ./Footer -->
 
 	<script src="../webjars/jquery/3.1.1/jquery.min.js"></script>
-	<script src="../webjars/bootstrap/3.3.7-1/js/bootstrap.min.js"></script>
+<!-- 	<script src="../webjars/bootstrap/3.3.7-1/js/bootstrap.min.js"></script> -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 	<script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+	
+	<script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
+	<script src="https://cdn.datatables.net/responsive/2.2.3/js/responsive.bootstrap.min.js"></script>
+	
 	<script src="../res/js/assetAssigned.js"></script>
 	<script src="../res/js/plugins/notify.js"></script>
 </body>
-<!-- Footer -->
-<div id="footer">
-
-	<p class="h6">
-		<a class="text-green ml-2" href="http://saratoga.co.za/"
-			target="_blank">Saratoga Software</a> &bull; &copy Copyright 2018
-		&bull; v1-Testing
-	</p>
-
-</div>
-<!-- ./Footer -->
 </html>
