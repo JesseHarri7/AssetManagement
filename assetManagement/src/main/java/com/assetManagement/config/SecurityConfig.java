@@ -30,14 +30,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
 	protected void configure(HttpSecurity http) throws Exception 
 	{
 		//Set what is restricted, all requests to be blocked unless it is from anyone with this role
-		http.antMatcher("/pages/**").authorizeRequests().anyRequest().hasRole("USER")
+		http.antMatcher("/pages/**").authorizeRequests().anyRequest().hasAnyRole("USER", "ADMIN")
 //			.antMatchers("/assetManagement/res/**").permitAll()//.anyRequest().permitAll()
 			//Set the login page
 			.and().formLogin().loginPage("/pages/index")
 			//Redirect if failed login.
 			.failureUrl("/index?error=1")
 			//Url that is POSTed from the login form to attempt login and default page to redirect to if successful
-			.loginProcessingUrl("/pages/login*").defaultSuccessUrl("/pages/asset", true)
+			.loginProcessingUrl("/pages/login*").defaultSuccessUrl("/pages/home", true)
 			//URL from webpages to logout
 			.permitAll().and().logout().logoutUrl("/pages/logout")
 			//Redirect back to login page

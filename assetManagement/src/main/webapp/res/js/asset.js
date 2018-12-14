@@ -3,14 +3,23 @@
 	var count = 0;
 	var dataSet = [];
 	
+	//Add temps html files
+	includeHTML();
+	
 	//All data fields on start up
 	findAll();
 	
 	//Show cancel button if there is data in local storage
 	showBtn();
 	
+	$('#test-btn').click(function(event) 
+	{
+		//Show active class for navigation bar
+		showActiveNav();
+	});
+	
 	//Show selected alert if employee is selected
-	showSelectAlert()
+	showSelectAlert();
 	
 	//Click to select row from the table
 	$('#asset-table tbody').on('click','tr', function()
@@ -19,44 +28,6 @@
 		$(this).toggleClass('selected');
 		
 	});
-	
-	/////////////////////////////////////////////////////////////Test
-	$('#test-btn').click(function(event) 
-	{		
-		var con = findUser();
-		if(con)
-		{
-			alert("true");
-		}
-		else
-		{
-			alert("false");
-		}
-	});
-	
-	function findUser()
-	{
-		var dataSet;
-		
-		$.ajax({
-		  url: "/assetManagement/user/username/bob",
-		  async: false,
-		  type: "GET",
-		  dataType: "json",
-		  success: function(data)
-		  {
-			  dataSet = true;
-//			  dataSet = data;
-		  },
-		  error: function(data)
-		  {
-			  dataSet = false;
-//			  dataSet = null;
-		  }
-		});
-		return dataSet;
-	}
-	/////////////////////////////////////////////////////////////Test
 	
 	//Form delete button
 	$('#delete-btn').click(function(event) 
@@ -68,7 +39,18 @@
 		
 		$('.notifyjs-corner').remove();
 		
-		if (rowToDelete.length != 0)
+		if (rowToDelete.length == 0)
+		{
+			$.notify("Heads up! Please select an asset to remove.", "warn");
+			//displayAlertT("Please select an asset to remove.", "warning", "Heads up!");
+			
+			//alert("Please select a asset to remove");
+		}
+		else if (rowToDelete.length >= 2)
+		{
+			$.notify("Heads up! Please only select one asset to remove.", "warn");
+		}
+		else
 		{
 			createNotifyD();
 			
@@ -83,14 +65,6 @@
 				});
 			
 //			displayAlertT("Are you sure you want to delete? <p><a href='#' class='alert-link' onclick='delYes();'>Yes</a> <a href='#' class='alert-link' onclick='delNo();' >No</a></p>", "info", "Heads up!");
-			
-		}
-		else
-		{
-			$.notify("Heads up! Please select an asset to remove.", "warn");
-			//displayAlertT("Please select an asset to remove.", "warning", "Heads up!");
-			
-			//alert("Please select a asset to remove");
 		}
 		
 	});
@@ -243,6 +217,7 @@
 	{
 		var assetTable = $("#asset-table").DataTable({
 			dom: '<f<t>lip>',
+			responsive: true,
 			retrieve: true,
 			select: true,
 			rowId: 'assetCode',
@@ -253,8 +228,8 @@
 				{data: 'name'},
 				{data: 'description'},
 				{data: 'brand'},
-				{data: 'datePurchased'},
-				{data: 'status'}
+				{data: 'datePurchased'}
+//				{data: 'status'}
 			]
 		});
 		
@@ -365,27 +340,84 @@
 		$('.yes'+i).trigger('notify-hide');
 	}
 		
+	//First get input from user for the reason and then delete
 	function remove(assetCode)
 	{
 		var table = $('#asset-table').DataTable();
+
+		removeMsg(assetCode);
 		
-		$.ajax({
-			url:"/assetManagement/asset/delete/" + assetCode, 
+			$.ajax({
+				url:"/assetManagement/asset/delete/" + assetCode, 
+				dataType: "json",
+				type: "DELETE",
+				success: success()
+			});
+			
+			function success()
+			{
+				$.notify("Success! Asset " + assetCode + " was removed.", "success");
+				table.row("#"+assetCode).remove().draw( false );
+				
+//				displayAlertT("Asset " + assetCode + " was removed.", "success", "Success!");
+				
+//				alert("Asset " + assetCode + " was removed.");
+			}
+		
+	}
+	
+	function removeMsg(assetCode)
+	{	
+		document.getElementById("removeCode").innerHTML = assetCode;
+//		Get the reason for the asset being removed
+		$('#removeModalId').modal('show');
+	}
+	
+	$('#form-remove-btn').click(function(event) 
+	{
+		var assetCode = document.getElementById("removeCode").innerHTML;
+		var status = document.forms["remove"]["rStatus"].value;
+		
+		//Find By id
+		var assetObj = findId(assetCode);
+		assetObj.status = status;
+
+		var code = assetObj.assetCode;
+		var assetId = assetObj.assetId;
+		var brand = assetObj.brand;
+		var date = assetObj.datePurchased;
+		var desc = assetObj.description;
+		var name = assetObj.name;
+		var unassignDate = assetObj.unassignDate;
+		var state = assetObj.state;
+		var stat = assetObj.status;
+			
+		var asset = {assetCode: code, assetId, brand, datePurchased: date, description: desc, name, state, status: stat, unassignDate};
+		
+		var data_json = JSON.stringify(asset);
+		
+		//Update record with status message
+		$.ajax(
+		{
+			headers: {
+		        'Accept': 'application/json',
+		        'Content-Type': 'application/json' 
+		    },
+			url:"/assetManagement/asset/update", 
 			dataType: "json",
-			type: "DELETE",
+			data: data_json,
+			type: "PUT",
 			success: success()
 		});
 		
 		function success()
 		{
-			$.notify("Success! Asset " + assetCode + " was removed.", "success");
-			table.row("#"+assetCode).remove().draw( false );
-			
-//			displayAlertT("Asset " + assetCode + " was removed.", "success", "Success!");
-			
-//			alert("Asset " + assetCode + " was removed.");
+			$.notify("Saved!", "success");
+
+			$('#removeModalId').modal('hide');
 		}
-	}
+		
+	});
 	
 	//Saving selected rows to local storage
 	function selectAsset()
@@ -429,10 +461,10 @@
 		var description = $('#desc').val();
 		var brand = $('#brand').val();
 		var datePurchased = [year, month, day].join('/');
-		var status = $('#status').val();
+//		var status = $('#status').val();
 		
 		//Set as object
-		var asset = {assetCode, name, description, brand, datePurchased, status};
+		var asset = {assetCode, name, description, brand, datePurchased};
 		
 		//Translate so that JSON can read it
 		var data_json = JSON.stringify(asset);
@@ -508,9 +540,9 @@
 		 var desc = document.forms["create"]["desc"].value;
 		 var brand = document.forms["create"]["brand"].value;
 		 var date = document.forms["create"]["date"].value;
-		 var status = document.forms["create"]["status"].value;
+//		 var status = document.forms["create"]["status"].value;
 		 
-	    if(id == "" || name == "" || desc == "" || brand == "" || date == "" || status == "") 
+	    if(id == "" || name == "" || desc == "" || brand == "" || date == "") 
 	    {
 	    	$.notify("Heads up! All fields must be filled out.", "warn");
 	    	
@@ -532,9 +564,9 @@
 		var desc = document.forms["update"]["uDesc"].value;
 		var brand = document.forms["update"]["uBrand"].value;
 		var date = document.forms["update"]["uDate"].valueAsDate;
-		var status = document.forms["update"]["uStatus"].value;
+//		var status = document.forms["update"]["uStatus"].value;
 		 
-	    if(id == "" || name == "" || desc == "" || brand == "" || date == "" || status == "") 
+	    if(id == "" || name == "" || desc == "" || brand == "" || date == "") 
 	    {
 	    	$.notify("Heads up! All fields must be filled out.", "warn");
 	    	
@@ -564,12 +596,12 @@
 		var name = document.forms["update"]["uName"].value;
 		var description = document.forms["update"]["uDesc"].value;
 		var brand = document.forms["update"]["uBrand"].value;
-		var status = document.forms["update"]["uStatus"].value;
+//		var status = document.forms["update"]["uStatus"].value;
 		
 		var assetObj = findId(assetCode);
 		var assetId = assetObj.assetId;
 		
-		var asset = {assetId, assetCode, name, description, brand, datePurchased, status};
+		var asset = {assetId, assetCode, name, description, brand, datePurchased};
 		
 		var data_json = JSON.stringify(asset);
 		
@@ -612,7 +644,7 @@
 		document.forms["update"]["uDesc"].value = asset.description;
 		document.forms["update"]["uBrand"].value = asset.brand;
 		document.forms["update"]["uDate"].valueAsDate = datePurchased;
-		document.forms["update"]["uStatus"].value = asset.status;
+//		document.forms["update"]["uStatus"].value = asset.status;
 		
 	}
 	
@@ -622,7 +654,8 @@
 		createTable();
 		if(count > 0)
 		{
-			alert("Data successfully assigned");
+			//alert("Data successfully assigned");
+			localStorage.setItem('assigned', JSON.stringify("Assigned"));
 			window.location = "../pages/assetAssigned";
 		}
 
@@ -648,11 +681,11 @@
 				
 				if(assetSet)
 				{
-//					$.notify("Error! Asset " + asset.assetCode + " is already assigned to employee " + assetSet.employees.employeeID, "error");
+					$.notify("Error! Asset " + asset.assetCode + " is already assigned to employee " + assetSet.employees.employeeID, "error");
 					
 //					displayAlertT("Asset " + asset.assetCode + " is already assigned to employee " + assetSet.employees.employeeID, "danger", "Error!");
 					
-					alert("Asset " + asset.assetCode + " is already assigned to employee " + assetSet.employees.employeeID);
+					//alert("Asset " + asset.assetCode + " is already assigned to employee " + assetSet.employees.employeeID);
 				}
 				else
 				{
@@ -792,6 +825,51 @@
 		}
 	}
 	
+	function showActiveNav()
+	{
+		$('#aNav').addClass('active');
+		/*var url = window.location.pathname;
+		
+		if(url == "/assetManagement/pages/asset")
+		{
+			$('#aNav').addClass('active');
+		}*/
+	}
+	
+	function includeHTML() 
+	{
+		  var z, i, elmnt, file, xhttp;
+		  /*loop through a collection of all HTML elements:*/
+		  z = document.getElementsByTagName("*");
+		  for (i = 0; i < z.length; i++) 
+		  {
+		    elmnt = z[i];
+		    /*search for elements with a certain atrribute:*/
+		    file = elmnt.getAttribute("w3-include-html");
+		    if (file) 
+		    {
+		      /*make an HTTP request using the attribute value as the file name:*/
+		      xhttp = new XMLHttpRequest();
+		      xhttp.onreadystatechange = function() 
+		      {
+		        if (this.readyState == 4) 
+		        {
+		          if (this.status == 200) {elmnt.innerHTML = this.responseText;}
+		          if (this.status == 404) {elmnt.innerHTML = "Page not found.";}
+		          /*remove the attribute, and call this function once more:*/
+		          elmnt.removeAttribute("w3-include-html");
+		          includeHTML();
+		        }
+		      }
+		      xhttp.open("GET", file, true);
+		      xhttp.send();
+		      /*exit the function:*/
+		      return;
+		    }
+		  }
+		  showActiveNav();
+	}
+	
 /*	function displayAlert(msg, type)
 	{
 		var alert = "<div class='alert " + type + " alert-dismissible fade in'> <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a> "
@@ -818,5 +896,7 @@
 			
 		});
 	}*/
+	
+	
 
 //});

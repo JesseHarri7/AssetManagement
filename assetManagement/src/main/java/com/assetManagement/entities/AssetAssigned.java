@@ -15,7 +15,7 @@ import org.hibernate.annotations.Where;
 
 @Entity
 @Table(name = "assetAssigned", catalog = "management")
-@SQLDelete(sql = "UPDATE asset_assigned set state = 'D' WHERE asset_assigned_id = ?")
+@SQLDelete(sql = "UPDATE asset_assigned set state = 'D', unassign_date = CURDATE() WHERE asset_assigned_id = ?")
 @Where(clause="state <> 'D'")
 public class AssetAssigned implements Serializable
 {
@@ -39,6 +39,8 @@ public class AssetAssigned implements Serializable
 	private Employee employees;
 	
 	private String moveDate;
+	private String unassignDate;
+
 	private String state = "A";
 	
 	public AssetAssigned() {}
@@ -98,6 +100,14 @@ public class AssetAssigned implements Serializable
 	public void setState(String state) 
 	{
 		this.state = state;
+	}
+	
+	public String getUnassignDate() {
+		return unassignDate;
+	}
+
+	public void setUnassignDate(String unassignDate) {
+		this.unassignDate = unassignDate;
 	}
 	
 }

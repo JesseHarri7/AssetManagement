@@ -1,8 +1,10 @@
 /*Home Page*/
 .white-box {
-	background: #fff;
+	background-color: #edf1f5;
 	padding: 25px;
-	margin-bottom: 15px
+	margin-bottom: 15px;
+	border: 1px solid;
+	border-radius: 4px;
 }
 
 .white-box .box-title {
@@ -15,7 +17,7 @@
 .container-fluid {
 	padding-left: 25px;
 	padding-right: 25px;
-	padding-bottom: 15px
+	padding-bottom: 15px;
 }
 
 .col-lg-1, .col-lg-10, .col-lg-11, .col-lg-12, .col-lg-2, .col-lg-3,
@@ -36,104 +38,18 @@
 }
 
 .text-danger {
-	color: #cbb2ae
+	color: #FF6384!important;
+/* 	color:red!important; */
 }
 
 .text-megna {
-	color: #aec9cb
+	color: #36A2EB!important;
+/* 	color: blue!important; */
 }
 
 .text-primary, .text-purple {
-	color: #b5a8b9
-}
-
-.progress {
-	-webkit-box-shadow: none !important;
-	background-color: rgba(120, 130, 140, .13);
-	box-shadow: none !important;
-	height: 4px;
-	border-radius: 0;
-	margin-bottom: 18px;
-	overflow: hidden
-}
-
-.progress-bar {
-	box-shadow: none;
-	font-size: 8px;
-	font-weight: 600;
-	line-height: 12px
-}
-
-.progress.progress-sm {
-	height: 8px !important
-}
-
-.progress.progress-sm .progress-bar {
-	font-size: 8px;
-	line-height: 5px
-}
-
-.progress.progress-md {
-	height: 15px !important
-}
-
-.progress.progress-md .progress-bar {
-	font-size: 10.8px;
-	line-height: 14.4px
-}
-
-.progress.progress-lg {
-	height: 20px !important
-}
-
-.progress.progress-lg .progress-bar {
-	font-size: 12px;
-	line-height: 20px
-}
-
-.progress-bar-primary {
-	background-color: #b5a8b9
-}
-
-.progress-bar-success {
-	background-color: #becfa6
-}
-
-.progress-bar-info {
-	background-color: #85b4d0
-}
-
-.progress-bar-megna {
-	background-color: #aec9cb
-}
-
-.progress-bar-warning {
-	background-color: #cbc3ae
-}
-
-.progress-bar-danger {
-	background-color: #cbb2ae
-}
-
-.progress-bar-inverse {
-	background-color: #b6b9a8
-}
-
-.progress-bar-purple {
-	background-color: #b5a8b9
-}
-
-.progress-bar-custom {
-	background-color: #85b4d0
-}
-
-.progress-animated {
-	-webkit-animation-duration: 5s;
-	-webkit-animation-name: myanimation;
-	-webkit-transition: 5s all;
-	animation-duration: 5s;
-	animation-name: myanimation;
-	transition: 5s all
+	color: #FFCD56!important;
+/* 	color: yellow!important; */
 }
 
 
@@ -149,67 +65,8 @@ keyframes myanimation {
 }
 
 }
-.progress-vertical {
-	min-height: 250px;
-	height: 250px;
-	width: 4px;
-	position: relative;
-	display: inline-block;
-	margin-bottom: 0;
-	margin-right: 20px
-}
 
-.progress-vertical .progress-bar {
-	width: 100%
-}
-
-.progress-vertical-bottom {
-	min-height: 250px;
-	height: 250px;
-	position: relative;
-	width: 4px;
-	display: inline-block;
-	margin-bottom: 0;
-	margin-right: 20px
-}
-
-.progress-vertical-bottom .progress-bar {
-	width: 100%;
-	position: absolute;
-	bottom: 0
-}
-
-.progress-vertical-bottom.progress-sm, .progress-vertical.progress-sm {
-	width: 8px !important
-}
-
-.progress-vertical-bottom.progress-sm .progress-bar, .progress-vertical.progress-sm .progress-bar
-	{
-	font-size: 8px;
-	line-height: 5px
-}
-
-.progress-vertical-bottom.progress-md, .progress-vertical.progress-md {
-	width: 15px !important
-}
-
-.progress-vertical-bottom.progress-md .progress-bar, .progress-vertical.progress-md .progress-bar
-	{
-	font-size: 10.8px;
-	line-height: 14.4px
-}
-
-.progress-vertical-bottom.progress-lg, .progress-vertical.progress-lg {
-	width: 20px !important
-}
-
-.progress-vertical-bottom.progress-lg .progress-bar, .progress-vertical.progress-lg .progress-bar
-	{
-	font-size: 12px;
-	line-height: 20px
-}
-
-#wrapper {
+/* #wrapper {
 	width: 100%
 }
 
@@ -217,4 +74,18 @@ keyframes myanimation {
 	padding: 0 0 60px;
 	min-height: 568px;
 	background: #edf1f5
+} */
+
+/* Chart */
+.chart-wrapper{
+	display: block;
+    width: 100%;
+    height: 230px;
+}
+
+/* Chart center */
+.center {
+  margin: auto;
+  width: 50%;
+  padding: 10px;
 }
