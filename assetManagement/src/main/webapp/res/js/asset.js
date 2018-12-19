@@ -48,7 +48,7 @@
 		}
 		else if (rowToDelete.length >= 2)
 		{
-			$.notify("Heads up! Please only select one asset to remove.", "warn");
+			$.notify("Heads up! Please only select one asset to remove.", "error");
 		}
 		else
 		{
@@ -106,10 +106,21 @@
 		});
 	}
 	
+	//Create button
+	$('#create-btn').click(function(event) 
+	{
+		//Clear form red border css
+		clearFormBorder();
+		$('.notifyjs-corner').remove();
+	});
+	
 	//Modal form create button
 	$('#form-create-btn').click(function(event) 
 	{
+		//Clear form red border css
+		clearFormBorder();
 		$('.notifyjs-corner').remove();
+		
 		//Check to see if all fields are filled in
 		if(validate())
 		{
@@ -121,6 +132,8 @@
 	//Modal form create-close button
 	$('#form-close-btn').click(function(event) 
 	{
+		//Clear form red border css
+		clearFormBorder();
 		//Clear modal form data
 		document.getElementById("create").reset();
 	});
@@ -135,6 +148,8 @@
 	//Form update button
 	$('#edit-btn').click(function(event) 
 	{
+		//Clear form red border css
+		clearFormBorder();
 		//Clear .notify space
 		$('.notifyjs-corner').remove();
 		
@@ -161,6 +176,8 @@
 	//Modal form update button
 	$('#form-update-btn').click(function(event) 
 	{
+		//Clear form red border css
+		clearFormBorder();
 		$('.notifyjs-corner').remove();
 		//Check to see if all fields are filled in
 		if(validateUpdate())
@@ -298,7 +315,8 @@
 			}
 			else
 			{
-				remove(rowToDelete[i].assetCode);
+				removeMsg(rowToDelete[i].assetCode);
+//				remove(rowToDelete[i].assetCode);
 			}
 		}
 	}
@@ -335,7 +353,8 @@
 		//Function
 		var assetSet = alreadySet(code);
 		assignedRemove(assetSet);
-		remove(code);
+		removeMsg(assetCode);
+//		remove(code);
 		//hide notification
 		$('.yes'+i).trigger('notify-hide');
 	}
@@ -345,7 +364,7 @@
 	{
 		var table = $('#asset-table').DataTable();
 
-		removeMsg(assetCode);
+//		removeMsg(assetCode);
 		
 			$.ajax({
 				url:"/assetManagement/asset/delete/" + assetCode, 
@@ -370,7 +389,7 @@
 	{	
 		document.getElementById("removeCode").innerHTML = assetCode;
 //		Get the reason for the asset being removed
-		$('#removeModalId').modal('show');
+		$('#removeModalId').modal({backdrop: "static"}, {keyboard: false});
 	}
 	
 	$('#form-remove-btn').click(function(event) 
@@ -407,14 +426,17 @@
 			dataType: "json",
 			data: data_json,
 			type: "PUT",
-			success: success()
+			success: success(code)
 		});
 		
-		function success()
+		function success(code)
 		{
-			$.notify("Saved!", "success");
-
+//			$.notify("Saved!", "success");
+			
 			$('#removeModalId').modal('hide');
+			
+			//Remove the asset
+			remove(code);
 		}
 		
 	});
@@ -503,7 +525,7 @@
 		}
 		else
 		{
-			$.notify("Error! The Asset " + assetCode + " you're trying to create already exists.", "Error");
+			$.notify("Error! The Asset " + assetCode + " you're trying to create already exists.", "error");
 			
 //			displayAlertT("The Asset " + assetCode + " you're trying to create already exists.", "danger", "Error!");
 
@@ -534,27 +556,51 @@
 	}
 	
 	function validate()
-	{
-		 var id = document.forms["create"]["id"].value;
-		 var name = document.forms["create"]["name"].value;
-		 var desc = document.forms["create"]["desc"].value;
-		 var brand = document.forms["create"]["brand"].value;
-		 var date = document.forms["create"]["date"].value;
-//		 var status = document.forms["create"]["status"].value;
+	{	
+		var id = document.forms["create"]["id"].value;
+		var name = document.forms["create"]["name"].value;
+		var desc = document.forms["create"]["desc"].value;
+		var brand = document.forms["create"]["brand"].value;
+		var date = document.forms["create"]["date"].value;
+//		var status = document.forms["create"]["status"].value;
 		 
-	    if(id == "" || name == "" || desc == "" || brand == "" || date == "") 
-	    {
-	    	$.notify("Heads up! All fields must be filled out.", "warn");
-	    	
-//	    	displayAlertT("All fields must be filled out.", "warning", "Heads up!");
-						
-	        //alert("All fields must be filled out");
-	        return false;
-	    }
-	    else
-	    {
-	    	return true;
-	    }
+		if(id == "" || name == "" || desc == "" || brand == "" || date == "") 
+		{
+			displayFormBorder(id, name, desc, brand, date);
+			$.notify("Heads up! All fields must be filled out.", "error");
+		    	
+//			displayAlertT("All fields must be filled out.", "warning", "Heads up!");
+							
+//			alert("All fields must be filled out");
+		    return false;
+		}
+		else
+		{
+			if(validateId(id))
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+	}
+	
+	function validateId(id)
+	{
+		var numbers = /^[0-9]+$/;
+		
+		if(id.match(numbers))
+		{
+			return true;
+		}
+		else
+		{
+			$.notify("Heads up! Please input numeric characters only.", "error");
+			$('#id').addClass("form-fill-error");
+			return false;
+		}
 	}
 	
 	function validateUpdate()
@@ -568,7 +614,8 @@
 		 
 	    if(id == "" || name == "" || desc == "" || brand == "" || date == "") 
 	    {
-	    	$.notify("Heads up! All fields must be filled out.", "warn");
+	    	displayFormBorder(id, name, desc, brand, date);
+	    	$.notify("Heads up! All fields must be filled out.", "error");
 	    	
 //	    	displayAlertT("All fields must be filled out.", "warning", "Heads up!");
 	    	
@@ -723,7 +770,7 @@
 		}
 		else
 		{
-			$.notify("Heads up! Neither an asset or employee was selected", "warn");
+			$.notify("Heads up! Neither an asset or employee was selected", "error");
 			
 //			displayAlertT("Neither an asset or employee was selected.", "warning", "Heads up!");
 			
@@ -868,6 +915,57 @@
 		    }
 		  }
 		  showActiveNav();
+	}
+	
+	function clearFormBorder()
+	{
+		//create form
+		$('#id').removeClass("form-fill-error");
+		$('#name').removeClass("form-fill-error");
+		$('#desc').removeClass("form-fill-error");
+		$('#brand').removeClass("form-fill-error");
+		$('#datePurchased').removeClass("form-fill-error");
+		
+		//Update form
+		$('#uId').removeClass("form-fill-error");
+		$('#uName').removeClass("form-fill-error");
+		$('#uDesc').removeClass("form-fill-error");
+		$('#uBrand').removeClass("form-fill-error");
+		$('#uDatePurchased').removeClass("form-fill-error");
+	}
+	
+	function displayFormBorder(id, name, desc, brand, date)
+	{
+		if(!id)
+		{
+			$('#id').addClass("form-fill-error");
+			$('#uId').addClass("form-fill-error");
+		}	
+		
+		if(!name)
+		{
+			$('#name').addClass("form-fill-error");
+			$('#uName').addClass("form-fill-error");
+		}
+		
+		if(!desc)
+		{
+			$('#desc').addClass("form-fill-error");
+			$('#uDesc').addClass("form-fill-error");
+		}
+		
+		if(!brand)
+		{
+			$('#brand').addClass("form-fill-error");
+			$('#uBrand').addClass("form-fill-error");
+		}
+		
+		if(!date)
+		{
+			$('#datePurchased').addClass("form-fill-error");
+			$('#uDatePurchased').addClass("form-fill-error");
+		}
+		
 	}
 	
 /*	function displayAlert(msg, type)
