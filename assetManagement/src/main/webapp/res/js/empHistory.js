@@ -6,7 +6,7 @@ findAll();
 function findAll() {
 		
 	$.ajax({
-		url:"/assetManagement/employee/findHistory",
+		url:"/assetManagement/employee/findAll",
 		dataType: "json",
 		type: "GET",
 		success: function(data) {
