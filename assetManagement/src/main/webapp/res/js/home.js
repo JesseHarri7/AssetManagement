@@ -4,7 +4,6 @@ $(document).ready(function()
 	includeHTML();
 	
 	var findAllAssets = findAllAssets();
-	var percent = ((findAllAssets.length / 100)*0.1)*10;
 	
 	var findAllEmp = findAllEmp();
 	
