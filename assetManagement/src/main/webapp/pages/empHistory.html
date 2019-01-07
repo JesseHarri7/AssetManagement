@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<head>
+	<link rel="stylesheet" href="../webjars/bootstrap/3.3.7-1/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="../res/css/styles.css" />
+	<link rel="stylesheet" href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" />
+	<link rel="stylesheet" href="https://cdn.datatables.net/select/1.2.0/css/select.dataTables.min.css" type="text/css" />
+</head>
+<body>
+	<h2>Saratoga</h2>
+	<nav class="navbar navbar-default">
+		<div class="container-fluid">
+			<div class="navbar-header">	
+			</div>
+			<ul class="nav navbar-nav">
+				<li><a href="../pages/asset-history">Assets</a></li>
+				<li class="active"><a href="#">Employee</a></li>
+				<li><a href="../pages/User">User</a></li>
+				<li><a href="../pages/assetAssigned-history">AssetAssigned</a></li>
+			</ul>
+		</div>
+	</nav>
+<li><a href="http://localhost:8080/assetManagement/employee/findHistory">findHistory</a></li>
+	<div class="row">
+		<table class="display" id = "emp-table">
+			<thead>
+				<tr>
+				<th>ID</th>
+				<th>Name</th>
+				<th>Surname</th>
+				<th>Start_Date</th>
+				<th>Email</th>
+				<th>Active</th>
+				</tr>
+			</thead>
+			<tbody></tbody>
+		</table>
+	</div>
+	
+	<script src="../webjars/jquery/3.1.1/jquery.min.js"></script>
+		<script src="../webjars/bootstrap/3.3.7-1/js/bootstrap.min.js"></script>
+		<script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+		<script src="../res/js/empHistory.js"></script>
+</body>
+</html>
