@@ -23,58 +23,166 @@
 		<div class="container-fluid">
 			<!-- row -->
 			<div class="row">
+			<!--col -->
 		    	<div class="chart-wrapper">
 			    	<div class="center">
 						<canvas id="homeChart"></canvas>
 					</div>
 				</div>
 			</div>
+			<!-- /.col -->
 			<!-- /row -->
+			
 			<!-- row -->
 		    <div class="row">
 		        <!--col -->
 		        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
 		            <div class="white-box">
 		                <div class="col-in row">
-		                    <div class="col-md-6 col-sm-6 col-xs-6"> <i data-icon="E" class="linea-icon linea-basic"></i>
-		                        <h3 class="text-muted vb">Assets</h3> </div>
-		                    <div class="col-md-6 col-sm-6 col-xs-6">
-		                        <h3 class="counter text-right m-t-15 text-danger"><div id="totalAssets"></div></h3> </div>
-		                    
-		                </div>
-		            </div>
-		        </div>
-		        <!-- /.col -->
-		        <!--col -->
-		        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-		            <div class="white-box">
-		                <div class="col-in row">
-		                    <div class="col-md-6 col-sm-6 col-xs-6"> <i class="linea-icon linea-basic" data-icon="&#xe01b;"></i>
-		                        <h3 class="text-muted vb">Employees</h3> </div>
-		                    <div class="col-md-6 col-sm-6 col-xs-6">
-		                        <h3 class="counter text-right m-t-15 text-megna"><div id="totalEmp"></div></h3> </div>
-		                   
-		                </div>
-		            </div>
-		        </div>
-		        <!-- /.col -->
-		        <!--col -->
-		        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-		            <div class="white-box">
-		                <div class="col-in row">
-		                    <div class="col-md-6 col-sm-6 col-xs-6"> <i class="linea-icon linea-basic" data-icon="&#xe00b;"></i>
-		                        <h3 class="text-muted vb">Assigned</h3> </div>
-		                    <div class="col-md-6 col-sm-6 col-xs-6">
-		                        <h3 class="counter text-right m-t-15 text-primary"><div id="totalAA"></div></h3> 
+		                    <div class="col-md-12 col-sm-12 col-xs-12">
+		                        <span class="home-span-left">
+		                        	<h3 class="text-muted vb">Assets</h3>
+		                        </span>
+		                        
+		                        <span class="home-span-right">
+		                        	<h3 class="counter text-right m-t-15 text-danger"><div id="totalAssets"></div></h3>
+		                        </span>
 		                    </div>
 		                    
 		                </div>
 		            </div>
 		        </div>
 		        <!-- /.col -->
+		        <!--col -->
+		        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+		            <div class="white-box">
+		                <div class="col-in row">
+		                   <div class="col-md-12 col-sm-12 col-xs-12">
+		                        <span class="home-span-left">
+		                        	<h3 class="text-muted vb">Employees</h3>
+		                        </span>
+		                        
+		                        <span class="home-span-right">
+		                        	<h3 class="counter text-right m-t-15 text-megna"><div id="totalEmp"></div></h3>
+		                   		</span>
+							</div>
+		            	</div>
+		       		</div>
+		       	</div>
+		        <!-- /.col -->
+		        <!--col -->
+		        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+		            <div class="white-box">
+		                <div class="col-in row">
+		                	<div class="col-md-12 col-sm-12 col-xs-12">
+		                     	<span class="home-span-left">
+		                        	<h3 class="text-muted vb">Assigned</h3> 
+		                        </span>
+		                        
+		                        <span class="home-span-right">
+		                        	<h3 class="counter text-right m-t-15 text-primary"><div id="totalAA"></div></h3>
+		                        </span> 
+		                    </div>
+		                </div>
+		            </div>
+		        </div>
+		        <!-- /.col -->
 		    </div>
 		    <!-- /.row -->
+			<!-- row -->
+			<div class="row">
+				 <!--col -->
+		        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+		            <div class="white-box">
+		                <div class="col-in row">
+		                    <div class="col-md-12 col-sm-12 col-xs-12">
+		                     	<span class="home-span-left">
+									<a class="reportAssets" href="#"><h3 class="text-muted vb">Asset reports</h3></a>
+		                        </span>
+		                        
+		                        <span class="home-span-right">
+		                        	<h3 class="counter text-right m-t-15 text-danger"><div id="reportAssets"></div></h3>
+		                   		</span>
+		                    </div>
+		                    
+		                </div>
+		            </div>
+		        </div>
+		        <!-- /.col -->
+		         <!--col -->
+		        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+		            <div class="white-box">
+		                <div class="col-in row">
+		                    <div class="col-md-12 col-sm-12 col-xs-12">
+		                     	<span class="home-span-left">
+									<a class="reportAssign" href="#"><h3 class="text-muted vb">Assigned reports</h3></a>
+		                        </span>
+		                        
+		                        <span class="home-span-right">
+		                        	<h3 class="counter text-right m-t-15 text-primary"><div id="reportAA"></div></h3>
+		                        </span>
+		                    </div>
+		                    
+		                </div>
+		            </div>
+		        </div>
+		        <!-- /.col -->
+				 <!--col -->
+		        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+		            <div class="white-box">
+		                <div class="col-in row">
+		                    <div class="col-md-12 col-sm-12 col-xs-12">
+		                     	<span class="home-span-left">
+									<h3 class="text-muted vb">Pending requests</h3>
+		                        </span>
+		                        
+		                         <span class="home-span-right">
+		                        	<h3 class="counter text-right m-t-15 text-primary"> <!-- ENTER NUMBER HERE --></h3>
+		                        </span> 
+		                    </div>
+		                    
+		                </div>
+		            </div>
+		        </div>
+		        <!-- /.col -->
+			</div>
 		</div>
+	</div>
+	
+<!-- 	Hidden tables -->
+	<div class="hidden-table">
+		<table class="display" id="asset-table" style="width:100%">
+			<thead>
+				<tr>
+					<th>Asset_Code</th>
+					<th>Name</th>
+					<th>Description</th>
+					<th>Brand</th>
+					<th>Date_Purchased</th>
+					<th>Date_Removed</th>
+					<th>Status</th>
+					<th>Active/Inactive</th>
+				</tr>
+			</thead>
+			<tbody>
+			</tbody>
+		</table>
+		
+		<table class="display" id="AA-table" style="width:100%">
+			<thead>
+				<tr>
+					<th>Asset_Code</th>
+					<th>Employee_ID</th>
+					<th>Emp_Name</th>
+					<th>Date_Assigned</th>
+					<th>Date_Unassigned</th>
+					<th>Previous_Owner</th>
+					<th>Active/Inactive</th>
+				</tr>
+			</thead>
+			<tbody>
+			</tbody>
+		</table>
 	</div>
 	
 	<!-- Footer -->
@@ -84,6 +192,22 @@
 	<script src="../webjars/jquery/3.1.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 	<script src="../res/js/plugins/Chart.bundle.min.js"></script>
+	
+	<script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+	<script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
+<!-- 	<script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script> -->
+	<script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
+	<script src="https://cdn.datatables.net/responsive/2.2.3/js/responsive.bootstrap.min.js"></script>
+
+	<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.flash.min.js"></script>
+	<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
+	<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
+	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+	<script src=""></script>
+	
 	<script src="../res/js/home.js"></script>
 </body>
 </html>

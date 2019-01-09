@@ -9,6 +9,11 @@ $(document).ready(function()
 	
 	var findAllAA = findAllAA();
 	
+	//Reporting stats
+	var allAssets = reportAssets();
+	
+	var allAssigned = reportAssigned();
+	
 	//Displaying total Assets
 	document.getElementById("totalAssets").innerHTML = findAllAssets.length;
 	
@@ -18,7 +23,13 @@ $(document).ready(function()
 	//Displaying total Assests assigned
 	document.getElementById("totalAA").innerHTML = findAllAA.length;
 	
-//	document.getElementById("totalAssetsPercent").innerHTML = percent;
+	//Reporting
+	
+	//Displaying total Assets
+	document.getElementById("reportAssets").innerHTML = allAssets.length;
+	
+	//Displaying total Assests assigned
+	document.getElementById("reportAA").innerHTML = allAssigned.length;
 	
 	//Find all assets from the database
 	function findAllAssets()
@@ -124,8 +135,15 @@ $(document).ready(function()
 	    data: data,
 	 // Configuration options
 	    options: {
-	    	responsive: true
-	    }
+	    		responsive: true,
+	    		maintainAspectRatio: false,
+	    		 title: 
+	    		 {
+	    			 display: true,
+	    			 text: 'Active assets',
+	    			 fontSize: 20
+	    		 }
+	    	}
 	});
 	
 	function showActiveNav()
@@ -166,5 +184,130 @@ $(document).ready(function()
 		  }
 		  showActiveNav();
 	}
+	
+	////////////////////////////////////////////////////////////////REPORTING////////////////////////////////////////////////////////////////
+	
+	//Find all assets from the database
+	function reportAssets()
+	{
+		var dataSet = [];
+		
+		$.ajax({
+			url:"/assetManagement/asset/findAllHistory",
+			dataType: "json",
+			async: false,
+			type: "GET",
+			success: function(data)
+			{
+				dataSet = data;
+				
+				var assetTable = $("#asset-table").DataTable({
+					dom: '<f<t>lip>',
+					buttons: [
+//			           'excel',
+			           {
+			        	   extend: 'excel',
+			        	   title: 'Assets',
+			        	   filename: 'Assets'
+			           }
+			        ],
+					responsive: true,
+					retrieve: true,
+					select: true,
+					rowId: 'assetCode',
+					data: dataSet,
+					columns: 
+					[
+						{data: 'assetCode'},
+						{data: 'name'},
+						{data: 'description'},
+						{data: 'brand'},
+						{data: 'datePurchased'},
+						{data: 'unassignDate'},
+						{data: 'status'},
+						{data: 'state'}
+					]
+				});
+				
+			},
+			error: function(data)
+			{
+				dataSet = "Error";
+			}
+		});
+		
+		return dataSet;
+	}
+	
+	$(document).on('click', '.reportAssets', function() 
+	{
+		var assets = $("#asset-table").DataTable();
+		
+		//var data = test.buttons.exportData();
+		
+		assets.button( '0' ).trigger();
+		
+	});
+	
+	//Find all Assigned assets from the database
+	function reportAssigned()
+	{
+		
+		var dataSet = [];
+		
+		$.ajax({
+			url:"/assetManagement/assetAssigned/findAllHistory",
+			dataType: "json",
+			async: false,
+			type: "GET",
+			success: function(data)
+			{
+				dataSet = data;
+				
+				var aaTable = $("#AA-table").DataTable({
+					dom: '<f<t>lip>',
+					buttons: [
+				           {
+				        	   extend: 'excel',
+				        	   title: 'Assigned',
+				        	   filename: 'Assigned Assets'
+				           }
+				        ],
+					retrieve: true,
+					responsive: true,
+					select: true,
+					data: dataSet,
+					columns: 
+					[
+						//{data: 'id'},
+						{data: 'assets.assetCode'},
+						{data: 'employees.employeeID'},
+						{data: 'employees.name'},
+						{data: 'moveDate'},
+						{data: 'unassignDate'},
+						{data: 'prevOwner'},
+						{data: 'state'}
+					]
+				});
+				
+			},
+			error: function(data)
+			{
+				dataSet = "Error";
+			}
+		});
+		
+		return dataSet;
+	}
+	
+	$(document).on('click', '.reportAssign', function() 
+	{		
+		var assigned = $("#AA-table").DataTable();
+		
+		//var data = test.buttons.exportData();
+		
+		assigned.button( '0' ).trigger();
+		
+	});
 	
 });

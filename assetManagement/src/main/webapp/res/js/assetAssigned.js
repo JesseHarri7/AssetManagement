@@ -18,6 +18,9 @@
 	//Show alert when assigning is successful
 	showSelectAlert();
 	
+	//Show alert when reassigning is successful
+	showReassignAlert();
+	
 	//Select row
 	$('#AA-table tbody').on('click','tr', function()
 	{
@@ -374,6 +377,20 @@
 			$(document).ready(function()
 			{
 			    $.notify("Data successfully assigned", "info");
+			});
+			localStorage.clear();
+			$('#cancel-btn').hide();
+		}
+	}
+	
+	function showReassignAlert()
+	{
+		var reassign = JSON.parse(localStorage.getItem('reassigned'));
+		if(reassign)
+		{
+			$(document).ready(function()
+			{
+			    $.notify("Data successfully reassigned", "info");
 			});
 			localStorage.clear();
 			$('#cancel-btn').hide();
