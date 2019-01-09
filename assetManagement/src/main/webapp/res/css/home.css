@@ -85,7 +85,17 @@ keyframes myanimation {
 
 /* Chart center */
 .center {
-  margin: auto;
-  width: 50%;
-  padding: 10px;
+	position: relative;
+ 	margin: auto;
+ 	height: 40vh;
+/*  	width: 80vw; */
+ 	padding: 10px;
+}
+
+.home-span-right{
+	float: right;
+}
+
+.home-span-left{
+	float: left;
 }

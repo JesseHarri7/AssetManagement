@@ -40,6 +40,7 @@ public class AssetAssigned implements Serializable
 	
 	private String moveDate;
 	private String unassignDate;
+	private String prevOwner;
 
 	private String state = "A";
 	
@@ -102,12 +103,24 @@ public class AssetAssigned implements Serializable
 		this.state = state;
 	}
 	
-	public String getUnassignDate() {
+	public String getUnassignDate() 
+	{
 		return unassignDate;
 	}
 
-	public void setUnassignDate(String unassignDate) {
+	public void setUnassignDate(String unassignDate) 
+	{
 		this.unassignDate = unassignDate;
+	}
+
+	public String getPrevOwner() 
+	{
+		return prevOwner;
+	}
+
+	public void setPrevOwner(String prevOwner) 
+	{
+		this.prevOwner = prevOwner;
 	}
 	
 }

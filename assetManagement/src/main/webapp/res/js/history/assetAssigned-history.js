@@ -42,6 +42,7 @@ $(document).ready(function()
 				{data: 'employees.name'},
 				{data: 'moveDate'},
 				{data: 'unassignDate'},
+				{data: 'prevOwner'},
 				{data: 'state'}
 			]
 		});

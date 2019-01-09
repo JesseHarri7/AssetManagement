@@ -14,8 +14,16 @@
 	
 	$('#test-btn').click(function(event) 
 	{
-		//Show active class for navigation bar
-		showActiveNav();
+////////////////////////////////////////Test////////////////////////////////////////
+		
+		var test = $("#asset-table").DataTable();
+		
+		var data = test.buttons.exportData();
+		
+		test.button( '0' ).trigger();
+		console.log(data);
+				
+/////////////////////////////////////////Test////////////////////////////////////////
 	});
 	
 	//Show selected alert if employee is selected
@@ -234,6 +242,9 @@
 	{
 		var assetTable = $("#asset-table").DataTable({
 			dom: '<f<t>lip>',
+			buttons: [
+	           'excel'
+	        ],
 			responsive: true,
 			retrieve: true,
 			select: true,
@@ -397,46 +408,49 @@
 		var assetCode = document.getElementById("removeCode").innerHTML;
 		var status = document.forms["remove"]["rStatus"].value;
 		
-		//Find By id
-		var assetObj = findId(assetCode);
-		assetObj.status = status;
+		if(validateDeleteForm())
+		{
+			//Find By id
+			var assetObj = findId(assetCode);
+			assetObj.status = status;
 
-		var code = assetObj.assetCode;
-		var assetId = assetObj.assetId;
-		var brand = assetObj.brand;
-		var date = assetObj.datePurchased;
-		var desc = assetObj.description;
-		var name = assetObj.name;
-		var unassignDate = assetObj.unassignDate;
-		var state = assetObj.state;
-		var stat = assetObj.status;
+			var code = assetObj.assetCode;
+			var assetId = assetObj.assetId;
+			var brand = assetObj.brand;
+			var date = assetObj.datePurchased;
+			var desc = assetObj.description;
+			var name = assetObj.name;
+			var unassignDate = assetObj.unassignDate;
+			var state = assetObj.state;
+			var stat = assetObj.status;
+				
+			var asset = {assetCode: code, assetId, brand, datePurchased: date, description: desc, name, state, status: stat, unassignDate};
 			
-		var asset = {assetCode: code, assetId, brand, datePurchased: date, description: desc, name, state, status: stat, unassignDate};
-		
-		var data_json = JSON.stringify(asset);
-		
-		//Update record with status message
-		$.ajax(
-		{
-			headers: {
-		        'Accept': 'application/json',
-		        'Content-Type': 'application/json' 
-		    },
-			url:"/assetManagement/asset/update", 
-			dataType: "json",
-			data: data_json,
-			type: "PUT",
-			success: success(code)
-		});
-		
-		function success(code)
-		{
-//			$.notify("Saved!", "success");
+			var data_json = JSON.stringify(asset);
 			
-			$('#removeModalId').modal('hide');
+			//Update record with status message
+			$.ajax(
+			{
+				headers: {
+			        'Accept': 'application/json',
+			        'Content-Type': 'application/json' 
+			    },
+				url:"/assetManagement/asset/update", 
+				dataType: "json",
+				data: data_json,
+				type: "PUT",
+				success: success(code)
+			});
 			
-			//Remove the asset
-			remove(code);
+			function success(code)
+			{
+//				$.notify("Saved!", "success");
+				
+				$('#removeModalId').modal('hide');
+				
+				//Remove the asset
+				remove(code);
+			}
 		}
 		
 	});
@@ -556,7 +570,7 @@
 	}
 	
 	function validate()
-	{	
+	{
 		var id = document.forms["create"]["id"].value;
 		var name = document.forms["create"]["name"].value;
 		var desc = document.forms["create"]["desc"].value;
@@ -626,6 +640,26 @@
 	    {
 	    	return true;
 	    }
+	}
+	
+	function validateDeleteForm()
+	{
+		var status = document.forms["remove"]["rStatus"].value;
+		 
+		if(status == "") 
+		{
+			displayFormBorder("id", "name", "desc", "brand", "date", status);
+			$.notify("Error! Reason is required.", "error");
+		    	
+//			displayAlertT("All fields must be filled out.", "warning", "Heads up!");
+							
+//			alert("All fields must be filled out");
+		    return false;
+		}
+		else
+		{
+			return true;
+		}
 	}
 	
 	function update()
@@ -934,7 +968,7 @@
 		$('#uDatePurchased').removeClass("form-fill-error");
 	}
 	
-	function displayFormBorder(id, name, desc, brand, date)
+	function displayFormBorder(id, name, desc, brand, date, status)
 	{
 		if(!id)
 		{
@@ -964,6 +998,11 @@
 		{
 			$('#datePurchased').addClass("form-fill-error");
 			$('#uDatePurchased').addClass("form-fill-error");
+		}
+		
+		if(!status)
+		{
+			$('#rStatus').addClass("form-fill-error");
 		}
 		
 	}

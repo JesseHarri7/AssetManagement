@@ -168,3 +168,7 @@
 .form-fill-error{
 	border-color: red!important;
 }
+
+.hidden-table{
+	    display: none;
+}
