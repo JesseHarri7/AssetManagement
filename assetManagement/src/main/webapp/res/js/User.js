@@ -1,10 +1,23 @@
 $(document).ready(function() {
+	
 	$('#change-btn').hide();
 	var dataSet = [];
 	
 	//All data fields on start up
-	findAll();
+	showActive();
 	
+	function showActive(){
+		$.ajax({
+			url:"/assetManagement/user/findActivated/active", 
+			dataType: "json",
+			type: "GET",
+			success: function(data) {
+				
+				dataSet = data;
+				userList(dataSet);
+			}
+			});
+	}
 	//do to example template
 	
 	$('#form-create-btn').click(function(event) {
@@ -17,20 +30,6 @@ $(document).ready(function() {
 		}
 	});
 	
-	$('#test-btn').click(function(event) 
-	{
-		var condition = false;
-		
-		if(condition == true)
-		{
-			alert("true");
-		}
-		else
-		{
-			alert("False");
-		}
-	});
-	
 	function validation()
 	{
 		var firstName = $('#firstname').val();
@@ -39,7 +38,7 @@ $(document).ready(function() {
 		var password = $('#password').val();
 		var active = "Active";
 		
-		if ( firstName=="" && lastName=="" && email=="" && password ==""){
+		if ( firstName=="" || lastName=="" || email=="" || password ==""){
 			alert("Please fill in the blanks");
 			return false;
 		}
@@ -49,28 +48,30 @@ $(document).ready(function() {
 		}	
 	}
 	
+	
+	
 	$('#showActive-btn').click(function(event) {
 		var status = $('#showActive-btn').val();
 		findActivated(status);
 	});
+	
 
-	
-	
 	function create()
 	{
 		dataSet = [];
-		
+		//dataSet = data;
+		var table = $('#user-table').DataTable();
+		table.draw();
         var table = $('#user-table').DataTable();
-        
 		var firstName = $('#firstname').val();
 		var lastName = $('#lastname').val();
 		var email = $('#email').val();
 		var password = $('#password').val();
+		var password = $('#username').val();
 		var active = "Active";
 		
-		var user = {firstName, lastName,email,password ,active};
-		var user_json = JSON.stringify(user)
-
+		var user = {firstName, lastName,email,password ,active,username};
+		var user_json = JSON.stringify(user);
 		var condition = Existance();
 		
 		if(condition)
@@ -85,23 +86,26 @@ $(document).ready(function() {
 			        'Content-Type': 'application/json' 
 			    },
 			    type:'POST',
-				dataType: 'JSON',
-				url:'assetManagement/user/create',
+				dataType: 'JSON',	
+				url:'/user/create',
 				data:user_json,
-				success: success(),
-				
+				success: function(response){
+					console.log(response)
+					success(response);
+				},
 				error: function(error){
 				alert("ERROR "+JSON.stringify(error));	
 				}
 			});
 			
-			function success()
+			function success(user)
 			{
+			//var user = Existance();
+			table.row.add(user).draw()
 			alert("User is created");	
 			}
 		}
 	}
-	
 	function Existance()
     {
     	var email = $('#email').val();
@@ -115,6 +119,7 @@ $(document).ready(function() {
 			type: "GET",
 			success: function(data) 
 			{
+//				dataSet = data;
 				dataSet = true;
 			},
 			error: function(data)
@@ -130,7 +135,7 @@ $(document).ready(function() {
 function findAll() 
 {
 	$.ajax({
-		url:"/assetManagement/user/findActivated/active",
+		url:"/assetManagement/user/findAll",
 		dataType: "json",
 		type: "GET",
 		success: function(data) 
@@ -180,10 +185,12 @@ function findActivated(status){ //activated or deactive
 		});
 	}
 }
+
 function userList(dataSet) {
 		
 	var userTable = $("#user-table").DataTable({
 		retrieve: true,
+		dom: '<f<t>lip>',
 		select: true,
 		data: dataSet,
 		columns: 
@@ -192,7 +199,8 @@ function userList(dataSet) {
 			{data: 'email'},
 			{data: 'firstName'},
 			{data: 'lastName'},
-			{data: 'active'}
+			{data: 'username'}
+			//{data: 'active'}
 		]
 	});
 	return userTable;
