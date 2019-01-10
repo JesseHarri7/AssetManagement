@@ -11,15 +11,6 @@ function findAll() {
 		type: "GET",
 		success: function(data) {
 			dataSet = data;
-			
-		/*	for (var i = 0; i < dataSet.length; i++) {
-				
-				if (dataSet[i].active && dataSet[i].active == 'Deactivated'){
-					dataSet[i].active = 'Deactivated';	
-				}else{
-					dataSet[i].active = 'Active';		
-				}
-			}*/
 			userList(dataSet);
 		}
 	});
@@ -38,8 +29,9 @@ function userList(dataSet) {
 			{data: 'firstName'},
 			{data: 'lastName'},
 			{data: 'email'},
-			{data: 'active'}
+			//{data: 'active'}
 		]
 	});
 	return userTable;
 }
+

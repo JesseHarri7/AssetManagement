@@ -87,7 +87,7 @@ $(document).ready(function() {
 			    },
 			    type:'POST',
 				dataType: 'JSON',	
-				url:'/user/create',
+				url:'/assetManagement/user/create',
 				data:user_json,
 				success: function(response){
 					console.log(response)
@@ -101,7 +101,7 @@ $(document).ready(function() {
 			function success(user)
 			{
 			//var user = Existance();
-			table.row.add(user).draw()
+//			table.row.add(user).draw()
 			alert("User is created");	
 			}
 		}

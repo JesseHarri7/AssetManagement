@@ -2,45 +2,48 @@
 <html>
 <head>
 <head>
-	<link rel="stylesheet" href="/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css" />
-	<link rel="stylesheet" href="css/styles.css" />
+	<link rel="stylesheet" href="../webjars/bootstrap/3.3.7-1/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="../res/css/styles.css" />
 	<link rel="stylesheet" href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" />
 	<link rel="stylesheet" href="https://cdn.datatables.net/select/1.2.0/css/select.dataTables.min.css" type="text/css" />
 </head>
 <body>
-	<h2>Saratoga</h2>
+	<img src="../res/resources/Saratoga_logo.png" width="250px">
 	<nav class="navbar navbar-default">
 		<div class="container-fluid">
 			<div class="navbar-header">	
 			</div>
 			<ul class="nav navbar-nav">
-				<li><a href="http://localhost:8080/asset">Assets</a></li>
-				<li><a href="http://localhost:8080/employee">Employee</a></li>
+				<a class="dropdown-toggle navbar-brand" data-toggle="dropdown" href="#">History<span class="caret"></span></a>
+				<ul class="dropdown-menu">
+					<li><a class="dropdown-item" href="../pages/user">Asset Management</a></li>
+				</ul>
+				<li><a href="../pages/asset-history">Assets</a></li>
+				<li><a href="../pages/empHistory">Employee</a></li>
 				<li class="active"><a href="#">User</a></li>
-				<li><a href="http://localhost:8080/assetAssigned">AssetAssigned</a></li>
+				<li><a href="../pages/assetAssigned-history">AssetAssigned</a></li>
 			</ul>
 		</div>
 	</nav>
-<li><a href="http://localhost:8080/assetManagement/user/findHistory">findHistory</a></li>
+<li><a href="http://localhost:8080/assetManagement/user/findHistory"></a></li>
 	<div class="row">
 		<table class="display" id = "user-table">
 			<thead>
 				<tr>
-					<th>ID</th>
-					<th>Username</th>
-					<th>First Name</th>
-					<th>Last Name</th>
-					<th>Email</th>
-					<th>Status</th>
+				<th>ID</th>
+				<th>Email</th>
+				<th>First Name</th>
+				<th>Last Name</th>
+				<th>User Name</th>
 				</tr>
 			</thead>
 			<tbody></tbody>
 		</table>
 	</div>
 	
-	<script src="/webjars/jquery/3.1.1/jquery.min.js"></script>
-		<script src="/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js"></script>
+	<script src="../webjars/jquery/3.1.1/jquery.min.js"></script>
+		<script src="../webjars/bootstrap/3.3.7-1/js/bootstrap.min.js"></script>
 		<script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-		<script src="js/userHistory.js"></script>
+		<script src="../res/js/userHistory.js"></script>
 </body>
 </html>
