@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Employees</title>
 
-<link rel="icon" type="image/png" href="../res/images/icons/S-favicon.png" />
+<!--  <link rel="icon" type="image/png" href="../res/images/icons/S-favicon.png" />
 <link rel="stylesheet"
 	href="../webjars/bootstrap/3.3.7-1/css/bootstrap.min.css" />
 <link rel="stylesheet" href="../res/css/styles.css" />
@@ -16,16 +15,28 @@
 	href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.2.0/animate.min.css"
 	rel="stylesheet">
 </head>
+<body>-->
+
+</head>
+<link rel="stylesheet"
+	href="../webjars/bootstrap/3.3.7-1/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../res/css/styles.css" />
+<link rel="stylesheet"
+	href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" />
+<link rel="stylesheet"
+	href="https://cdn.datatables.net/select/1.2.0/css/select.dataTables.min.css"
+	type="text/css" />
+</head>
 <body>
 
-	<img src="../res/resources/Saratoga_logo.png" width="250px">
+	<img src="../res/images/Saratoga_logo.png" width="250px">
 	<!-- 	<h2>Saratoga</h2> -->
 	<nav class="navbar navbar-default">
 		<div class="container-fluid">
 			<div class="navbar-header">
 				<a class="dropdown-toggle navbar-brand" data-toggle="dropdown" href="#">Asset Management<span class="caret"></span></a>
 				<ul class="dropdown-menu">
-					<li><a class="dropdown-item" href="../pages/emp-history">History</a></li>
+					<li><a class="dropdown-item" href="../pages/empHistory">History</a></li>
 				</ul>
 			</div>
 			<ul class="nav navbar-nav">
@@ -46,8 +57,7 @@
 	<div id="nav-buttons">
 		<input type="button" value="Show Not Active" id = "showActive-btn"
 		class= "btn btn-primary">
-		<input type="button" value="Delete" id="delete-btn"
-			class="btn btn-primary"> <input type="button"
+			<input type="button"
 			value="Set Employee" id="setEmp-btn" class="btn btn-primary">
 			<input type="button" value="Activate user" id="change-btn" class="btn btn-primary" disabled>
 			
@@ -57,7 +67,7 @@
 		
 			<class="btn btn-primary"> <input type="button" value="Create"
 		    class="btn btn-primary" data-toggle="modal"
-			data-target="#exampleModal"> <input type="button">
+			data-target="#exampleModal">
 		
 			<input type="button" value="Reassign" id="reassign-btn"
 			class="btn btn-primary btn-primary-r"> 
@@ -73,9 +83,9 @@
 							<th>ID</th>
 							<th>Name</th>
 							<th>Surname</th>
-							<th>Start_Date</th>
+<!-- 							<th>Start_Date</th> -->
 							<th>Email</th>
-							<th>Status</th>
+<!-- 							<th>Status</th> -->
 						</tr>
 					</thead>
 					<tbody>
@@ -97,6 +107,12 @@
 				</div>
 				<div class="modal-body">
 					<form>
+					
+						<div class="form-group">
+							<label for="employeeID">Employee ID:</label> <input type="text" required
+								class="form-control" id="id" placeholder="Enter ID">
+						</div>
+					
 						<div class="form-group">
 							<label for="Email">Email:</label> <input type="text" required
 								class="form-control" id="email" placeholder="Enter email">
