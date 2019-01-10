@@ -3,8 +3,20 @@ $(document).ready(function()
 	var dataSet = [];
 	
 	//All data fields on start up
-	findAll();
+	showActive();
 	
+	function showActive(){
+		$.ajax({
+			url:"/assetManagement/employee/findActivated/active", 
+			dataType: "json",
+			type: "GET",
+			success: function(data) {
+				
+				dataSet = data;
+				empList(dataSet);
+			}
+			});
+	}
 	//do to example template
 	$('#form-create-btn').click(function(event) {
 		event.preventDefault();
@@ -16,15 +28,17 @@ $(document).ready(function()
 		}
 	});
 	
+	
+	
 	function validation()
 	{
-		var firstName = $('#name').val();
-		var lastName = $('#surname').val();
+		var name = $('#name').val();
+		var surname = $('#surname').val();
 		var email = $('#email').val();
 		var password = $('#empname').val();
 		var active = "Active";
 		
-		if ( firstName=="" || lastName=="" || email=="" || password ==""){
+		if ( name=="" || surname=="" || email=="" || password ==""){
 			alert("Please fill in the blanks");
 			return false;
 		}
@@ -34,40 +48,54 @@ $(document).ready(function()
 		}	
 	}
 	
-	
-	function create(){
+	function create()
+	{
+		dataSet = [];
+		var table = $('#emp-table').DataTable();
+		table.draw();
         var table = $('#emp-table').DataTable();
-		var empID = $('#id').val();
-		var firstName = $('#name').val();
-		var lastName = $('#surname').val();
+		var employeeID = $('#id').val();
+		var name = $('#name').val();
+		var surname = $('#surname').val();
 		var email = $('#email').val();
-		var empname = $('#empname').val();
+//		var empname = $('#empname').val();
 		var active = "Active";
-		
-		var emp = {empID, name, surname,email,empname,active};
+	
+		var emp = {employeeID, name, surname,email,active};
 		var emp_json = JSON.stringify(emp)
-		console.log(emp_json);
-		$.ajax({
-			headers: { 
-		        'Accept': 'application/json',
-		        'Content-Type': 'application/json' 
-		    },
-		    type:'POST',
-			dataType: 'JSON',
-			url:'/assetManagement/employee/create',
-			data:emp_json,
-			success:function(response){
-				
-				table.row.add(emp).draw();
-				$('#exampleModal').modal('hide');
-				
-			},
-		error: function(error){
-			alert("ERROR "+JSON.stringify(error))
-			
+		var condition = Existance();
+		
+		if(condition)
+		{
+			alert("Email exists");
 		}
+		else
+		{
+			$.ajax({
+				headers: {
+			        'Accept': 'application/json',
+			        'Content-Type': 'application/json' 
+			    },
+			    type:'POST',
+				dataType: 'JSON',	
+				url:'/assetManagement/employee/create',
+				data:emp_json,
+				success: success(),
+				error: function(error){
+				alert("ERROR "+JSON.stringify(error));	
+				}
+			});
 			
-		});
+			function success()
+			{
+			table.row.add(emp).draw()
+			alert("Employee is created");	
+			
+			/*var emp = Existance();
+			table.row.add(emp).draw()
+			alert("Employee is created");*/
+			}
+		}
 	}
 	
 	function findAll()
@@ -85,10 +113,14 @@ $(document).ready(function()
 		});
 	}
 	
+	function empDelete(){
+	
+	}
+	
 	
 	function empList(dataSet) {
 		
-		var userTable = $("#emp-table").DataTable({
+		var empTable = $("#emp-table").DataTable({
 			retrieve: true,
 			dom: '<f<t>lip>',
 			select: true,
@@ -98,9 +130,9 @@ $(document).ready(function()
 				{data: 'employeeID'},
 				{data: 'name'},
 				{data: 'surname'},
-				{data: 'startDate'},
+				//{data: 'startDate'},
 				{data: 'email'},
-				{data: 'active'}
+				//{data: 'active'}
 			]
 		});
 		return empTable;
@@ -121,6 +153,7 @@ $(document).ready(function()
 			type: "GET",
 			success: function(data) 
 			{
+//				dataSet = data;
 				dataSet = true;
 			},
 			error: function(data)
@@ -147,9 +180,9 @@ $(document).ready(function()
 	//select
     $('#emp-table tbody').on( 'click', 'tr', function () {
     	var table = $('#emp-table').DataTable();
-    	var selectedUser = table.row(this).data();
+    	var selectedEmp = table.row(this).data();
     	
-    	if(selectedUser && selectedUser.active == 'Active'){
+    	if(selectedEmp && selectedEmp.active == 'Active'){
     		$('#change-btn').show();
     		$('#change-btn').prop('value', 'Deactivate');
     
@@ -157,8 +190,8 @@ $(document).ready(function()
     		$('#change-btn').show();
     		$('#change-btn').prop('value', 'Activate');
     		
-    	}if(selectedUser && selectedUser.active == ' '){
-    		selectedUser && selectedUser.active == 'Active';
+    	}if(selectedEmp && selectedEmp.active == ' '){
+    		selectedEmp && selectedEmp.active == 'Active';
     	}
         
     	if ( $(this).hasClass('selected') ) {
@@ -212,8 +245,6 @@ $(document).ready(function()
     }
 
     function findActivated(status){ //activated or Deactivated
-    	
-    	
     	if(status == 'Show Active'){
     		$.ajax({
     			url:"/assetManagement/employee/findActivated/active", 
@@ -259,5 +290,6 @@ $('#showActive-btn').click(function(event) {
 	var status = $('#showActive-btn').val();
 	findActivated(status);
 });
+
 });
 
