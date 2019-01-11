@@ -2,7 +2,7 @@ $(document).ready(function()
 {
 	var dataSet = [];
 	
-	//All data fields on start up
+	//Active data fields on start up
 	showActive();
 	
 	function showActive(){
@@ -27,9 +27,6 @@ $(document).ready(function()
 			create();
 		}
 	});
-	
-	
-	
 	function validation()
 	{
 		var name = $('#name').val();
@@ -113,10 +110,7 @@ $(document).ready(function()
 		});
 	}
 	
-	function empDelete(){
-	
-	}
-	
+
 	
 	function empList(dataSet) {
 		
