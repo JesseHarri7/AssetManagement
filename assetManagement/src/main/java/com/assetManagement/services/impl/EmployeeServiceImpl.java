@@ -81,7 +81,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return employeeRepo.save(employee);
 	}
 
-
+//	@Override
 	public List<Employee> findAll() {
 		List<Employee> eList = new ArrayList<Employee>();
 		Iterable<Employee> employees = employeeRepo.findAll();
@@ -92,6 +92,13 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return eList;
 	}
 	
-		
-	
+	@Override
+	public List<Employee> findByActive(String active) {
+		return  employeeRepo.findByActive(active);
+	}
+
+	public List<Employee> findHistory() {
+		return findAll();
+	}
+
 }

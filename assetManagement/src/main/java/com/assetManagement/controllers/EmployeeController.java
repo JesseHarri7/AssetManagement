@@ -17,10 +17,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.assetManagement.entities.Employee;
 import com.assetManagement.entities.User;
+import com.assetManagement.excptions.ResourceNotFoundException;
 import com.assetManagement.services.EmployeeService;
 import com.assetManagement.services.impl.EmployeeServiceImpl;
 @RestController
-@RequestMapping("assetManagement/employee/")
+@RequestMapping("/employee/")
 public class EmployeeController {
 	@Autowired
 	private EmployeeServiceImpl service;
@@ -68,21 +69,39 @@ public class EmployeeController {
 				return new ResponseEntity<List<Employee>>(employee, HttpStatus.OK);
 			}	
 			
-			// find by email
-			@RequestMapping(value = "email/{email}", method = RequestMethod.GET)
-			public ResponseEntity<Employee> findByEmail(@PathVariable String email) {
-				Employee employee = service.findByEmail(email);
-				if (employee == null) {
-					return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-				}
-				
-				return new ResponseEntity<Employee>(employee, HttpStatus.OK);			
-			}
+	// find by email
+	@RequestMapping(value = "email/{email}", method = RequestMethod.GET)
+	public ResponseEntity<Employee> findByEmail(@PathVariable String email) {
+		Employee employee = service.findByEmail(email);
+		if (employee == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+
+		return new ResponseEntity<Employee>(employee, HttpStatus.OK);
+	}
 			
-			// find All
-						@RequestMapping(value = "findAll", method = RequestMethod.GET)
-						@ResponseBody
-						public List<Employee> findAll() {
-							return service.findAll();
-							}
+	// find All
+	@RequestMapping(value = "findAll", method = RequestMethod.GET)
+	@ResponseBody
+	public List<Employee> findAll() {
+		return service.findAll();
+	}
+
+	// find Activated
+	@RequestMapping(value = "findActivated/{active}", method = RequestMethod.GET)
+	public ResponseEntity<List<Employee>> findByActive(@PathVariable String active) {
+		List<Employee> employees = service.findByActive(active);
+		if (employees == null) {
+			throw new ResourceNotFoundException("Not users active");
+		}
+		return new ResponseEntity<List<Employee>>(employees, HttpStatus.OK);
+	}
+	
+	// find history
+	@RequestMapping(value = "findHistory", method = RequestMethod.GET)
+	@ResponseBody
+	public List<Employee> findHistory() {
+		return service.findHistory();
+	}
+	
 }
