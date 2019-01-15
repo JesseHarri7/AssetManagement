@@ -14,6 +14,8 @@ $(document).ready(function()
 	
 	var allAssigned = reportAssigned();
 	
+	var allComponents = reportComp();
+	
 	//Displaying total Assets
 	document.getElementById("totalAssets").innerHTML = findAllAssets.length;
 	
@@ -30,6 +32,9 @@ $(document).ready(function()
 	
 	//Displaying total Assests assigned
 	document.getElementById("reportAA").innerHTML = allAssigned.length;
+	
+	//Displaying total components assigned
+	document.getElementById("reportComp").innerHTML = allComponents.length;
 	
 	//Find all assets from the database
 	function findAllAssets()
@@ -299,7 +304,7 @@ $(document).ready(function()
 		
 		return dataSet;
 	}
-	
+
 	$(document).on('click', '.reportAssign', function() 
 	{		
 		var assigned = $("#AA-table").DataTable();
@@ -307,6 +312,64 @@ $(document).ready(function()
 		//var data = test.buttons.exportData();
 		
 		assigned.button( '0' ).trigger();
+		
+	});
+	
+	function reportComp()
+	{
+		var dataSet = [];
+		
+		$.ajax({
+			url:"/assetManagement/assetAsset/findAllHistory", 
+			dataType: "json",
+			type: "GET",
+			async: false,
+			success: function(data)
+			{				
+				dataSet = data;
+				
+				var aaTable = $("#assetComp-table").DataTable({
+					dom: '<f<t>lip>',
+					buttons: [
+				           {
+				        	   extend: 'excel',
+				        	   title: 'Asset Components',
+				        	   filename: 'Asset Compnents'
+				           }
+				        ],
+					retrieve: true,
+					responsive: true,
+					select: true,
+					data: dataSet,
+					columns: 
+					[
+						{data: 'assetOne.assetCode'},
+						{data: 'assetOne.name'},
+						{data: 'assetComponent.assetCode'},
+						{data: 'assetComponent.name'},
+						{data: 'assignDate'},
+						{data: 'prevAsset'},
+						{data: 'unassignDate'},
+						{data: 'state'}
+					]
+				});
+			},
+			error: function(data)
+			{
+				dataSet = "Error";
+			}
+		});
+		
+		return dataSet;
+	}
+	
+	$(document).on('click', '.reportComp', function() 
+	{
+		var components = $("#assetComp-table").DataTable();
+		
+		//var data = test.buttons.exportData();
+		
+		components.button( '0' ).trigger();
 		
 	});
 	

@@ -43,7 +43,7 @@ public class AssetServiceImpl implements AssetService
 		}
 		else
 		{	
-			return repo.findByAssetCode(id);
+			return asset;
 		}
 		
 	}
@@ -131,6 +131,18 @@ public class AssetServiceImpl implements AssetService
 	{
 		List<Asset> assetList = new ArrayList<Asset>();
 		Iterable<Asset> assets = repo.findAllHistory();
+		for (Asset a : assets)
+		{
+			assetList.add(a);
+		}
+		return assetList;
+	}
+
+	@Override
+	public List<Asset> findByComponent() 
+	{
+		List<Asset> assetList = new ArrayList<Asset>();
+		Iterable<Asset> assets = repo.findByComponent();
 		for (Asset a : assets)
 		{
 			assetList.add(a);

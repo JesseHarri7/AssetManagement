@@ -7,7 +7,6 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import com.assetManagement.entities.Asset;
-import com.assetManagement.entities.AssetAssigned;
 
 
 @Repository
@@ -23,6 +22,9 @@ public interface AssetRepo extends CrudRepository<Asset, Long>
 	List<Asset> findByName(String assetName);
 	
 	List<Asset> findByUnassignDate(String date);
+	
+	@Query(value = "SELECT * FROM asset WHERE state = 'A' AND main_comp = True OR sub_comp = True", nativeQuery = true)
+	List<Asset> findByComponent();
 	
 	@Query(value = "SELECT * FROM asset", nativeQuery = true)
 	List<Asset> findAllHistory();

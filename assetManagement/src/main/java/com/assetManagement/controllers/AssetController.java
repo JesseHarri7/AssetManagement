@@ -90,5 +90,12 @@ public class AssetController
 	{
 		return service.findByName(name);
 	}
+	
+	//Find All By component
+		@RequestMapping(value = "/asset/component", method = RequestMethod.GET)
+		public List<Asset> findAllComp()
+		{
+			return service.findByComponent();
+		}
 
 }
