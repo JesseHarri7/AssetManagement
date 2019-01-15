@@ -26,9 +26,8 @@ function empList(dataSet) {
 			{data: 'employeeID'},
 			{data: 'name'},
 			{data: 'surname'},
-			//{data: 'startDate'},
 			{data: 'email'},
-			//{data: 'active'}
+			{data: 'active'}
 		]
 	});
 	return empTable;

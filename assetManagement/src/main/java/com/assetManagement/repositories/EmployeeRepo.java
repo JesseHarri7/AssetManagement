@@ -17,6 +17,8 @@ import com.assetManagement.entities.Employee;
 	    List<Employee> findBySurname(String surname);
 	    Employee findByEmail(String email);
 	    List<Employee> findByStartDate(Date startDate);
+	    List<Employee> findByActive(String active);
+	   // List<Employee> findHistory(String history);
 	    @Modifying(clearAutomatically = true)
 	    @Query("update Employee employee set employee.active =:active where employee.employeeID =:employeeID")
 	    Integer deleteEmployee(@Param("employeeID") Long employeeID, @Param("active") String active);

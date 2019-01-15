@@ -42,7 +42,7 @@ $(document).ready(function()
 		var dataSet = [];
 		
 		$.ajax({
-		  url: "/assetManagement/user/username/" + username,
+		  url: "/assetManagement/user/email/" + username,
 		  async: false,
 		  type: "GET",
 		  dataType: "json",
@@ -77,7 +77,7 @@ $(document).ready(function()
 	//Successful login
 	function login(user)
 	{
-		var userDB = user.username;
+		var userDB = user.email;
 		var passDB = user.password;
 		
 		var username = $('#username').val();

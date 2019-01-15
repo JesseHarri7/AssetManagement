@@ -27,12 +27,13 @@ public class Employee implements Serializable {
 
 	@Id
 	private long employeeID;
-
+	
+	
 	@Column(name = "Name")
 	private String name;
 	
 	@Column(name = "Active")
-	private String active;
+	private String active = "Active";
 
 	@Column(name = "Surname")
 	private String surname;
