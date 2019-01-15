@@ -12,22 +12,12 @@
 	//Show cancel button if there is data in local storage
 	showBtn();
 	
-	$('#test-btn').click(function(event) 
-	{
-////////////////////////////////////////Test////////////////////////////////////////
-		
-		var test = $("#asset-table").DataTable();
-		
-		var data = test.buttons.exportData();
-		
-		test.button( '0' ).trigger();
-		console.log(data);
-				
-/////////////////////////////////////////Test////////////////////////////////////////
-	});
-	
 	//Show selected alert if employee is selected
 	showSelectAlert();
+	
+////////////////////////////////////////Test////////////////////////////////////////	
+				
+/////////////////////////////////////////Test////////////////////////////////////////
 	
 	//Click to select row from the table
 	$('#asset-table tbody').on('click','tr', function()
@@ -151,6 +141,9 @@
 	{
 		$('.notifyjs-corner').remove();
 		resetLocal();
+		
+		$('#setAssetATwo-btn').addClass('hidden');
+		$('#setAssetA-btn').removeClass('hidden');
 	});
 	
 	//Form update button
@@ -221,9 +214,12 @@
 			{
 				//Send to employee table if there is no employee data
 				clearLocal();
-				selectAsset();
-				window.location = "../pages/employee";
-				alert("Please select an employee to assign to the selected asset");
+				if(!subComp())
+				{
+					selectAsset();
+					window.location = "../pages/employee";
+					alert("Please select an employee to assign to the selected asset");
+				}
 			}
 		}
 		else
@@ -235,7 +231,89 @@
 			//alert("Please select an asset to assign to an employee");
 		}
 		
-    } );	
+    } );
+	
+	function subComp()
+	{
+		$('.notifyjs-corner').remove();
+		
+		var table = $('#asset-table').DataTable();
+		
+		//Returns data of the selected row
+		var asset = table.rows( '.selected' ).data();
+	
+		var subComp = asset[0].subComp;
+		
+		if(subComp)
+		{
+			$.notify("Heads up! You cannot assign a Sub component to an Employee.", "warn")
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	
+	//Component button
+	$('#comp-btn').click(function(event) 
+	{
+		var status = $('#comp-btn').val();
+		
+		compBtn(status);
+	});
+	
+	//Change component button text and change data table
+	function compBtn(status)
+	{
+		if(status == "Show components")
+		{
+			var dataSet = [];
+			
+			$.ajax({
+				url:"/assetManagement/asset/component",
+				dataType: "json",
+				type: "GET",
+				success: function(data)
+				{
+					dataSet = data;
+					
+					var table = $('#asset-table').DataTable();
+					table.clear();
+					table.rows.add(dataSet);
+					table.rows(dataSet).draw();
+					table.draw();
+					
+				}
+			});
+			
+			$('#comp-btn').prop('value', 'Show All');
+		}
+		else
+		{
+			var dataSet = [];
+			
+			$.ajax({
+				url:"/assetManagement/asset/findAll",
+				dataType: "json",
+				type: "GET",
+				success: function(data)
+				{
+					dataSet = data;
+					
+					var table = $('#asset-table').DataTable();
+					table.clear();
+					table.rows.add(dataSet);
+					table.rows(dataSet).draw();
+					table.draw();
+					
+				}
+			});
+			
+			$('#comp-btn').prop('value', 'Show components');
+		}
+		
+	}
 	
 	//Create dataTable with JSON data
 	function assetList(dataSet)
@@ -247,7 +325,7 @@
 	        ],
 			responsive: true,
 			retrieve: true,
-			select: true,
+//			select: true,
 			rowId: 'assetCode',
 			data: dataSet,
 			columns: 
@@ -497,10 +575,13 @@
 		var description = $('#desc').val();
 		var brand = $('#brand').val();
 		var datePurchased = [year, month, day].join('/');
+		
+		var mainComp = document.getElementById("mainComp");
+		var subComp = document.getElementById("subComp");
 //		var status = $('#status').val();
 		
 		//Set as object
-		var asset = {assetCode, name, description, brand, datePurchased};
+		var asset = {assetCode, name, description, brand, datePurchased, mainComp: mainComp.checked, subComp: subComp.checked};
 		
 		//Translate so that JSON can read it
 		var data_json = JSON.stringify(asset);
@@ -681,8 +762,10 @@
 		
 		var assetObj = findId(assetCode);
 		var assetId = assetObj.assetId;
+		var mainComp = assetObj.mainComp;
+		var subComp = assetObj.subComp;
 		
-		var asset = {assetId, assetCode, name, description, brand, datePurchased};
+		var asset = {assetId, assetCode, name, description, brand, datePurchased, mainComp, subComp};
 		
 		var data_json = JSON.stringify(asset);
 		
@@ -774,7 +857,7 @@
 					count++;
 					asset = JSON.parse(localStorage.getItem('asset' + [i]));
 					
-					var assetAssigned = {assets: asset, employees: emp};
+					var assetAssigned = {assets: asset, employees: emp, empName: emp.name};
 					
 					var today = new Date();
 					var dd = today.getDate();
@@ -879,6 +962,261 @@
 			return false;
 		}
 
+	}
+	
+	//Assign asset sub component to main component
+	$('#setAssetA-btn').click(function(event) 
+	{
+		var table = $('#asset-table').DataTable();
+
+		//Returns data of the selected row
+		var asset = table.rows( '.selected' ).data();
+		
+		$('.notifyjs-corner').remove();
+		
+		if (asset.length == 0)
+		{
+			$.notify("Heads up! Please select an asset to assign.", "warn");
+		}
+		else if (asset.length >= 2)
+		{
+			$.notify("Heads up! Please only select one asset to assign.", "error");
+		}
+		else
+		{
+			if(isComponent(asset[0]))
+			{
+				$.notify("Success! Asset selected", "info");
+				
+				localStorage.setItem('assetOne', JSON.stringify(asset[0]));
+				
+				table.rows('.selected').deselect();
+				
+				$('#setAssetA-btn').addClass('hidden');
+				$('#setAssetATwo-btn').removeClass('hidden');
+				
+				showBtn();
+			}
+				
+		}
+						
+	});
+	
+	$('#setAssetATwo-btn').click(function(event) 
+	{
+		var table = $('#asset-table').DataTable();
+		
+		//Returns data of the selected row
+		var assetTwo = table.rows( '.selected' ).data();
+		
+		$('.notifyjs-corner').remove();
+		
+		if (assetTwo.length == 0)
+		{
+			$.notify("Heads up! Please select an asset to assign.", "warn");
+		}
+		else if (assetTwo.length >= 2)
+		{
+			$.notify("Heads up! Please only select one asset to assign.", "error");
+		}
+		else
+		{
+			if(isComponent(assetTwo[0]))
+			{
+				$.notify("Success! Asset selected", "info");
+				
+				localStorage.setItem('assetTwo', JSON.stringify(assetTwo[0]));
+				
+				$('#setAssetATwo-btn').addClass('hidden');
+				$('#setAssetA-btn').removeClass('hidden');
+				
+				var assetOne = JSON.parse(localStorage.getItem('assetOne'));
+				var assetTwo = JSON.parse(localStorage.getItem('assetTwo'));
+				
+				localStorage.clear();
+				$('#cancel-btn').hide();
+				
+				if(checkComponents(assetOne, assetTwo))
+				{
+					var assetOrder = rearrangeAssets(assetOne, assetTwo);
+					assignAssets(assetOrder[0], assetOrder[1]);
+				}
+				
+			}
+		}
+						
+	});
+	
+	function isComponent(asset)
+	{
+		
+//		var dataSet = [];
+
+		/*$.ajax({
+			url:"/assetManagement/asset/" + asset.assetCode,
+			async: false,
+			dataType: "json",
+			type: "GET",
+			success: function(data)
+			{
+				dataSet = data;
+			},
+			error: dataSet = null
+		});*/
+		
+		var mainComp = asset.mainComp;
+		var subComp = asset.subComp;
+		
+		if(mainComp || subComp)
+		{
+			
+			return true;
+		}
+		else
+		{
+			$.notify("Heads up! Please select a Main component or a Sub component.", "warn")
+			return false;
+		}
+		
+	}
+	
+	function checkComponents(assetOne, assetTwo)
+	{
+		var assetOneMain = assetOne.mainComp;
+		var assetOneSub = assetOne.subComp;
+		
+		var assetTwoMain = assetTwo.mainComp;
+		var assetTwoSub = assetTwo.subComp;
+		
+		if(assetOneMain && assetTwoSub || assetTwoMain && assetOneSub)
+		{
+			
+			return true;
+		}
+		else
+		{
+			$.notify("Heads up! Please select one main component and one sub component.", "error");
+		}
+	}
+	
+	function assignAssets(assetOne, assetComponent)
+	{
+//		var assetCode = assetOne;
+		
+//		var assetAssigned = assetTwo;
+		
+		//Assigned date
+		var today = new Date();
+		var dd = today.getDate();
+		var mm = today.getMonth()+1; 
+		var yyyy = today.getFullYear();
+		
+		today = yyyy + '-' + mm + '-' + dd;
+		
+		
+		//Set as object
+		var asset = {assetOne, assetComponent};
+		asset.assignDate = today;
+		
+		//Translate so that JSON can read it
+		var data_json = JSON.stringify(asset);
+		
+		//Before creating, first check to see if the asset already exists
+		var exists = findAssetCodes(assetOne.assetCode, assetComponent.assetId);
+		
+		//Before creating, first check to see if the sub component is already assigned
+		var subComp = findSubComp(assetComponent.assetId);
+		
+		if(exists.length == 0 && subComp.length == 0)
+		{
+			$.ajax(
+			{
+				headers: {
+			        'Accept': 'application/json',
+			        'Content-Type': 'application/json' 
+			    },
+				url:"/assetManagement/assetAsset/create",
+				dataType: "json",
+				data: data_json,
+				type: "POST",
+				success: success()
+			});
+			
+			function success()
+			{
+				$.notify("Success! Assets have been successfully assigned.", "success");
+				
+			}
+			
+		}
+		/*else
+		{
+			$.notify("Error! The Assets you're trying to assign are already assigned.", "warn");
+		}*/
+	}
+	
+	function findAssetCodes(assetOne, assetComponent)
+	{
+		var dataSet = [];
+
+		$.ajax({
+			url:"/assetManagement/assetAsset/assetCodes/" + assetOne + "/" + assetComponent,
+			async: false,
+			dataType: "json",
+			type: "GET",
+			success: function(data)
+			{
+				dataSet = data;
+				$.notify("Error! The Assets you're trying to assign are already assigned.", "warn");
+			},
+			error: function(data)
+			{
+				dataSet = [];
+			}
+		});
+		return dataSet;
+	}
+	
+	function findSubComp(assetComp)
+	{
+		var dataSet = [];
+
+		$.ajax({
+			url:"/assetManagement/assetAsset/findAssetComponent/" + assetComp,
+			async: false,
+			dataType: "json",
+			type: "GET",
+			success: function(data)
+			{
+				dataSet = data;
+				$.notify("Error! The sub component is already assigned.", "warn");
+			},
+			error: function(data)
+			{
+				dataSet = [];
+			}
+		});
+		return dataSet;
+	}
+	
+	function rearrangeAssets(assetOne, assetTwo)
+	{
+		var first;
+		var second;
+		
+		if(assetOne.mainComp)
+		{
+			first = assetOne;
+			second = assetTwo;
+		}
+		else
+		{
+			first = assetTwo;
+			second = assetOne;
+		}
+		
+		return [first, second];	
+		
 	}
 	
 	function assignedRemove(assign)

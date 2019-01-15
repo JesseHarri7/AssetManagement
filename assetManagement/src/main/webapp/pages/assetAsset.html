@@ -4,7 +4,7 @@
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	
-<title>Assign</title>
+<title>AssetAsset</title>
 
 <link rel="icon" type="image/png" href="../res/images/icons/S-favicon.png" />
 <!-- <link rel="stylesheet" href="../webjars/bootstrap/3.3.7-1/css/bootstrap.min.css" /> -->
@@ -28,8 +28,8 @@
 
 		<input type="button" value="Unassign" id="delete-btn" class="btn btn-primary">
 		<input type="button" value="Reassign" id="reassign-btn" class="btn btn-primary">
-		<input type="button" value="Asset info" id="asset-btn" class="btn btn-primary" data-target="#assetModal">
-		<input type="button" value="Employee info" id="emp-btn" class="btn btn-primary" data-target="#empModal">
+		<input type="button" value="Main component info" id="asset-btn" class="btn btn-primary" data-target="#assetModal">
+		<input type="button" value="Sub component info" id="comp-btn" class="btn btn-primary" data-target="#empModal">
 		<input type="button" value="Cancel" id="cancel-btn" class="btn btn-primary-c">
 
 	</div>	
@@ -40,8 +40,9 @@
 				<thead>
 					<tr>
 						<th>Asset_Code</th>
-						<th>Employee_ID</th>
-						<th>Emp_Name</th>
+						<th>Name</th>
+						<th>Asset_Component</th>
+						<th>Name</th>
 						<th>Date_Assigned</th>
 					</tr>
 				</thead>
@@ -50,7 +51,7 @@
 			</table>
 		</div>
 	</div>
-
+	
 	<!-- Asset modal view -->
 	<!-- Asset info Modal -->
 	<div class="modal fade" id="assetModal" role="dialog">
@@ -81,38 +82,6 @@
 
 		</div>
 	</div>
-
-	<!-- Employee modal view -->
-	<!-- Employee Info Modal -->
-	<div class="modal fade" id="empModal" role="dialog">
-		<div class="modal-dialog">
-
-			<!-- Modal content-->
-			<div class="modal-content">
-				<div class="modal-header">
-					<h2 class="modal-title">Employee Details</h2>
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-				</div>
-				<div class="modal-body">
-					Employee ID:
-					<div id="mEmpId"></div>
-					<br> Name:
-					<div id="mEmpName"></div>
-					<br> Surname:
-					<div id="mSur"></div>
-					<br> Email:
-					<div id="mEmail"></div>
-					<br> Start Date:
-					<div id="mStartDate"></div>
-					<br>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				</div>
-			</div>
-
-		</div>
-	</div>
 	
 	<!-- Footer -->
 	<div w3-include-html="../pages/temps/footer.html"></div>
@@ -126,7 +95,7 @@
 	<script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
 	<script src="https://cdn.datatables.net/responsive/2.2.3/js/responsive.bootstrap.min.js"></script>
 	
-	<script src="../res/js/assetAssigned.js"></script>
+	<script src="../res/js/assetAsset.js"></script>
 	<script src="../res/js/plugins/notify.js"></script>
 </body>
 </html>

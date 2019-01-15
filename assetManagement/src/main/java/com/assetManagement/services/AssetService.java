@@ -12,5 +12,7 @@ public interface AssetService extends Service<Asset, Long>
 	List<Asset> findByDatePurchased(String date);
 	
 	List<Asset> findByName(String assetName);
+	
+	List<Asset> findByComponent();
 	 
 }

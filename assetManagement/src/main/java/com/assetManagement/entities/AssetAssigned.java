@@ -40,6 +40,7 @@ public class AssetAssigned implements Serializable
 	
 	private String moveDate;
 	private String unassignDate;
+	private String empName;
 	private String prevOwner;
 
 	private String state = "A";
@@ -121,6 +122,16 @@ public class AssetAssigned implements Serializable
 	public void setPrevOwner(String prevOwner) 
 	{
 		this.prevOwner = prevOwner;
+	}
+
+	public String getEmpName() 
+	{
+		return empName;
+	}
+
+	public void setEmpName(String empName) 
+	{
+		this.empName = empName;
 	}
 	
 }

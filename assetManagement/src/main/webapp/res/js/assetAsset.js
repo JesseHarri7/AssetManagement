@@ -14,21 +14,53 @@
 	showSelectAlert();
 	
 	//Show alert when reassigning is successful
-	showReassignAlert();
+//	showReassignAlert();
 	
 	//Select row
 	$('#AA-table tbody').on('click','tr', function()
 	{
-		if ( $(this).hasClass('selected') )
-		{
-            $(this).removeClass('selected');
-		}
-		else
-		{
-            $('tr.selected').removeClass('selected');
-            $(this).addClass('selected');
-        }
-	} );
+		$(this).toggleClass('selected');
+	});
+	
+	function findAll()
+	{
+		var dataSet = [];
+		
+		$.ajax({
+			url:"/assetManagement/assetAsset/findAll", 
+			dataType: "json",
+			type: "GET",
+			success: function(data)
+			{				
+				dataSet = data;
+				aaList(dataSet);
+				
+			}
+		});
+	}
+
+	function aaList(dataSet)
+	{
+		
+		var aaTable = $("#AA-table").DataTable({
+			dom: '<f<t>lip>',
+			retrieve: true,
+			responsive: true,
+			select: true,
+			data: dataSet,
+			columns:
+			[
+				//{data: 'id'},
+				{data: 'assetOne.assetCode'},
+				{data: 'assetOne.name'},
+				{data: 'assetComponent.assetCode'},
+				{data: 'assetComponent.name'},
+				{data: 'assignDate'}
+			]
+		});
+		
+		return aaTable;
+	}
 	
 	//Get Asset info
 	$('#asset-btn').click(function(event)
@@ -36,10 +68,12 @@
 		$('.notifyjs-corner').remove();
 		
 		var table = $('#AA-table').DataTable();
+		
 		var findAssetId = table.row('.selected').data();
+		
 		if(findAssetId)
 		{
-			var assetInfo = findAsset(findAssetId.assets.assetCode);
+			var assetInfo = findAsset(findAssetId.assetOne.assetCode);
 			
 			$('#assetModal').modal('show');
 			displayAsset(assetInfo);
@@ -47,34 +81,47 @@
 		else
 		{
 			$.notify("Heads up! Please select an asset Code.", "warn");
-			
-			//displayAlert("Please select an asset Code.", "warning", "Heads up!");
-			
-			//alert("Please select an asset Code")
 		}
-	});	
+	});
 	
-	//Get Emp info
-	$('#emp-btn').click(function(event)
+	function findAsset(id)
+	{
+		var dataSetA = [];
+
+		$.ajax({
+			url:"/assetManagement/asset/" + id,
+			async: false,
+			dataType: "json",
+			type: "GET",
+			success: function(data)
+			{
+				dataSetA = data
+			},
+			error: dataSetA = null
+		});
+		return dataSetA;
+	
+	}
+	
+	//Get sub component info
+	$('#comp-btn').click(function(event)
 	{
 		$('.notifyjs-corner').remove();
 		
 		var table = $('#AA-table').DataTable();
-		var findEmpId = table.row('.selected').data();
-		if(findEmpId)
+		
+		var findAssetId = table.row('.selected').data();
+		
+		if(findAssetId)
 		{
-			var empInfo = findEmp(findEmpId.employees.employeeID);
+			var assetInfo = findAsset(findAssetId.assetComponent.assetCode);
 			
-			$('#empModal').modal('show');
-			displayEmp(empInfo);			
+			$('#assetModal').modal('show');
+			displayAsset(assetInfo);
 		}
 		else
 		{
-			$.notify("Heads up! Please select an Employee ID..", "warn");
-			
-			//displayAlert("Please select an Employee ID.", "warning", "Heads up!");
-			
-			//alert("Please select an Employee ID")
+			$.notify("Heads up! Please select an asset Code.", "warn");
 		}
 	});
 	
@@ -185,53 +232,6 @@
 		resetLocal();
 	})
 	
-	$('#assetT-btn').click( function()
-	{
-		$('.notifyjs-corner').remove();
-		
-		var table = $('#AA-table').DataTable();
-		var findAssetId = table.cell('.selected').data();
-		var assetInfo = findAsset(findAssetId);
-	})
-	
-	function findAll()
-	{
-		
-		$.ajax({
-			url:"/assetManagement/assetAssigned/findAll", 
-			dataType: "json",
-			type: "GET",
-			success: function(data)
-			{				
-				dataSet = data;
-				aaList(dataSet);
-				
-			}
-		});
-	}
-
-	function aaList(dataSet)
-	{
-		
-		var aaTable = $("#AA-table").DataTable({
-			dom: '<f<t>lip>',
-			retrieve: true,
-			responsive: true,
-			select: true,
-			data: dataSet,
-			columns: 
-			[
-				//{data: 'id'},
-				{data: 'assets.assetCode'},
-				{data: 'employees.employeeID'},
-				{data: 'employees.name'},
-				{data: 'moveDate'}
-			]
-		});
-		
-		return aaTable;
-	}
-	
 	function remove()
 	{
 		var table = $('#AA-table').DataTable();
@@ -250,81 +250,12 @@
 			function success()
 			{
 				$.notify("Success! Asset " + rowToDelete.assets.assetCode + " and employee " + rowToDelete.employees.employeeID + " are now unassigned.", "success");
-				
-				//displayAlert("Asset " + rowToDelete.assets.assetCode + " and employee " + rowToDelete.employees.employeeID + " is now unassigned.", "success", "Success!");
-				
-				//alert("Asset " + rowToDelete.assets.assetCode + " and employee " + rowToDelete.employees.employeeID + " is now unassigned")
 			}
 		}
 		else
 		{
 			$.notify("Heads up! Please select a item to unassign.", "warn");
-			
-			//displayAlert("Please select a item to unassign.", "warning", "Heads up!");
-			
-			//alert("Please select a item to remove");
 		}	
-		
-		
-	}
-	
-	function findAsset(id)
-	{
-		var dataSetA = [];
-
-		$.ajax({
-			url:"/assetManagement/asset/" + id,
-			async: false,
-			dataType: "json",
-			type: "GET",
-			success: function(data)
-			{
-				dataSetA = data
-			},
-			error: dataSetA = null
-		});
-		return dataSetA;
-	
-	}
-	
-	function findEmp(id)
-	{
-		var dataSetEmp = [];
-
-		$.ajax({
-			url:"/assetManagement/employee/" + id,
-			async: false,
-			dataType: "json",
-			type: "GET",
-			success: function(data)
-			{
-				dataSetEmp = data
-			},
-			error: dataSetEmp = null
-		});
-		return dataSetEmp;
-
-	}
-	
-	function displayAsset(asset)
-	{	
-		document.getElementById("mAssetId").innerHTML = asset.assetCode;
-		document.getElementById("mName").innerHTML = asset.name;
-		document.getElementById("mDesc").innerHTML = asset.description;
-		document.getElementById("mBrand").innerHTML = asset.brand;
-		document.getElementById("mDate").innerHTML = asset.datePurchased;
-		document.getElementById("mStatus").innerHTML = asset.status;
-		
-	}
-	
-	function displayEmp(emp)
-	{
-		
-		document.getElementById("mEmpId").innerHTML = emp.employeeID;
-		document.getElementById("mEmpName").innerHTML = emp.name;
-		document.getElementById("mSur").innerHTML = emp.surname;
-		document.getElementById("mEmail").innerHTML = emp.email;
-		document.getElementById("mStartDate").innerHTML = emp.startDate;
 		
 	}
 	
@@ -378,31 +309,20 @@
 		}
 	}
 	
-	function showReassignAlert()
-	{
-		var reassign = JSON.parse(localStorage.getItem('reassigned'));
-		if(reassign)
-		{
-			$(document).ready(function()
-			{
-			    $.notify("Data successfully reassigned", "info");
-			});
-			localStorage.clear();
-			$('#cancel-btn').hide();
-		}
-	}
-	
 	function showActiveNav()
 	{
-		$('#aaNav').addClass('active');
+		$('#assetAssetNav').addClass('active');
 		
-		$("a[href='../pages/asset-history']").attr('href', '../pages/assetAssigned-history')
-		/*var url = window.location.pathname;
-		
-		if(url == "/assetManagement/pages/asset")
-		{
-			$('#aNav').addClass('active');
-		}*/
+		$("a[href='../pages/asset-history']").attr('href', '../pages/assetAsset-history')
+	}
+	
+	function displayAsset(asset)
+	{
+		document.getElementById("mAssetId").innerHTML = asset.assetCode;
+		document.getElementById("mName").innerHTML = asset.name;
+		document.getElementById("mDesc").innerHTML = asset.description;
+		document.getElementById("mBrand").innerHTML = asset.brand;
+		document.getElementById("mDate").innerHTML = asset.datePurchased;		
 	}
 	
 	function includeHTML() 
@@ -438,33 +358,3 @@
 		  }
 		  showActiveNav();
 	}
-	
-/*	function displayAlert(msg, type, title)
-	{
-		$.notify({
-			title: '<strong>' + title + '</strong>',
-			message: msg
-		},{
-			animate: 
-			{
-				enter: 'animated fadeInRight',
-				exit: 'animated fadeOutRight'
-			},
-			type: type,
-			delay: 10000,
-			timer: 1000,
-			mouse_over: 'pause',
-			z_index: 2000
-			
-		});
-	}
-
-	
-	function displayAlert(msg, type)
-	{
-		var alert = "<div class='alert " + type + " alert-dismissible fade in'> <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a> "
-						+ msg + "</div>";
-		return alert;
-	}*/
-	
-//});

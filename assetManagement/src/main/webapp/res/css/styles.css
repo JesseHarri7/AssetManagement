@@ -85,6 +85,11 @@
 	visibility: visible;
 }
 
+.hidden {
+/* 	visibility: hidden; */
+	display: none;
+}
+
 .center-box {
 	position: absolute;
 	top: 0;
@@ -170,5 +175,17 @@
 }
 
 .hidden-table{
-	    display: none;
+   display: none;
+}
+
+.span-right{
+	float: right;
+}
+
+.span-left{
+	float: left;
+}
+
+.chkBx{
+	width: 10%;
 }

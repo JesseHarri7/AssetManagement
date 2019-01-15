@@ -32,6 +32,8 @@ public class Asset implements Serializable
 	private String description;
 	private String brand;
 	private String datePurchased;
+	private boolean mainComp = false;
+	private boolean subComp = false;
 	private String status = "In-use";
 	private String unassignDate;
 	
@@ -143,5 +145,26 @@ public class Asset implements Serializable
 	{
 		this.unassignDate = unassignDate;
 	}
+
+	public boolean isMainComp() 
+	{
+		return mainComp;
+	}
+
+	public void setMainComp(boolean mainComp) 
+	{
+		this.mainComp = mainComp;
+	}
+
+	public boolean isSubComp() 
+	{
+		return subComp;
+	}
+
+	public void setSubComp(boolean subComp) 
+	{
+		this.subComp = subComp;
+	}
+
 
 }
