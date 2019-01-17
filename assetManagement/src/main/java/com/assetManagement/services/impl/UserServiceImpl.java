@@ -11,6 +11,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.assetManagement.entities.Asset;
+import com.assetManagement.entities.Employee;
 import com.assetManagement.entities.User;
 import com.assetManagement.excptions.ResourceNotFoundException;
 import com.assetManagement.repositories.UserRepo;
@@ -127,12 +128,12 @@ public  class UserServiceImpl implements UserService {
 			return null;
 		
 	}
-}
+   }
 	public List<User> findByActive(String active) {
 		return  userRepo.findByActive(active);
 	}
 
-	public List<User> findHistory() {
+	/*public List<User> findHistory() {
 		/*List<User> userList = new ArrayList<User>();
 		Iterable<User> user = userRepo.findHistory();
 		for (User a : user)
@@ -140,7 +141,11 @@ public  class UserServiceImpl implements UserService {
 			userList.add(a);
 		}
 		return userList;	
+	}
+		return findAll();
 	}*/
+	
+	public List<User> findHistory() {
 		return findAll();
 	}
 }
