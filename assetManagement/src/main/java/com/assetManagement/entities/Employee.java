@@ -103,10 +103,18 @@ public class Employee implements Serializable {
 	}
 
 
+	public String getActive() {
+		return active;
+	}
+
+	public void setActive(String active) {
+		this.active = active;
+	}
+
 	@Override
 	public String toString() {
-		return "Employee [employeeID=" + employeeID + ", name=" + name + ", surname=" + surname + ", email=" + email
-				+ ", startDate=" + startDate + "]";
+		return "Employee [employeeID=" + employeeID + ", name=" + name + ", active=" + active + ", surname=" + surname
+				+ ", email=" + email + ", startDate=" + startDate + "]";
 	}
 
 

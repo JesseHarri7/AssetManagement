@@ -5,13 +5,16 @@ $(document).ready(function()
 	//Active data fields on start up
 	showActive();
 	
+	//Add temps html files
+	includeHTML();
+	
 	function showActive(){
 		$.ajax({
 			url:"/assetManagement/employee/findActivated/active", 
 			dataType: "json",
 			type: "GET",
 			success: function(data) {
-				
+				console.log(JSON.stringify(data));
 				dataSet = data;
 				empList(dataSet);
 			}
@@ -55,7 +58,6 @@ $(document).ready(function()
 		var name = $('#name').val();
 		var surname = $('#surname').val();
 		var email = $('#email').val();
-//		var empname = $('#empname').val();
 		var active = "Active";
 	
 		var emp = {employeeID, name, surname,email,active};
@@ -109,9 +111,7 @@ $(document).ready(function()
 			}
 		});
 	}
-	
 
-	
 	function empList(dataSet) {
 		
 		var empTable = $("#emp-table").DataTable({
@@ -124,15 +124,12 @@ $(document).ready(function()
 				{data: 'employeeID'},
 				{data: 'name'},
 				{data: 'surname'},
-				//{data: 'startDate'},
-				{data: 'email'},
+				{data: 'email'}
 				//{data: 'active'}
 			]
 		});
 		return empTable;
 	}
-	
-
 
 	function Existance()
     {
@@ -285,5 +282,86 @@ $('#showActive-btn').click(function(event) {
 	findActivated(status);
 });
 
-});
+$('#setEmp-btn').click( function () 
+		{
+			$('.notifyjs-corner').remove();
+			
+			var table = $('#emp-table').DataTable();
+			
+			//Get data from the selected row
+			var assetData = table.rows( '.selected' ).data();
+			
+			//Returns an array because there can be multiple rows selected
+			if(assetData.length != 0)
+			{
+				//Get data from the local storage
+				emp = JSON.parse(localStorage.getItem('emp'));
+				if(emp)
+				{
+					//Save selected rows to local storage and
+					//Create asset assigned table if there is employee data
+					selectAsset();
+					assign();
+				}
+				else
+				{
+					//Send to employee table if there is no employee data
+					clearLocal();
+					selectAsset();
+					window.location = "../pages/employee";
+					alert("Please select an employee to assign to the selected asset");
+				}
+			}
+			else
+			{
+				$.notify("Heads up! Please select an asset to assign to an employee.", "warn");
+				
+//				displayAlertT("Please select an asset to assign to an employee.", "warning", "Heads up!");
 
+				//alert("Please select an asset to assign to an employee");
+			}
+			
+	    } );	
+		
+	function showActiveNav()
+	{
+		$('#eNav').addClass('active');
+		
+		$("a[href='../pages/asset-history']").attr('href', '../pages/employee-history')
+	}
+	
+	function includeHTML() 
+	{
+		  var z, i, elmnt, file, xhttp;
+		  /*loop through a collection of all HTML elements:*/
+		  z = document.getElementsByTagName("*");
+		  for (i = 0; i < z.length; i++) 
+		  {
+		    elmnt = z[i];
+		    /*search for elements with a certain atrribute:*/
+		    file = elmnt.getAttribute("w3-include-html");
+		    if (file) 
+		    {
+		      /*make an HTTP request using the attribute value as the file name:*/
+		      xhttp = new XMLHttpRequest();
+		      xhttp.onreadystatechange = function() 
+		      {
+		        if (this.readyState == 4) 
+		        {
+		          if (this.status == 200) {elmnt.innerHTML = this.responseText;}
+		          if (this.status == 404) {elmnt.innerHTML = "Page not found.";}
+		          /*remove the attribute, and call this function once more:*/
+		          elmnt.removeAttribute("w3-include-html");
+		          includeHTML();
+		        }
+		      }
+		      xhttp.open("GET", file, true);
+		      xhttp.send();
+		      /*exit the function:*/
+		      return;
+		    }
+		  }
+		  showActiveNav();
+	}
+
+});
