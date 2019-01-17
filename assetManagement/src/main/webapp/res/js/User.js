@@ -151,7 +151,7 @@ function findAll()
 	
 	
 
-function findActivated(status){ //activated or deactive 
+function findActivated(status){ //activated or deactivated
 	
 	
 	if(status == 'Show Active'){
