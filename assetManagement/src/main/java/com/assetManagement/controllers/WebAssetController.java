@@ -19,6 +19,12 @@ public class WebAssetController
 		return "/pages/employee.html";
 	}
 	
+	@RequestMapping(value = "/pages/employee-history")
+    public String empHistory() 
+	{
+		return "/pages/empHistory.html";
+	}
+	
 	@RequestMapping(value = "/pages/assetAssigned")
     public String assetAssigned() 
 	{
