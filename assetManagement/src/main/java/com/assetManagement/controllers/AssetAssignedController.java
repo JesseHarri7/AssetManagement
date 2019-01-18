@@ -91,5 +91,12 @@ public class AssetAssignedController
 			return service.findByMoveDate(date);
 		}
 		
+		//Find by Asset Id Active and deactive
+		@RequestMapping(value = "/assetAssigned/findAllAssetHistory/{id}", method = RequestMethod.GET)
+		public List<AssetAssigned> findByAssetIdHistory(@PathVariable Long id)
+		{
+			return service.findByAssetCodeAll(id);
+		}
+		
 
 }

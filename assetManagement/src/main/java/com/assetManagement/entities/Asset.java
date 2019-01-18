@@ -165,6 +165,4 @@ public class Asset implements Serializable
 	{
 		this.subComp = subComp;
 	}
-
-
 }

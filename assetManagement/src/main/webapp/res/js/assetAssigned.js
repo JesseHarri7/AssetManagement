@@ -223,6 +223,7 @@
 			[
 				//{data: 'id'},
 				{data: 'assets.assetCode'},
+				{data: 'assets.name'},
 				{data: 'employees.employeeID'},
 				{data: 'employees.name'},
 				{data: 'moveDate'}
@@ -241,7 +242,7 @@
 		if (rowToDelete)
 		{
 			$.ajax({
-				url:"/assetManagement/assetAssigned/delete/" + rowToDelete.id, 
+				url:"/assetManagement/assetAssigned/delete/" + rowToDelete.id,
 				dataType: "json",
 				type: "DELETE",
 				success: success()

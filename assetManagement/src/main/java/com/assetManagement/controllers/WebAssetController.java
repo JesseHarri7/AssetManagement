@@ -62,9 +62,15 @@ public class WebAssetController
 	}
 	
 	@RequestMapping(value = "/pages/component")
-    public String assetAsset() 
+    public String assetComp() 
 	{
 		return "/pages/assetAsset.html";
+	}
+	
+	@RequestMapping(value = "/pages/component-history")
+    public String assetCompHistory() 
+	{
+		return "/pages/assetCompHistory.html";
 	}
 	
 	/*@RequestMapping(value = "/assetManagement/error")

@@ -1,4 +1,4 @@
-package com.assetManagement.services;
+/*package com.assetManagement.services;
 
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -150,3 +150,4 @@ public class AssetAssignedServiceTest
 	}
 	
 }
+*/

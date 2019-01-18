@@ -15,6 +15,9 @@
 	//Show selected alert if employee is selected
 	showSelectAlert();
 	
+	//Show button to assign if reassign is selected
+	showAssignBtn();
+	
 ////////////////////////////////////////Test////////////////////////////////////////	
 				
 /////////////////////////////////////////Test////////////////////////////////////////
@@ -205,10 +208,18 @@
 			emp = JSON.parse(localStorage.getItem('emp'));
 			if(emp)
 			{
-				//Save selected rows to local storage and
-				//Create asset assigned table if there is employee data
-				selectAsset();
-				assign();
+				if(!subComp())
+				{
+					//Save selected rows to local storage and
+					//Create asset assigned table if there is employee data
+					selectAsset();
+					///If there is emp data then set asset and emp values to assetAssigned table and then clear the local storage
+					assign();
+				}
+				else
+				{
+					$.notify("Heads up! You cannot assign a Sub component to an Employee.", "warn")
+				}
 			}
 			else
 			{
@@ -219,6 +230,10 @@
 					selectAsset();
 					window.location = "../pages/employee";
 					alert("Please select an employee to assign to the selected asset");
+				}
+				else
+				{
+					$.notify("Heads up! You cannot assign a Sub component to an Employee.", "warn")
 				}
 			}
 		}
@@ -231,7 +246,128 @@
 			//alert("Please select an asset to assign to an employee");
 		}
 		
-    } );
+    });
+	
+	//select Asset for reassign
+	$('#reassign-btn').click( function () 
+	{
+		var assign = JSON.parse(localStorage.getItem('component'));
+		
+		var table = $('#asset-table').DataTable();
+		var assetData = table.rows( '.selected' ).data();
+		
+		if(assetData.length == 0)
+		{
+			$.notify("Heads up! Please select an asset to reassign.", "warn");
+		}
+		else if(assetData.length >= 2)
+		{
+			$.notify("Heads up! Please only select one employee.", "warn");
+		}
+		else
+		{
+			if(subComp())
+			{
+				//Save new reassignment
+				selectAsset();
+				if(reassignAsset())
+				{
+					comp = JSON.parse(localStorage.getItem('component'));
+					var id = comp.id;
+					
+					reassignRemove(id);
+					localStorage.setItem('reassignedComp', JSON.stringify("ReassignedComp"));
+					window.location = "/assetManagement/pages/component";
+				}
+			}
+			else
+			{
+				$.notify("Heads up! You cannot reassign a Main component.", "warn")
+			}
+			
+		}
+				
+    });
+	
+	function reassignAsset()
+	{
+		var success = false;
+		
+		var comp = JSON.parse(localStorage.getItem('component'));
+		var assetComp = JSON.parse(localStorage.getItem('asset0'));
+		
+		var assetOne = comp.assetOne;
+		var id = comp.id;
+		var prevAsset = comp.assetOne.assetCode + "_" + comp.assetOne.name;
+		
+		if(assetOne && assetComp)
+		{
+			success = assignAssets(assetOne, assetComp);
+		}
+		return success;
+			/*//Assigned date
+			var today = new Date();
+			var dd = today.getDate();
+			var mm = today.getMonth()+1; 
+			var yyyy = today.getFullYear();
+			
+			today = yyyy + '-' + mm + '-' + dd;
+			
+			//Set as object
+			var asset = {assetOne, assetComponent: assetComp, prevAsset};
+			asset.assignDate = today;
+			
+			//Translate so that JSON can read it
+			var data_json = JSON.stringify(asset);
+			
+			//Before creating, first check to see if the asset already exists
+			var exists = findAssetCodes(assetOne.assetCode, assetComponent.assetId);
+			
+			//Before creating, first check to see if the sub component is already assigned
+			var subComp = findSubComp(assetComponent.assetId);
+			
+			if(exists.length == 0 && subComp.length == 0)
+			{
+				$.ajax(
+				{
+					headers: {
+				        'Accept': 'application/json',
+				        'Content-Type': 'application/json' 
+				    },
+					url:"/assetManagement/assetAsset/create",
+					dataType: "json",
+					data: data_json,
+					type: "POST",
+					success: success()
+				});
+			
+			function success()
+			{
+				reassignRemove(id);
+				localStorage.setItem('reassigned', JSON.stringify("Reassigned"));
+//				alert("Data successfully assigned");
+				window.location = "/assetManagement/pages/component";
+			}	
+				
+		}
+		else if(subComp != 0)
+		{
+			$.notify("Error! The sub component is already assigned.", "warn");
+		}*/
+	}
+	
+	function reassignRemove(id)
+	{
+		$.ajax({
+			url:"/assetManagement/assetAsset/delete/" + id, 
+			dataType: "json",
+			type: "DELETE",
+			success: function(data)
+			{
+				
+			}
+		});
+	}
 	
 	function subComp()
 	{
@@ -246,7 +382,7 @@
 		
 		if(subComp)
 		{
-			$.notify("Heads up! You cannot assign a Sub component to an Employee.", "warn")
+//			$.notify("Heads up! You cannot assign a Sub component to an Employee.", "warn")
 			return true;
 		}
 		else
@@ -373,8 +509,13 @@
 		//For each row selected, delete
 		for (i = 0; i < items; i++)
 		{
-			//Check to see if the asset isn't already assigned
+			//Check to see if the asset is already assigned
 			var assetSet = alreadySet(rowToDelete[i].assetCode);
+			
+			//Check to see if the asset is already assigned to a asset
+			var getAssigned = assignedAssetCode(rowToDelete[i].assetCode);
+			
+			var compSet = findSubComp(rowToDelete[i].assetId);
 			
 			if(assetSet)
 			{
@@ -388,19 +529,19 @@
 					  autoHide: false,
 					  clickToHide: false
 					});
+			}
+			else if(getAssigned != 0 || compSet != 0)
+			{
+				createNotify(rowToDelete[i].assetCode, i, rowToDelete[i].assetId);
 				
-				/*if(confirm("Asset " + assetSet.assets.assetCode + " is already assigned. This will unassign the asset from the employee, are you sure you want to delete?"))
-				{
-					assignedRemove(assetSet);
-					remove(rowToDelete[i].assetCode);
-				}
-				else
-				{
-					$.notify("Success! Action was cancelled.", "success");
-					
-//					displayAlertT("Action was cancelled.", "success", "Success!");
-				}*/
-				
+				$.notify({
+					  title: "Asset " + rowToDelete[i].assetCode + " is already assigned. This will unassign the asset, are you sure you want to delete?",
+					  button: 'Confirm'
+					}, {
+					  style: 'foo',
+					  autoHide: false,
+					  clickToHide: false
+					});
 			}
 			else
 			{
@@ -410,7 +551,26 @@
 		}
 	}
 	
-	function createNotify(code, i)
+	function assignedAssetCode(id)
+	{
+		var dataSet = [];
+
+		$.ajax({
+			url:"/assetManagement/assetAsset/findAssetOne/" + id,
+			async: false,
+			dataType: "json",
+			type: "GET",
+			success: function(data)
+			{
+				dataSet = data
+			},
+			error: dataSet = null
+		});
+		
+		return dataSet;
+	}
+	
+	function createNotify(code, i, id)
 	{
 		//add a new style 'foo'
 
@@ -421,7 +581,7 @@
 		        "<div class='title' data-notify-html='title'/>" +
 		        "<div class='buttons'>" +
 		          "<button onclick='chkNo("+code+","+i+")' class='btn btn-secondary no"+i+"'>Cancel</button> " +
-		          "<button onclick='chkYes("+code+","+i+")' class='btn btn-secondary yes"+i+"'>Confirm</button>" +
+		          "<button onclick='chkYes("+code+","+i+","+id+")' class='btn btn-secondary yes"+i+"'>Confirm</button>" +
 		        "</div>" +
 		      "</div>" +
 		    "</div>"
@@ -437,12 +597,36 @@
 	}
 
 	//Toast confirm button
-	function chkYes(code, i) 
+	function chkYes(code, i, id) 
 	{
 		//Function
 		var assetSet = alreadySet(code);
-		assignedRemove(assetSet);
-		removeMsg(assetCode);
+		
+		var getAssigned = assignedAssetCode(code);
+		
+		var compSet = findSubComp(id);
+		
+		//If the asset is assigned to an employee and a main component then unassign both
+		if(assetSet && getAssigned)
+		{
+			assignedRemove(assetSet);
+			compRemove(getAssigned);
+		}
+		else if(getAssigned)
+		{
+			compRemove(getAssigned);
+		}
+		else if(assetSet)
+		{
+			assignedRemove(assetSet);
+		}
+		else
+		{
+			subCompRemove(compSet);
+		}
+		
+		
+		removeMsg(code);
 //		remove(code);
 		//hide notification
 		$('.yes'+i).trigger('notify-hide');
@@ -466,14 +650,41 @@
 			{
 				$.notify("Success! Asset " + assetCode + " was removed.", "success");
 				table.row("#"+assetCode).remove().draw( false );
-				
-//				displayAlertT("Asset " + assetCode + " was removed.", "success", "Success!");
-				
-//				alert("Asset " + assetCode + " was removed.");
 			}
 		
 	}
 	
+	function compRemove(components)
+	{
+		var total = components.length;
+		
+		for(i = 0; i < total; i++)
+		{
+			$.ajax({
+				url:"/assetManagement/assetAsset/delete/" + components[i].id,
+				dataType: "json",
+				type: "DELETE",
+				success: function(data)
+				{
+					$.notify("Success! Asset " + components[i].assetOne.assetCode + " and asset " + components[i].assetComponent.assetCode + " is now unassigned.", "success")
+				}
+			});
+		}
+	}
+	
+	function subCompRemove(component)
+	{
+		$.ajax({
+			url:"/assetManagement/assetAsset/delete/" + component.id,
+			dataType: "json",
+			type: "DELETE",
+			success: function(data)
+			{
+				$.notify("Success! Asset " + component.assetComponent.assetCode + " and asset " + component.assetOne.assetCode + " is now unassigned.", "success")
+			}
+		});
+	}
+			
 	function removeMsg(assetCode)
 	{	
 		document.getElementById("removeCode").innerHTML = assetCode;
@@ -491,6 +702,14 @@
 			//Find By id
 			var assetObj = findId(assetCode);
 			assetObj.status = status;
+			
+			var today = new Date();
+			var dd = today.getDate();
+			var mm = today.getMonth()+1;
+			var yyyy = today.getFullYear();
+			
+			today = yyyy + '-' + mm + '-' + dd;
+			assetObj.unassignDate = today;
 
 			var code = assetObj.assetCode;
 			var assetId = assetObj.assetId;
@@ -499,10 +718,12 @@
 			var desc = assetObj.description;
 			var name = assetObj.name;
 			var unassignDate = assetObj.unassignDate;
-			var state = assetObj.state;
+			var state = "D";
 			var stat = assetObj.status;
+			var mainComp = assetObj.mainComp;
+			var subComp = assetObj.subComp;
 				
-			var asset = {assetCode: code, assetId, brand, datePurchased: date, description: desc, name, state, status: stat, unassignDate};
+			var asset = {assetCode: code, assetId, brand, datePurchased: date, description: desc, name, state, status: stat, unassignDate, mainComp, subComp};
 			
 			var data_json = JSON.stringify(asset);
 			
@@ -517,21 +738,38 @@
 				dataType: "json",
 				data: data_json,
 				type: "PUT",
-				success: success(code)
+				success: success()
 			});
 			
-			function success(code)
+			function success()
 			{
+				var table = $('#asset-table').DataTable();
+
 //				$.notify("Saved!", "success");
 				
 				$('#removeModalId').modal('hide');
 				
-				//Remove the asset
-				remove(code);
+				$.notify("Success! Asset " + assetCode + " was removed.", "success");
+				table.row("#"+assetCode).remove().draw( false );
 			}
 		}
 		
 	});
+	
+	function assignedRemove(assign)
+	{
+		$.ajax({
+			url:"/assetManagement/assetAssigned/delete/" + assign.id,
+			dataType: "json",
+			type: "DELETE",
+			success: function(data)
+			{
+//				updateAsset(assign);
+				$.notify("Success! Asset " + assign.assets.assetCode + " and employee " + assign.employees.employeeID + " is now unassigned.", "success")//displayAlertT("Asset " + assign.assets.assetCode + " and employee " + assign.employees.employeeID + " is now unassigned.", "success", "Success!") //alert("Asset " + assign.assets.assetCode + " and employee " + assign.employees.employeeID + " is now unassigned")
+			}
+		});
+
+	}
 	
 	//Saving selected rows to local storage
 	function selectAsset()
@@ -842,6 +1080,7 @@
 			{
 				asset = JSON.parse(localStorage.getItem('asset' + [i]));
 				var assetSet = alreadySet(asset.assetCode);
+				var subComp = isSubComponent(asset);
 				
 				if(assetSet)
 				{
@@ -851,17 +1090,29 @@
 					
 					//alert("Asset " + asset.assetCode + " is already assigned to employee " + assetSet.employees.employeeID);
 				}
+				else if(subComp)
+				{
+					$.notify("Error! You cannot assign a sub component to an employee", "error");
+				}
 				else
 				{
 					//Keep track of how many assets are added to the local storage so they can all be removed if the cancel button is clicked
 					count++;
 					asset = JSON.parse(localStorage.getItem('asset' + [i]));
 					
-					var assetAssigned = {assets: asset, employees: emp, empName: emp.name};
+					//Find if the asset had a previous owner
+					var getAssigned = assignedAssetCodeAll(asset.assetCode);
+					if(getAssigned != 0)
+					{
+						var lastAssigned = getAssigned.length - 1;
+						var prevOwner = getAssigned[lastAssigned].employees.employeeID + "_" + getAssigned[lastAssigned].employees.name + "_" + getAssigned[lastAssigned].employees.surname;
+					}
+					
+					var assetAssigned = {assets: asset, employees: emp, empName: emp.name, prevOwner};
 					
 					var today = new Date();
 					var dd = today.getDate();
-					var mm = today.getMonth()+1; 
+					var mm = today.getMonth()+1;
 					var yyyy = today.getFullYear();
 					
 					today = yyyy + '-' + mm + '-' + dd;
@@ -894,6 +1145,25 @@
 			//alert("Neither an asset or employee was selected");
 		}
 	
+	}
+	
+	function assignedAssetCodeAll(id)
+	{
+		var dataSet = [];
+
+		$.ajax({
+			url:"/assetManagement/assetAssigned/findAllAssetHistory/" + id,
+			async: false,
+			dataType: "json",
+			type: "GET",
+			success: function(data)
+			{
+				dataSet = data
+			},
+			error: dataSet = null
+		});
+		
+		return dataSet;
 	}
 	
 	//Clear local storage
@@ -1080,6 +1350,21 @@
 		
 	}
 	
+	function isSubComponent(asset)
+	{
+		var subComp = asset.subComp;
+		
+		if(subComp)
+		{
+			
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	
 	function checkComponents(assetOne, assetTwo)
 	{
 		var assetOneMain = assetOne.mainComp;
@@ -1104,6 +1389,9 @@
 //		var assetCode = assetOne;
 		
 //		var assetAssigned = assetTwo;
+		var reassign = false;
+		
+		var prevAsset = null;
 		
 		//Assigned date
 		var today = new Date();
@@ -1113,9 +1401,16 @@
 		
 		today = yyyy + '-' + mm + '-' + dd;
 		
+		//Find if the asset was assigned to a previous asset
+		var getAssigned = compAssetCodeAll(assetOne.assetCode);
+		if(getAssigned != 0)
+		{
+			var lastAssigned = getAssigned.length - 1;
+			prevAsset = getAssigned[lastAssigned].assetOne.assetCode + "_" + getAssigned[lastAssigned].assetOne.name;
+		}
 		
 		//Set as object
-		var asset = {assetOne, assetComponent};
+		var asset = {assetOne, assetComponent, prevAsset};
 		asset.assignDate = today;
 		
 		//Translate so that JSON can read it
@@ -1145,14 +1440,39 @@
 			function success()
 			{
 				$.notify("Success! Assets have been successfully assigned.", "success");
-				
+				reassign = true;
 			}
 			
+		}
+		else if(subComp != 0)
+		{
+			$.notify("Error! The sub component is already assigned.", "warn");
 		}
 		/*else
 		{
 			$.notify("Error! The Assets you're trying to assign are already assigned.", "warn");
 		}*/
+		
+		return reassign;
+	}
+	
+	function compAssetCodeAll(id)
+	{
+		var dataSet = [];
+
+		$.ajax({
+			url:"/assetManagement/assetAsset/assetCodesHist/" + id,
+			async: false,
+			dataType: "json",
+			type: "GET",
+			success: function(data)
+			{
+				dataSet = data
+			},
+			error: dataSet = null
+		});
+		
+		return dataSet;
 	}
 	
 	function findAssetCodes(assetOne, assetComponent)
@@ -1189,7 +1509,6 @@
 			success: function(data)
 			{
 				dataSet = data;
-				$.notify("Error! The sub component is already assigned.", "warn");
 			},
 			error: function(data)
 			{
@@ -1219,15 +1538,70 @@
 		
 	}
 	
-	function assignedRemove(assign)
-	{
+	function updateAsset(data)
+	{		
+		var emp = findEmp(data.employees.employeeID);
 		
-		$.ajax({
-			url:"/assetManagement/assetAssigned/delete/" + assign.id,
+		var assetCode = data.assets.assetCode;
+		
+//		var assetId = assetObj.assetId;
+		
+		var empId = emp.employeeID;
+		
+		var empName = emp.name;
+		
+		var empSurname = emp.surname;
+		
+		var prevOwner = empId + "_" + empName + "_" + empSurname;
+		
+		var assetObj = findId(assetCode);
+		
+		var assetId = assetObj.assetId;
+		var name = assetObj.name;
+		var description = assetObj.description;
+		var brand = assetObj.brand;
+		var datePurchased = assetObj.datePurchased;
+		var mainComp = assetObj.mainComp;
+		var subComp = assetObj.subComp;
+		
+		var asset = {assetId, assetCode, name, description, brand, datePurchased, mainComp, subComp, prevOwner};
+		
+		var data_json = JSON.stringify(asset);
+		
+		$.ajax(
+		{
+			headers: { 
+		        'Accept': 'application/json',
+		        'Content-Type': 'application/json' 
+		    },
+			url:"/assetManagement/asset/update", 
 			dataType: "json",
-			type: "DELETE",
-			success: $.notify("Success! Asset " + assign.assets.assetCode + " and employee " + assign.employees.employeeID + " is now unassigned.", "success")//displayAlertT("Asset " + assign.assets.assetCode + " and employee " + assign.employees.employeeID + " is now unassigned.", "success", "Success!") //alert("Asset " + assign.assets.assetCode + " and employee " + assign.employees.employeeID + " is now unassigned")
+			data: data_json,
+			type: "PUT",
+			success: success()
 		});
+		function success()
+		{
+//			$.notify("Success! Asset " + assetCode + " has been updated.", "success");
+		}
+	}
+	
+	function findEmp(id)
+	{
+		var dataSetEmp = [];
+
+		$.ajax({
+			url:"/assetManagement/employee/" + id,
+			async: false,
+			dataType: "json",
+			type: "GET",
+			success: function(data)
+			{
+				dataSetEmp = data
+			},
+			error: dataSetEmp = null
+		});
+		return dataSetEmp;
 
 	}
 	
@@ -1241,6 +1615,18 @@
 			{
 			    $.notify("Please select an asset to assign to the selected employee", "info");
 			});
+		}
+	}
+	
+	//Display reassign button if reassign is selected
+	function showAssignBtn()
+	{
+		var assign = JSON.parse(localStorage.getItem('component'));
+		
+		if(assign)
+		{
+			$('#reassign-btn').addClass('visible-r');
+			$.notify("Please select an asset to reassign", "info");
 		}
 	}
 	

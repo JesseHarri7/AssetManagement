@@ -134,4 +134,16 @@ public class AssetAssignedServiceImpl implements AssetAssignedService
 		return assetAList;
 	}
 
+	@Override
+	public List<AssetAssigned> findByAssetCodeAll(Long asset) 
+	{
+		List<AssetAssigned> assetAList = new ArrayList<AssetAssigned>();
+		Iterable<AssetAssigned> assigns = repo.findByAssetsAssetCodeAll(asset);
+		for (AssetAssigned a : assigns)
+		{
+			assetAList.add(a);
+		}
+		return assetAList;
+	}
+
 }

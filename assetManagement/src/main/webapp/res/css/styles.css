@@ -12,10 +12,12 @@
 }
 
 #footer {
-	position: fixed;
+	position: relative;
 	left: 0px;
+	right: 0px;
 	bottom: 0px;
 	width: 100%;
+	padding: 0.5rem;
 	background-color: #F8F8F8;
 	color: #36454f;
 	text-align: center;

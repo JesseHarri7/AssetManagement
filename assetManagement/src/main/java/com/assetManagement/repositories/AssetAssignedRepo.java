@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.assetManagement.entities.AssetAssigned;
@@ -23,5 +24,8 @@ public interface AssetAssignedRepo extends CrudRepository<AssetAssigned, Long>
 	
 	@Query(value = "SELECT * FROM asset_assigned", nativeQuery = true)
 	List<AssetAssigned> findAllHistory();
+	
+	@Query(value = "SELECT * FROM asset_assigned WHERE asset_code = :assetCode", nativeQuery = true)
+	List<AssetAssigned> findByAssetsAssetCodeAll(@Param("assetCode") Long Asset);
 	 
 }
