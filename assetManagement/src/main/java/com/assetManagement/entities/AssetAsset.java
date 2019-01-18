@@ -16,6 +16,7 @@ import org.hibernate.annotations.Where;
 
 @Entity
 @Table(name = "assetAsset", catalog = "management")
+//, prev_asset = (SELECT CONCAT(asset_code, '_', name) FROM asset WHERE asset_code = management.asset_asset.asset_code)
 @SQLDelete(sql = "UPDATE asset_asset set state = 'D', unassign_date = CURDATE() WHERE asset_asset_id = ?")
 @Where(clause="state <> 'D'")
 public class AssetAsset implements Serializable

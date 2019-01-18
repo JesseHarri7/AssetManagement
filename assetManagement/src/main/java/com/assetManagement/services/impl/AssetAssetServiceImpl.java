@@ -91,19 +91,17 @@ public class AssetAssetServiceImpl implements AssetAssetService
 		return assetList;
 	}
 
-/*	@Override
-	public AssetAsset findByAssetOne(Long asset) 
+	@Override
+	public List<AssetAsset> findByAssetOne(Long asset) 
 	{
-		AssetAsset assetId = repo.findByAssetOneAssetCode(asset);
-		if (assetId == null)
+		List<AssetAsset> assetList = new ArrayList<AssetAsset>();
+		Iterable<AssetAsset> assets = repo.findByAssetOneAssetCode(asset);
+		for (AssetAsset a : assets)
 		{
-			return null;
+			assetList.add(a);
 		}
-		else
-		{
-			return assetId;
-		}
-	}*/
+		return assetList;
+	}
 
 	@Override
 	public AssetAsset findByAssetComponent(Long id) 
@@ -145,6 +143,18 @@ public class AssetAssetServiceImpl implements AssetAssetService
 		{
 			return asset;
 		}
+	}
+
+	@Override
+	public List<AssetAsset> findByAssetOneHist(Long asset) 
+	{
+		List<AssetAsset> assetList = new ArrayList<AssetAsset>();
+		Iterable<AssetAsset> assets = repo.findByAssetOneAssetCodeHist(asset);
+		for (AssetAsset a : assets)
+		{
+			assetList.add(a);
+		}
+		return assetList;
 	}
 
 }

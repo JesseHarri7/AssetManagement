@@ -11,6 +11,8 @@ public interface AssetAssignedService extends Service<AssetAssigned, Long>
 	
 	AssetAssigned findByEmployeeID(Long emp);
 	
+	List<AssetAssigned> findByAssetCodeAll(Long asset);
+	
 	List<AssetAssigned> findByMoveDate(String date);
 	 
 }

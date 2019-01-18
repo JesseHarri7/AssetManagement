@@ -70,11 +70,11 @@ public class AssetAssetController
 	}
 	
 	//Find by AssetOne id
-	/*@RequestMapping(value = "/assetAsset/findAssetOne", method = RequestMethod.GET)
-	public AssetAsset findAssetOne(@PathVariable Long id)
+	@RequestMapping(value = "/assetAsset/findAssetOne/{id}", method = RequestMethod.GET)
+	public List<AssetAsset> findAssetOne(@PathVariable Long id)
 	{
 		return service.findByAssetOne(id);
-	}*/
+	}
 	
 	//Find by AssetTwo id
 	@RequestMapping(value = "/assetAsset/findAssetComponent/{id}", method = RequestMethod.GET)
@@ -95,6 +95,13 @@ public class AssetAssetController
 	public AssetAsset findAssetCodes(@PathVariable Long assetOne, @PathVariable Long assetComponent)
 	{
 		return service.findByAssetCodes(assetOne, assetComponent);
+	}
+	
+	//Find by Asset codes History
+	@RequestMapping(value = "/assetAsset/assetCodesHist/{id}", method = RequestMethod.GET)
+	public List<AssetAsset> findAssetCodesHist(@PathVariable Long id)
+	{
+		return service.findByAssetOneHist(id);
 	}
 
 }

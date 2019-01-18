@@ -4,35 +4,24 @@
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	
-<title>Asset Component</title>
+<title>Component - History</title>
 
 <link rel="icon" type="image/png" href="../res/images/icons/S-favicon.png" />
-<!-- <link rel="stylesheet" href="../webjars/bootstrap/3.3.7-1/css/bootstrap.min.css" /> -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" />
 <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.bootstrap4.min.css" />
 
+<!-- <link rel="stylesheet" href="../webjars/bootstrap/3.3.7-1/css/bootstrap.min.css" /> -->
 <link rel="stylesheet" href="../res/css/styles.css" />
 <link rel="stylesheet" href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" />
 <link rel="stylesheet" href="https://cdn.datatables.net/select/1.2.0/css/select.dataTables.min.css" type="text/css" />
-<link href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.2.0/animate.min.css" rel="stylesheet">
 </head>
 <body>
 
 	<div w3-include-html="../pages/temps/header.html"></div>
 	<!-- 	<h3>Saratoga</h3> -->
-	<div w3-include-html="../pages/temps/nav.html"></div>
-
-	<div id="nav-buttons">
-
-		<input type="button" value="Unassign" id="delete-btn" class="btn btn-primary">
-		<input type="button" value="Reassign" id="reassign-btn" class="btn btn-primary">
-		<input type="button" value="Main component info" id="asset-btn" class="btn btn-primary" data-target="#assetModal">
-		<input type="button" value="Sub component info" id="comp-btn" class="btn btn-primary" data-target="#empModal">
-		<input type="button" value="Cancel" id="cancel-btn" class="btn btn-primary-c">
-
-	</div>	
+	<div w3-include-html="../pages/temps/nav-history.html"></div>
 
 	<div class="table-width-outter">
 		<div class="table-width-inner">
@@ -44,42 +33,14 @@
 						<th>Asset_Component</th>
 						<th>Name</th>
 						<th>Date_Assigned</th>
+						<th>Date_Unassigned</th>
+						<th>Previous_Asset</th>
+						<th>Active/Inactive</th>
 					</tr>
 				</thead>
 				<tbody>
 				</tbody>
 			</table>
-		</div>
-	</div>
-	
-	<!-- Asset modal view -->
-	<!-- Asset info Modal -->
-	<div class="modal fade" id="assetModal" role="dialog">
-		<div class="modal-dialog">
-
-			<!-- Modal content-->
-			<div class="modal-content">
-				<div class="modal-header">
-					<h2 class="modal-title">Asset Details</h2>
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-				</div>
-				<div class="modal-body">
-					Asset Code:
-					<div id="mAssetId"></div>
-					<br> Name:
-					<div id="mName"></div>
-					<br> Description:
-					<div id="mDesc"></div>
-					<br> Brand:
-					<div id="mBrand"></div>
-					<br> Date Purchased:
-					<div id="mDate"></div>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				</div>
-			</div>
-
 		</div>
 	</div>
 	
@@ -95,7 +56,6 @@
 	<script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
 	<script src="https://cdn.datatables.net/responsive/2.2.3/js/responsive.bootstrap.min.js"></script>
 	
-	<script src="../res/js/assetAsset.js"></script>
-	<script src="../res/js/plugins/notify.js"></script>
+	<script src="../res/js/history/assetComp-history.js"></script>
 </body>
 </html>

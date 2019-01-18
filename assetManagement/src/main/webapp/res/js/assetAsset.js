@@ -10,17 +10,22 @@
 	//All data fields on start up
 	findAll();
 	
-	//Show alert when assigning is successful
-	showSelectAlert();
-	
 	//Show alert when reassigning is successful
-//	showReassignAlert();
+	showReassignAlert();
 	
 	//Select row
 	$('#AA-table tbody').on('click','tr', function()
 	{
-		$(this).toggleClass('selected');
-	});
+		if ( $(this).hasClass('selected') )
+		{
+            $(this).removeClass('selected');
+		}
+		else
+		{
+            $('tr.selected').removeClass('selected');
+            $(this).addClass('selected');
+        }
+	} );
 	
 	function findAll()
 	{
@@ -41,7 +46,6 @@
 
 	function aaList(dataSet)
 	{
-		
 		var aaTable = $("#AA-table").DataTable({
 			dom: '<f<t>lip>',
 			retrieve: true,
@@ -147,17 +151,10 @@
 				  autoHide: false,
 				  clickToHide: false
 				});
-			
-			//displayAlert("Are you sure you want to unassign? <p><a href='#' class='alert-link' onclick='delYes();'>Yes</a> <a href='#' class='alert-link' onclick='delNo();' >No</a></p>", "info", "Heads up!");
-
 		}
 		else
 		{
 			$.notify("Heads up! Please select an item to unassign.", "warn");
-			
-			//displayAlert("Please select a item to unassign.", "warning", "Heads up!");
-			
-			//alert("Please select a item to remove");
 		}
 		
 	});
@@ -199,6 +196,33 @@
 		
 	});
 	
+	function remove()
+	{
+		var table = $('#AA-table').DataTable();
+
+		var rowToDelete = table.row( '.selected' ).data();
+		
+		if (rowToDelete)
+		{
+			$.ajax({
+				url:"/assetManagement/assetAsset/delete/" + rowToDelete.id, 
+				dataType: "json",
+				type: "DELETE",
+				success: success()
+			});
+			table.row('.selected').remove().draw( false );
+			function success()
+			{
+				$.notify("Success! Asset " + rowToDelete.assetOne.assetCode + " and component " + rowToDelete.assetComponent.assetCode + " are now unassigned.", "success");
+			}
+		}
+		else
+		{
+			$.notify("Heads up! Please select a item to unassign.", "warn");
+		}
+		
+	}
+	
 	//Reassign button
 	$('#reassign-btn').click(function(event)
 	{
@@ -210,18 +234,13 @@
 		
 		if(data)
 		{
+			//Add selected data to local storage
 			selectAA();
-			window.location = "../pages/employee";
-			alert("Please select an employee to reassign to this asset");
-			
+			window.location = "../pages/asset";			
 		}
 		else
 		{
 			$.notify("Heads up! Please select a item to reassign.", "warn");
-			
-			//displayAlert("Please select a item to reassign.", "warning", "Heads up!");
-			
-			//alert("Please select a item to remove");
 		}	
 	});
 	
@@ -232,33 +251,6 @@
 		resetLocal();
 	})
 	
-	function remove()
-	{
-		var table = $('#AA-table').DataTable();
-
-		var rowToDelete = table.row( '.selected' ).data();
-		
-		if (rowToDelete)
-		{
-			$.ajax({
-				url:"/assetManagement/assetAssigned/delete/" + rowToDelete.id, 
-				dataType: "json",
-				type: "DELETE",
-				success: success()
-			});
-			table.row('.selected').remove().draw( false );
-			function success()
-			{
-				$.notify("Success! Asset " + rowToDelete.assets.assetCode + " and employee " + rowToDelete.employees.employeeID + " are now unassigned.", "success");
-			}
-		}
-		else
-		{
-			$.notify("Heads up! Please select a item to unassign.", "warn");
-		}	
-		
-	}
-	
 	function selectAA()
 	{
 		var table = $('#AA-table').DataTable();
@@ -266,15 +258,11 @@
 		
 		if(data)
 		{
-			localStorage.setItem('assign', JSON.stringify(data));
+			localStorage.setItem('component', JSON.stringify(data));
 		}
 		else
 		{
 			$.notify("Heads up! Please select a item to reassign.", "warn");
-			
-			//displayAlert("Please select a item to reassign.", "warning", "Heads up!");
-
-			//alert("Please select a row");
 		}
 	}
 	
@@ -309,11 +297,25 @@
 		}
 	}
 	
+	function showReassignAlert()
+	{
+		var reassign = JSON.parse(localStorage.getItem('reassignedComp'));
+		if(reassign)
+		{
+			$(document).ready(function()
+			{
+			    $.notify("Data successfully reassigned", "info");
+			});
+			localStorage.clear();
+			$('#cancel-btn').hide();
+		}
+	}
+	
 	function showActiveNav()
 	{
 		$('#assetAssetNav').addClass('active');
 		
-		$("a[href='../pages/asset-history']").attr('href', '../pages/assetAsset-history')
+		$("a[href='../pages/asset-history']").attr('href', '../pages/component-history')
 	}
 	
 	function displayAsset(asset)

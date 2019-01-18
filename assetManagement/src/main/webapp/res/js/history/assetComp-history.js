@@ -11,7 +11,7 @@ $(document).ready(function()
 		var dataSetHistory = [];
 		
 		$.ajax({
-			url:"/assetManagement/assetAssigned/findAllHistory",
+			url:"/assetManagement/assetAsset/findAllHistory",
 			dataType: "json",
 			type: "GET",
 			success: function(data)
@@ -37,13 +37,13 @@ $(document).ready(function()
 			columns: 
 			[
 				//{data: 'id'},
-				{data: 'assets.assetCode'},
-				{data: 'assets.name'},
-				{data: 'employees.employeeID'},
-				{data: 'employees.name'},
-				{data: 'moveDate'},
+				{data: 'assetOne.assetCode'},
+				{data: 'assetOne.name'},
+				{data: 'assetComponent.assetCode'},
+				{data: 'assetComponent.name'},
+				{data: 'assignDate'},
 				{data: 'unassignDate'},
-				{data: 'prevOwner'},
+				{data: 'prevAsset'},
 				{data: 'state'}
 			]
 		});
@@ -53,9 +53,9 @@ $(document).ready(function()
 	
 	function showActiveNav()
 	{
-		$('#aaNav').addClass('active');
+		$('#cNav').addClass('active');
 		
-		$("a[href='../pages/asset']").attr('href', '../pages/assetAssigned')
+		$("a[href='../pages/asset']").attr('href', '../pages/component')
 		/*var url = window.location.pathname;
 		
 		if(url == "/assetManagement/pages/asset")

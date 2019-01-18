@@ -1,4 +1,4 @@
-package com.assetManagement.repositories;
+/*package com.assetManagement.repositories;
 
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -99,3 +99,4 @@ public class AssetRepoTest
 	}
 	
 }
+*/

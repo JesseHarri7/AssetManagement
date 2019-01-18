@@ -1,4 +1,4 @@
-package com.assetManagement.controllers;
+/*package com.assetManagement.controllers;
 
 import static org.junit.Assert.assertNotNull;
 
@@ -18,7 +18,7 @@ public class AssetAssignedControllerTest
 	
 	public String BASE_URL = "http://localhost:"+port+"/assetManagement/assetAssigned";
 	
-/*	@Test
+	@Test
 	public void testCreateAssetAssigned() throws Exception
 	{
 		String urlFind = BASE_URL + "/{id}";
@@ -42,7 +42,7 @@ public class AssetAssignedControllerTest
 		assertNotNull(createAA);
 		
 	}
-*/
+
 	
 	@Test
 	public void TestFindById()
@@ -53,3 +53,4 @@ public class AssetAssignedControllerTest
 		assertNotNull(assetA);
 	}
 }
+*/
