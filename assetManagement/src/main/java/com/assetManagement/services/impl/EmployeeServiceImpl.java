@@ -8,83 +8,98 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.assetManagement.entities.Employee;
-import com.assetManagement.entities.User;
 import com.assetManagement.excptions.ResourceNotFoundException;
 import com.assetManagement.repositories.EmployeeRepo;
 import com.assetManagement.services.EmployeeService;
 
 @Service
-public class EmployeeServiceImpl implements EmployeeService {
-
+public class EmployeeServiceImpl implements EmployeeService 
+{
+	
 	@Autowired
-	private EmployeeRepo employeeRepo;
+	private EmployeeRepo repo;
 
 	@Override
-	public Employee addEmployee(Employee employee) {
-		employee = employeeRepo.save(employee);
-		return employee;
-	}
-
-	@Override
-	public List<Employee> findByName(String name) throws ResourceNotFoundException {
-		List<Employee> list = employeeRepo.findByName(name);
-		if (list != null && !list.isEmpty()) {
-			return list;
-		} else {
-			throw new ResourceNotFoundException("Employee is not found");
-		}
-
-	}
-
-	@Override
-	public List<Employee> findBySurname(String surname) throws ResourceNotFoundException {
-		List<Employee> list = employeeRepo.findBySurname(surname);
-		if (list != null && !list.isEmpty()) {
-			return list;
-		} else {
-			throw new ResourceNotFoundException("Cannot find employee");
-		}
-	}
-
-	@Override
-	public Employee findByEmail(String email) throws ResourceNotFoundException {
-		Employee employee = employeeRepo.findByEmail(email);
-		if (employee != null ) {
+	public Employee create(Employee entity) 
+	{
+		Employee employee = repo.findByEmployeeID(entity.getEmployeeID());
+		
+		if(employee == null)
+		{
 			return employee;
-		} else {
-			throw new ResourceNotFoundException("Cannot find email");
+		}
+		else
+		{
+			return null;
 		}
 	}
 
 	@Override
-	public List<Employee> findByStartDate(Date startDate) throws ResourceNotFoundException {
-		List<Employee> list = employeeRepo.findByStartDate(startDate);
-		if (list != null && !list.isEmpty()) {
-			return list;
-		} else {
-			throw new ResourceNotFoundException("Cannot find start date");
+	public List<Employee> findByName(String name) throws ResourceNotFoundException 
+	{
+		List<Employee> emp = repo.findByName(name);
+		
+		if (emp != null && !emp.isEmpty())
+		{
+			return emp;
 		}
-	}
+		else 
+		{
+			throw new ResourceNotFoundException("Cannot find employee by Name");
+		}
 
-	/*@Override
-	public Employee saveEmployee(Employee employee) {
-		 employee = employeeRepo.save(employee);
-		if (employee != null) {
-			return employee;
-		} else {
-			throw new ResourceNotFoundException("Unexpected error while creating employee");
-		}
-	}*/
+	}
 
 	@Override
-	public Employee saveEmployee(Employee employee) {
-		return employeeRepo.save(employee);
+	public List<Employee> findBySurname(String surname) throws ResourceNotFoundException 
+	{
+		List<Employee> emp = repo.findBySurname(surname);
+		
+		if (emp != null && !emp.isEmpty()) 
+		{
+			return emp;
+		}
+		else 
+		{
+			throw new ResourceNotFoundException("Cannot find employee by Surname");
+		}
 	}
 
-//	@Override
-	public List<Employee> findAll() {
+	@Override
+	public Employee findByEmail(String email) throws ResourceNotFoundException 
+	{
+		Employee emp = repo.findByEmail(email);
+		
+		if (emp != null ) 
+		{
+			return emp;
+		}
+		else 
+		{
+			throw new ResourceNotFoundException("Cannot find employee by email");
+		}
+	}
+
+	@Override
+	public List<Employee> findByStartDate(Date startDate) throws ResourceNotFoundException 
+	{
+		List<Employee> emp = repo.findByStartDate(startDate);
+		
+		if (emp != null && !emp.isEmpty()) 
+		{
+			return emp;
+		}
+		else 
+		{
+			throw new ResourceNotFoundException("Cannot find employee by start date");
+		}
+	}
+
+	public List<Employee> readAll() 
+	{
 		List<Employee> eList = new ArrayList<Employee>();
-		Iterable<Employee> employees = employeeRepo.findAll();
+		Iterable<Employee> employees = repo.findAll();
+		
 		for (Employee e : employees)
 		{
 			eList.add(e);
@@ -93,12 +108,54 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 	
 	@Override
-	public List<Employee> findByActive(String active) {
-		return  employeeRepo.findByActive(active);
+	public Employee readById(Long id) 
+	{
+		Employee emp = repo.findByEmployeeID(id);
+		if (emp == null)
+		{
+			return null;
+		}
+		else
+		{	
+			return emp;
+		}
+		
 	}
 
-	public List<Employee> findHistory() {
-		return findAll();
+	@Override
+	public Employee update(Employee entity) 
+	{
+		Employee emp = repo.findByEmployeeID(entity.getEmployeeID());
+		if (emp == null)
+		{
+			return null;
+		}
+		else
+		{
+			return repo.save(entity);
+		}
+	}
+
+	@Override
+	public void delete(Employee entity) 
+	{
+		if (entity != null)
+		{
+			repo.delete(entity);
+		}		
+	}
+
+	@Override
+	public List<Employee> findAllHistory() 
+	{
+		List<Employee> empList = new ArrayList<Employee>();
+		Iterable<Employee> emps = repo.findAllHistory();
+		
+		for (Employee e : emps)
+		{
+			empList.add(e);
+		}
+		return empList;
 	}
 
 }

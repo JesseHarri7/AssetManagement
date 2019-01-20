@@ -3,7 +3,8 @@ $(document).ready(function()
 	var dataSet = [];
 	
 	//Active data fields on start up
-	showActive();
+//	showActive();
+	findAll();
 	
 	//Add temps html files
 	includeHTML();

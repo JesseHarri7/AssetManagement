@@ -6,102 +6,96 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.assetManagement.entities.Employee;
-import com.assetManagement.entities.User;
-import com.assetManagement.excptions.ResourceNotFoundException;
 import com.assetManagement.services.EmployeeService;
-import com.assetManagement.services.impl.EmployeeServiceImpl;
 @RestController
 @RequestMapping("/employee/")
-public class EmployeeController {
+public class EmployeeController 
+{
 	@Autowired
-	private EmployeeServiceImpl service;
-			
-			
+	EmployeeService service;
 					
-			// create
-			@RequestMapping(value = "create", method = RequestMethod.POST)
-			@ResponseStatus(HttpStatus.CREATED)
-			public Employee create(@RequestBody Employee employee) {
-				return service.addEmployee(employee);
-			}
-	
-			// find by name
-			@RequestMapping(value = "name/{name}", method = RequestMethod.GET)
-			public ResponseEntity<List<Employee>> findByName(@PathVariable String name) {
-			List<Employee> employee = service.findByName(name);
-			
-			if (employee == null) {
-				return  new ResponseEntity<List<Employee>>(HttpStatus.NOT_FOUND);
-			}
-			
-			return new ResponseEntity<List<Employee>>(employee, HttpStatus.OK);
-			}	
-			// find by surname
-			@RequestMapping(value = "surname/{surname}", method = RequestMethod.GET)
-			public ResponseEntity<List<Employee>> findBySurname(@PathVariable String surname) {
-			List<Employee> employee = service.findBySurname(surname);
-			
-			if (employee == null) {
-				return  new ResponseEntity<List<Employee>>(HttpStatus.NOT_FOUND);
-			}
-			
-			return new ResponseEntity<List<Employee>>(employee, HttpStatus.OK);
-			}	
-			// find by start date
-			@RequestMapping(value = "startDate/{startDate}", method = RequestMethod.GET)
-			public ResponseEntity<List<Employee>> findByStartDate(@PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate) {
-				List<Employee> employee = service.findByStartDate(startDate);
-				
-				if (employee == null) {
-					return  new ResponseEntity<List<Employee>>(HttpStatus.NOT_FOUND);
-				}
-				
-				return new ResponseEntity<List<Employee>>(employee, HttpStatus.OK);
-			}	
-			
-	// find by email
-	@RequestMapping(value = "email/{email}", method = RequestMethod.GET)
-	public ResponseEntity<Employee> findByEmail(@PathVariable String email) {
-		Employee employee = service.findByEmail(email);
-		if (employee == null) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
-
-		return new ResponseEntity<Employee>(employee, HttpStatus.OK);
+	//Find by id
+	@RequestMapping(value = "{id}", method = RequestMethod.GET)
+	public Employee findById(@PathVariable Long id)
+	{
+		return service.readById(id);
 	}
-			
+		
+	// create
+	@RequestMapping(value = "create", method = RequestMethod.POST)
+	@ResponseStatus(HttpStatus.CREATED)
+	public Employee create(@RequestBody Employee employee) 
+	{
+		return service.create(employee);
+	}
+	
+	//update
+	@RequestMapping(value = "update", method = RequestMethod.PUT)
+	@ResponseStatus(HttpStatus.OK)
+	public void update(@RequestBody Employee employee)
+	{
+		service.update(employee);
+	}
+	
 	// find All
 	@RequestMapping(value = "findAll", method = RequestMethod.GET)
-	@ResponseBody
-	public List<Employee> findAll() {
-		return service.findAll();
+	public List<Employee> findAll() 
+	{
+		return service.readAll();
+	}
+	
+	//Find All History
+	@RequestMapping(value = "findAllHistory", method = RequestMethod.GET)
+	public List<Employee> findAllHistory()
+	{
+		return service.findAllHistory();
+	}
+	
+	//delete
+	@RequestMapping(value = "delete/{id}", method = {RequestMethod.GET, RequestMethod.DELETE})
+	@ResponseStatus(HttpStatus.OK)
+	public void delete(@PathVariable("id") Long id)
+	{
+		Employee deleteEmp = service.readById(id);
+		if (deleteEmp != null)
+		{
+			service.delete(deleteEmp);
+		}
 	}
 
-	// find Activated
-	@RequestMapping(value = "findActivated/{active}", method = RequestMethod.GET)
-	public ResponseEntity<List<Employee>> findByActive(@PathVariable String active) {
-		List<Employee> employees = service.findByActive(active);
-		if (employees == null) {
-			throw new ResourceNotFoundException("Not users active");
-		}
-		return new ResponseEntity<List<Employee>>(employees, HttpStatus.OK);
+	// find by name
+	@RequestMapping(value = "name/{name}", method = RequestMethod.GET)
+	public List<Employee> findByName(@PathVariable String name) 
+	{
+		return service.findByName(name);
 	}
 	
-	// find history
-	@RequestMapping(value = "findHistory", method = RequestMethod.GET)
-	@ResponseBody
-	public List<Employee> findHistory() {
-		return service.findHistory();
+	// find by surname
+	@RequestMapping(value = "surname/{surname}", method = RequestMethod.GET)
+	public List<Employee> findBySurname(@PathVariable String surname) 
+	{
+		return service.findBySurname(surname);
 	}
 	
+	// find by start date
+	@RequestMapping(value = "startDate/{startDate}", method = RequestMethod.GET)
+	public List<Employee> findByStartDate(@PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate) 
+	{
+		return service.findByStartDate(startDate);
+	}	
+	
+	// find by email
+	@RequestMapping(value = "email/{email}", method = RequestMethod.GET)
+	public Employee findByEmail(@PathVariable String email) 
+	{
+		return service.findByEmail(email);			
+	}
 }
