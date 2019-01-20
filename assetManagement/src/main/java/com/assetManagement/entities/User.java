@@ -6,31 +6,32 @@
 package com.assetManagement.entities;
 
 import java.io.Serializable;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.SQLDelete;
 
 @Entity
 @Table(name = "User")
-public class User implements Serializable {
+@SQLDelete(sql = "UPDATE User set state = 'D' WHERE user_id = ?")
+public class User implements Serializable 
+{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(generator="increment")
 	@GenericGenerator(name="increment", strategy = "increment")
 	@Column(name = "User_ID")
-	private long userID;
-
-	@Column(name = "Username")
-	private String username;
+	private Long userID;
 
 	@Column(name = "Password")
 	private String password;
@@ -45,18 +46,18 @@ public class User implements Serializable {
 	private String lastName;
 	
 	@Column
-	private String active = "Active";
+	private String state = "A";
 	
 	private int enabled = 1;
 
-	/*
-	 * @OneToOne(fetch = FetchType.LAZY)
-	 * 
-	 * @JoinColumn(name = "userID") private User user;
-	 */
-
-	public User() {
-		// TODO Auto-generated constructor stub
+	public User() {}
+	
+	public User(String email, String password, String firstN, String lastN)
+	{
+		this.email = email;
+		this.password = password;
+		this.firstName = firstN;
+		this.lastName = lastN;
 	}
 
 	public String getEmail() {
@@ -73,14 +74,6 @@ public class User implements Serializable {
 
 	public void setPassword(String password) {
 		this.password = password;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-	public String getUsername() {
-		return username;
 	}
 
 	public long getUserID() {
@@ -106,11 +99,11 @@ public class User implements Serializable {
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
-	public String getActive() {
-		return active;
+	public String getState() {
+		return state;
 	}
-	public void setActive(String active) {
-		this.active = active;
+	public void setState(String state) {
+		this.state = state;
 	}
 	
 	public int getEnabled() 
