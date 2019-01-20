@@ -6,35 +6,39 @@ package com.assetManagement.entities;
  * and open the template in the editor.
  */
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.SQLDelete;
+
 @Entity
 
 @Table(name = "Employees")
+@SQLDelete(sql = "UPDATE employees set state = 'D', term_date = CURDATE() WHERE employee_id = ?")
+public class Employee implements Serializable 
+{
 
-public class Employee implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
+	@GeneratedValue
+	private Long Id;
+	
 	@Id
-	private long employeeID;
-	
-	
+	private Long employeeID;
+
 	@Column(name = "Name")
 	private String name;
 	
-	@Column(name = "Active")
-	private String active = "Active";
-
 	@Column(name = "Surname")
 	private String surname;
 
@@ -45,7 +49,10 @@ public class Employee implements Serializable {
 	@Column(name = "Date")
 	private Date startDate;
 
-
+	private String termDate;
+	
+	@Column(name = "State")
+	private String state = "A";
 	
 	//@Column(name = "Start_Date")
 	//private Date startDate;*/
@@ -101,20 +108,39 @@ public class Employee implements Serializable {
 	public long getEmployeeID() {
 		return employeeID;
 	}
-
-
-	public String getActive() {
-		return active;
+	
+	public void setEmployeeID(long employeeID) {
+		this.employeeID = employeeID;
+	}
+	
+	public Long getId() {
+		return Id;
 	}
 
-	public void setActive(String active) {
-		this.active = active;
+	public void setId(Long id) {
+		Id = id;
 	}
+
+	public String getTermDate() {
+		return termDate;
+	}
+
+	public void setTermDate(String termDate) {
+		this.termDate = termDate;
+	}
+
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}	
 
 	@Override
 	public String toString() {
-		return "Employee [employeeID=" + employeeID + ", name=" + name + ", active=" + active + ", surname=" + surname
-				+ ", email=" + email + ", startDate=" + startDate + "]";
+		return "Employee [employeeID=" + employeeID + ", name=" + name + ", surname=" + surname + ", email=" + email
+				+ ", startDate=" + startDate + "]";
 	}
 
 

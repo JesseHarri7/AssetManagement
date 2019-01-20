@@ -11,11 +11,8 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
 
-import com.assetManagement.App;
 import com.assetManagement.entities.Employee;
-import com.assetManagement.services.EmployeeService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -30,9 +27,9 @@ public class EmployeeServiceImplTest{
 	        Employee employee2 = new Employee("Lindo", "Kuhle", "Lindo@gmail.com", new Date(), 45846);
 	        Employee employee3 = new Employee("Jabu", "Lile", "Jabu@gmail.com", new Date(), 89470);
 	        
-	        employeeService.saveEmployee(employee1);
-	        employeeService.saveEmployee(employee2);
-	        employeeService.saveEmployee(employee3);    
+//	        employeeService.saveEmployee(employee1);
+//	        employeeService.saveEmployee(employee2);
+//	        employeeService.saveEmployee(employee3);    
 	  }
 	 	@Test
 	 	public void testFindByName(){

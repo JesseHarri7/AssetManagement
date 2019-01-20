@@ -31,7 +31,87 @@ $(document).ready(function()
             $(this).addClass('selected');
             $('#setEmp-btn').prop('disabled', false);
         }*/
-	} );
+	});
+	
+	//Form create button
+	$('#form-create-btn').click(function(event) 
+	{
+		event.preventDefault();
+		var data = validation();
+		
+		if(data)
+		{
+			create();
+		}
+	});
+	
+	function validation()
+	{
+		var name = $('#name').val();
+		var surname = $('#surname').val();
+		var email = $('#email').val();
+		var password = $('#empname').val();
+		var active = "Active";
+		
+		if ( name=="" || surname=="" || email=="" || password =="")
+		{
+			alert("Please fill in the blanks");
+			return false;
+		}
+		else
+		{
+			return true;
+		}	
+	}
+	
+	function create()
+	{
+		dataSet = [];
+		var table = $('#emp-table').DataTable();
+		table.draw();
+        var table = $('#emp-table').DataTable();
+		var employeeID = $('#id').val();
+		var name = $('#name').val();
+		var surname = $('#surname').val();
+		var email = $('#email').val();
+		var active = "Active";
+	
+		var emp = {employeeID, name, surname,email,active};
+		var emp_json = JSON.stringify(emp)
+		var condition = Existance();
+		
+		if(condition)
+		{
+			alert("Email exists");
+		}
+		else
+		{
+			$.ajax({
+				headers: {
+			        'Accept': 'application/json',
+			        'Content-Type': 'application/json' 
+			    },
+			    type:'POST',
+				dataType: 'JSON',	
+				url:'/assetManagement/employee/create',
+				data:emp_json,
+				success: success(),
+				error: function(error){
+				alert("ERROR "+JSON.stringify(error));	
+				}
+			});
+			
+			function success()
+			{
+			table.row.add(emp).draw()
+			alert("Employee is created");	
+			
+			/*var emp = Existance();
+			table.row.add(emp).draw()
+			alert("Employee is created");*/
+			}
+		}
+	}
 	
 	//Delete
 	$('#delete-btn').click(function(event) 
@@ -59,7 +139,7 @@ $(document).ready(function()
 	
 	//select Employee 
 	$('#setEmp-btn').click( function () 
-	{	
+	{
 		var table = $('#emp-table').DataTable();
 		var empData = table.rows( '.selected' ).data();
 		if(empData.length == 0)
@@ -133,8 +213,8 @@ $(document).ready(function()
 				{data: 'employeeID'},
 				{data: 'name'},
 				{data: 'surname'},
-				{data: 'email'},
-				{data: 'startDate'}
+				{data: 'email'}
+//				{data: 'startDate'}
 			]
 		});
 		
