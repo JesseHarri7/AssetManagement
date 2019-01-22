@@ -18,11 +18,7 @@
 	<div w3-include-html="../pages/temps/nav.html"></div>
 
 	<div id="nav-buttons">
-		<input type="button" value="Show Not Active" id="showActive-btn"
-			class="btn btn-primary"> <input type="button" value="Create"
-			class="btn btn-primary" data-toggle="modal"
-			data-target="#exampleModal"> <input type="button"
-			value="Activate user" id="change-btn" class="btn btn-primary">
+		<input type="button" value="Create" class="btn btn-primary" data-toggle="modal" data-target="#createModal">
 	</div>
 
 	<div class="table-width-outter">
@@ -30,7 +26,7 @@
 			<table class="display" id="user-table" style="width:100%">
 				<thead>
 					<tr>
-						<th>ID</th>
+<!-- 						<th>ID</th> -->
 						<th>Email</th>
 						<th>First Name</th>
 						<th>Last Name</th>
@@ -42,49 +38,42 @@
 		</div>
 	</div>
 
-	<div class="modal" id="exampleModal" tabindex="-1" role="dialog"
-		aria-labelledby="exampleModalLabel" aria-hidden="true">
-		<div class="modal-dialog" role="document">
+	<!-- User-create modal view -->
+	<!-- Create Modal -->
+	<div class="modal fade" id="createModal" role="dialog">
+		<div class="modal-dialog">
+			<!-- Modal content-->
 			<div class="modal-content">
 				<div class="modal-header">
-					<h2 class="modal-title" id="exampleModalLabel">Add User</h2>
-					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
+					<h2 class="modal-title">Add User</h2>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
 				</div>
 				<div class="modal-body">
-					<form>
-						<div class="form-group">
-							<label for="Email">Email:</label> <input type="text" required
-								class="form-control" id="email" placeholder="Enter email">
-						</div>
-						<div class="form-group">
-							<label for="password">password:</label> <input type="password"
-								required class="form-control" id="password"
-								placeholder="Enter password">
-						</div>
-
+					<form name="create" id="create">
+					
 						<div class="form-group">
 							<label for="firstname">First name:</label> <input type="text"
-								required class="form-control" id="firstname"
-								placeholder="Enter User name">
+								class="form-control" id="firstname" placeholder="Enter name" required>
 						</div>
 
 						<div class="form-group">
 							<label for="lastname">Last name:</label> <input type="text"
-								required class="form-control" id="lastname"
-								placeholder="Enter lastname">
+								class="form-control" id="lastname" placeholder="Enter lastname" required>
 						</div>
+						
 						<div class="form-group">
-							<label for="lastname">User name:</label> <input type="text"
-								required class="form-control" id="username"
-								placeholder="Enter username">
+							<label for="Email">Email:</label> <input type="text"
+								class="form-control" id="email" placeholder="Enter email" required>
 						</div>
-						<!-- <button type="submit" class="btn btn-default">Submit</button> -->
+						
+						<div class="form-group">
+							<label for="password">password:</label> <input type="password"
+								class="form-control" id="password" placeholder="Enter password" required>
+						</div>
+
 					</form>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-primary" id="form-create-btn">ADD</button>
+						<button type="button" class="btn btn-primary" id="form-create-btn">Save</button>
 						<button type="button" class="btn btn-secondary"
 							data-dismiss="modal">Close</button>
 					</div>

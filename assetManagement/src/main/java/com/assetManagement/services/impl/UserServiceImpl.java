@@ -82,7 +82,6 @@ public  class UserServiceImpl implements UserService
 		}
 	}
 
-	@SuppressWarnings("null")
 	@Override
 	public User create(User entity)
 	{
@@ -90,8 +89,8 @@ public  class UserServiceImpl implements UserService
 		
 		if(user == null)// && allAssets.size() == 0)
 		{
-			user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-			return repo.save(user);
+			entity.setPassword(bCryptPasswordEncoder.encode(entity.getPassword()));
+			return repo.save(entity);
 		}
 		else
 		{
