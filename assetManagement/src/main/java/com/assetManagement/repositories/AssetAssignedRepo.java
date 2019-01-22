@@ -16,7 +16,7 @@ public interface AssetAssignedRepo extends CrudRepository<AssetAssigned, Long>
 	
 	AssetAssigned findByAssetsAssetCode(Long Asset);
 	
-	AssetAssigned findByEmployeesEmployeeID(Long emp);
+	List<AssetAssigned> findByEmployeesEmployeeID(Long emp);
 	
 	List<AssetAssigned> findByMoveDate(String date);
 	

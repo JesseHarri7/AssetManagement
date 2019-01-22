@@ -25,9 +25,7 @@
 	//Click to select row from the table
 	$('#asset-table tbody').on('click','tr', function()
 	{
-		
 		$(this).toggleClass('selected');
-		
 	});
 	
 	//Form delete button
@@ -112,6 +110,10 @@
 	{
 		//Clear form red border css
 		clearFormBorder();
+		
+		//Clear form content if any
+		document.getElementById("create").reset();
+		
 		$('.notifyjs-corner').remove();
 	});
 	
@@ -515,6 +517,7 @@
 			//Check to see if the asset is already assigned to a asset
 			var getAssigned = assignedAssetCode(rowToDelete[i].assetCode);
 			
+			//Before creating, first check to see if the sub component is already assigned
 			var compSet = findSubComp(rowToDelete[i].assetId);
 			
 			if(assetSet)
@@ -599,7 +602,7 @@
 	//Toast confirm button
 	function chkYes(code, i, id) 
 	{
-		//Function
+		//Get assigned asset data
 		var assetSet = alreadySet(code);
 		
 		var getAssigned = assignedAssetCode(code);
@@ -830,17 +833,17 @@
 		if(exists.length == 0)
 		{
 			$.ajax(
-				{
-					headers: {
-				        'Accept': 'application/json',
-				        'Content-Type': 'application/json' 
-				    },
-					url:"/assetManagement/asset/create", 
-					dataType: "json",
-					data: data_json,
-					type: "POST",
-					success: success()
-				});
+			{
+				headers: {
+			        'Accept': 'application/json',
+			        'Content-Type': 'application/json' 
+			    },
+				url:"/assetManagement/asset/create", 
+				dataType: "json",
+				data: data_json,
+				type: "POST",
+				success: success()
+			});
 			function success()
 			{
 				$.notify("Success! Asset " + assetCode + " has been created.", "success");
@@ -909,6 +912,7 @@
 		}
 		else
 		{
+			//Only allow numbers for the ID
 			if(validateId(id))
 			{
 				return true;

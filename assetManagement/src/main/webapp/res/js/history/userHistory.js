@@ -9,7 +9,7 @@ includeHTML();
 function findAll() {
 		
 	$.ajax({
-		url:"/assetManagement/user/findAll",
+		url:"/assetManagement/user/findAllHistory",
 		dataType: "json",
 		type: "GET",
 		success: function(data) {
@@ -29,11 +29,10 @@ function userList(dataSet) {
 		columns: 
 		[
 			{data: 'userID'},
-			{data: 'username'},
 			{data: 'firstName'},
 			{data: 'lastName'},
 			{data: 'email'},
-			//{data: 'active'}
+			{data: 'state'}
 		]
 	});
 	return userTable;

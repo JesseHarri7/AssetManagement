@@ -1,9 +1,7 @@
 package com.assetManagement.entities;
 
-import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
-
-import java.util.Date;
+import static org.junit.Assert.assertNotNull;
 
 import org.junit.Test;
 
@@ -17,7 +15,7 @@ public class EmployeeTest {
 	emp.setSurname("Mvinjelwa");
 	emp.setEmail("Alulutho2010@saratoga.com");
 	//emp.setEmployeeID(990720093);
-	emp.setStartDate(new Date());
+//	emp.setStartDate(new Date());
 	System.out.println(emp.getStartDate());
 	assertNotNull(emp);
 	assertEquals("Lutho", emp.getName());

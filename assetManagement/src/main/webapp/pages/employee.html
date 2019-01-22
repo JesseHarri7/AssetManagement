@@ -25,24 +25,11 @@
 	<div w3-include-html="../pages/temps/nav.html"></div>
 
 	<div id="nav-buttons">
-		<input type="button" value="Show Not Active" id = "showActive-btn"
-		class= "btn btn-primary">
-			<input type="button"
-			value="Set Employee" id="setEmp-btn" class="btn btn-primary">
-			<input type="button" value="Activate Employee" id="change-btn" class="btn btn-primary" disabled>
-			
-			
-		<!--<input type="button" value="Create Employee" id = "createEmp-btn"
-		class= "btn btn-primary">-->
-		
-			<class="btn btn-primary"> <input type="button" value="Create"
-		    class="btn btn-primary" data-toggle="modal"
-			data-target="#exampleModal">
-		
-			<input type="button" value="Reassign" id="reassign-btn"
-			class="btn btn-primary btn-primary-r"> 
-			<input type="button"
-			value="Cancel" id="cancel-btn" class="btn btn-primary-c">
+		<input type="button" value="Create" class="btn btn-primary" data-toggle="modal" data-target="#createModal">
+		<input type="button" value="Remove" id="remove-btn" class="btn btn-primary">
+		<input type="button" value="Assign Employee" id="setEmp-btn" class="btn btn-primary">
+		<input type="button" value="Reassign" id="reassign-btn" class="btn btn-primary btn-primary-r"> 
+		<input type="button" value="Cancel" id="cancel-btn" class="btn btn-primary-c">
 	</div>
 	
 		<div class="table-width-outter">
@@ -63,47 +50,52 @@
 			</div>
 		</div>
 	
-<div class="modal" id="exampleModal" tabindex="-1" role="dialog"
-		aria-labelledby="exampleModalLabel" aria-hidden="true">
-		<div class="modal-dialog" role="document">
+	<!-- Emp-create modal view -->
+	<!-- Create Modal -->
+	<div class="modal fade" id="createModal" role="dialog">
+		<div class="modal-dialog">
+			<!-- Modal content-->
 			<div class="modal-content">
 				<div class="modal-header">
-					<h2 class="modal-title" id="exampleModalLabel">Add Employee</h2>
-					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
+					<h2 class="modal-title">Add Employee</h2>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
 				</div>
 				<div class="modal-body">
-					<form>
+					<form name="create" id="create">
 					
 						<div class="form-group">
-							<label for="employeeID">Employee ID:</label> <input type="text" required
-								class="form-control" id="id" placeholder="Enter ID">
-						</div>
-					
-						<div class="form-group">
-							<label for="Email">Email:</label> <input type="text" required
-								class="form-control" id="email" placeholder="Enter email">
+							<label for="employeeID">Employee ID:</label> <input type="text"
+								class="form-control" id="id" placeholder="Enter ID" required>
 						</div>
 
 						<div class="form-group">
 							<label for="firstname">First name:</label> <input type="text"
-								required class="form-control" id="name"
-								placeholder="Enter first name">
+								class="form-control" id="name"
+								placeholder="Enter first name" required>
 						</div>
 
 						<div class="form-group">
 							<label for="lastname">Last name:</label> <input type="text"
-								required class="form-control" id="surname"
-								placeholder="Enter last name">
+								class="form-control" id="surname"
+								placeholder="Enter last name" required>
 						</div>
+						
+						<div class="form-group">
+							<label for="Email">Email:</label> <input type="text"
+								class="form-control" id="email" placeholder="Enter email" required>
+						</div>
+						
+						<div class="form-group">
+							<label for="date">Date started:</label> <input type="date"
+								name="date" class="form-control" id="dateStart"
+								max="2040-12-31" placeholder="Enter the date employee started" required>
+						</div>
+						
 						<!-- <button type="submit" class="btn btn-default">Submit</button> -->
 					</form>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-primary" id="form-create-btn">ADD</button>
-						<button type="button" class="btn btn-secondary"
-							data-dismiss="modal">Close</button>
+						<button type="button" class="btn btn-primary" id="form-create-btn">Save</button>
+						<button type="button" class="btn btn-secondary" id="form-close-btn" data-dismiss="modal">Close</button>
 					</div>
 				</div>
 			</div>
@@ -116,20 +108,14 @@
 <!-- 	<script src="../webjars/bootstrap/3.3.7-1/js/bootstrap.min.js"></script> -->
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 	<script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-	<script src="../res/js/employee.js"></script>
 	
 <!-- 	<script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script> -->
 	<script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
 	<script src="https://cdn.datatables.net/responsive/2.2.3/js/responsive.bootstrap.min.js"></script>
 
-	<!-- 	<script src="js/plugins/bootstrap-notify.js"></script> -->
-	<!-- 	<script src="js/plugins/bootstrap-notify.min.js"></script> -->
 	<script src="../res/js/plugins/notify.js"></script>
 	
-	<!-- <script src="../webjars/jquery/3.1.1/jquery.min.js"></script>
-	<script src="../webjars/bootstrap/3.3.7-1/js/bootstrap.min.js"></script>
-	<script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-	<script src="../res/js/employee.js"></script> -->
+	<script src="../res/js/employee.js"></script>
 </body>
 
 </html>

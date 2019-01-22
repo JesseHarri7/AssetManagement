@@ -70,7 +70,7 @@ public class WebAssetController
 	@RequestMapping(value = "/pages/component")
     public String assetComp() 
 	{
-		return "/pages/assetAsset.html";
+		return "/pages/components.html";
 	}
 	
 	@RequestMapping(value = "/pages/component-history")

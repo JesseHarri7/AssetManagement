@@ -79,7 +79,7 @@ public class AssetAssignedController
 		
 		//Find By Emp id
 		@RequestMapping(value = "assetAssigned/findAllEmp/{id}", method = RequestMethod.GET)
-		public AssetAssigned findByEmpId(@PathVariable long id)
+		public List<AssetAssigned> findByEmpId(@PathVariable Long id)
 		{
 			return service.findByEmployeeID(id);
 		}

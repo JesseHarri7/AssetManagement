@@ -6,9 +6,10 @@ includeHTML();
 //All data fields on start up
 findAll();
 
-function findAll() {
+function findAll() 
+{
 	$.ajax({
-		url:"/assetManagement/employee/findAll",
+		url:"/assetManagement/employee/findAllHistory",
 		dataType: "json",
 		type: "GET",
 		success: function(data) {
@@ -31,7 +32,9 @@ function empList(dataSet) {
 			{data: 'name'},
 			{data: 'surname'},
 			{data: 'email'},
-			{data: 'active'}
+			{data: 'startDate'},
+			{data: 'termDate'},
+			{data: 'state'}
 		]
 	});
 	return empTable;

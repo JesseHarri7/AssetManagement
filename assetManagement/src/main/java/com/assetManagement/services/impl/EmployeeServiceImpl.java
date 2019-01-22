@@ -1,7 +1,6 @@
 package com.assetManagement.services.impl;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +25,7 @@ public class EmployeeServiceImpl implements EmployeeService
 		
 		if(employee == null)
 		{
-			return employee;
+			return repo.save(entity);
 		}
 		else
 		{
@@ -81,7 +80,7 @@ public class EmployeeServiceImpl implements EmployeeService
 	}
 
 	@Override
-	public List<Employee> findByStartDate(Date startDate) throws ResourceNotFoundException 
+	public List<Employee> findByStartDate(String startDate) throws ResourceNotFoundException 
 	{
 		List<Employee> emp = repo.findByStartDate(startDate);
 		
