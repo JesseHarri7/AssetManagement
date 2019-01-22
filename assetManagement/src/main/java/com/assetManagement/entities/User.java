@@ -36,7 +36,7 @@ public class User implements Serializable
 	@Column(name = "Password")
 	private String password;
 
-	@Column(name = "Email")
+	@Column(unique=true)
 	private String email;
 
 	@Column
@@ -76,11 +76,13 @@ public class User implements Serializable
 		this.password = password;
 	}
 
-	public long getUserID() {
+	public Long getUserID() 
+	{
 		return this.userID;
 	}
 
-	public void setUserID(long userID) {
+	public void setUserID(Long userID) 
+	{
 		this.userID = userID;
 	}
 
