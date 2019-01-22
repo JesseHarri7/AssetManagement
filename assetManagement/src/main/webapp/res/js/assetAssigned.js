@@ -247,6 +247,7 @@
 				type: "DELETE",
 				success: success()
 			});
+			
 			table.row('.selected').remove().draw( false );
 			function success()
 			{

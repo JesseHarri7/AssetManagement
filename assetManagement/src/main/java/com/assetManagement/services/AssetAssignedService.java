@@ -9,7 +9,7 @@ public interface AssetAssignedService extends Service<AssetAssigned, Long>
 	
 	AssetAssigned findByAssetCode(Long asset);
 	
-	AssetAssigned findByEmployeeID(Long emp);
+	List<AssetAssigned> findByEmployeeID(Long emp);
 	
 	List<AssetAssigned> findByAssetCodeAll(Long asset);
 	

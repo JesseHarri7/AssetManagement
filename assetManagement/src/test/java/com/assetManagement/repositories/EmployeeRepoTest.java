@@ -1,18 +1,10 @@
 package com.assetManagement.repositories;
 
-import org.springframework.data.domain.Sort;
-import org.springframework.data.domain.Sort.Direction;
-import org.springframework.data.repository.CrudRepository;
-
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import java.util.Date;
 import java.util.List;
-
-import javax.persistence.EntityManager;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -22,9 +14,6 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.assetManagement.entities.Employee;
-import com.assetManagement.entities.User;
-import com.assetManagement.repositories.EmployeeRepo;
-import com.assetManagement.repositories.UserRepo;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -42,7 +31,7 @@ public class EmployeeRepoTest {
 	        employee.setName("Lutho");
 	        employee.setEmail("Lwethu@gmail.com");
 	        employee.setSurname("Lutholwethu");
-	        employee.setStartDate(new Date());
+//	        employee.setStartDate(new Date());
 	        employeeRepo.save(employee);
 	}
 	
@@ -87,14 +76,14 @@ public class EmployeeRepoTest {
 	
 
 	}
-	@Test
-	public void testFindByStartDate() {
-	Date startDate = new Date();		
-	List<Employee> employees = employeeRepo.findByStartDate(new Date())	;
-	assertNotNull(employees);
-	Employee employee = new Employee();
-	System.out.println("Employees: "+ employees);
 	
-
-	}
+	/*@Test
+	public void testFindByStartDate() 
+	{
+		Date startDate = new Date();		
+		List<Employee> employees = employeeRepo.findByStartDate(new Date())	;
+		assertNotNull(employees);
+		Employee employee = new Employee();
+		System.out.println("Employees: "+ employees);
+	}*/
 }

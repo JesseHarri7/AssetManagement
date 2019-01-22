@@ -12,7 +12,7 @@ public interface EmployeeService extends Service<Employee, Long>
 	
     List<Employee> findBySurname(String surname) throws ResourceNotFoundException;
     
-    List<Employee> findByStartDate(Date startDate) throws ResourceNotFoundException;
+    List<Employee> findByStartDate(String startDate) throws ResourceNotFoundException;
     
 	Employee findByEmail(String email) throws ResourceNotFoundException;
 }

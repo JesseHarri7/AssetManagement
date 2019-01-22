@@ -6,22 +6,18 @@ package com.assetManagement.entities;
  * and open the template in the editor.
  */
 import java.io.Serializable;
-import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.SQLDelete;
 
 @Entity
-
 @Table(name = "Employees")
-@SQLDelete(sql = "UPDATE employees set state = 'D', term_date = CURDATE() WHERE employee_id = ?")
+@SQLDelete(sql = "UPDATE employees set state = 'D', term_date = CURDATE() WHERE id = ?")
 public class Employee implements Serializable 
 {
 
@@ -30,10 +26,11 @@ public class Employee implements Serializable
 	 */
 	private static final long serialVersionUID = 1L;
 
+	@Id
 	@GeneratedValue
 	private Long Id;
 	
-	@Id
+	@Column(unique=true)
 	private Long employeeID;
 
 	@Column(name = "Name")
@@ -45,9 +42,8 @@ public class Employee implements Serializable
 	@Column(name = "Email", unique = true)
 	private String email;
 	
-	@Temporal(TemporalType.DATE)
-	@Column(name = "Date")
-	private Date startDate;
+//	@Temporal(TemporalType.DATE)
+	private String startDate;
 
 	private String termDate;
 	
@@ -64,7 +60,7 @@ public class Employee implements Serializable
 	public Employee() {
 	}
 
-	public Employee(String name, String surname, String email, Date startDate, long employeeID) {
+	public Employee(String name, String surname, String email, String startDate, long employeeID) {
 		this.name = name;
 		this.surname = surname;
 		this.email = email;
@@ -97,11 +93,11 @@ public class Employee implements Serializable
 		this.email = email;
 	}
 
-	public Date getStartDate() {
+	public String getStartDate() {
 		return startDate;
 	}
 
-	public void setStartDate(Date startDate) {
+	public void setStartDate(String startDate) {
 		this.startDate = startDate;
 	}
 

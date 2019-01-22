@@ -95,17 +95,15 @@ public class AssetAssignedServiceImpl implements AssetAssignedService
 	}
 
 	@Override
-	public AssetAssigned findByEmployeeID(Long emp) 
+	public List<AssetAssigned> findByEmployeeID(Long emp) 
 	{
-		AssetAssigned empId = repo.findByEmployeesEmployeeID(emp);
-		if (empId == null)
+		List<AssetAssigned> empList = new ArrayList<AssetAssigned>();
+		Iterable<AssetAssigned> emps = repo.findByEmployeesEmployeeID(emp);
+		for (AssetAssigned e : emps)
 		{
-			return null;
+			empList.add(e);
 		}
-		else
-		{
-			return empId;
-		}
+		return empList;
 	}
 
 	@Override

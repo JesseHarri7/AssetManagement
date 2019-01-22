@@ -17,7 +17,7 @@ public interface EmployeeRepo extends CrudRepository<Employee, Long>
     
     Employee findByEmail(String email);
     
-    List<Employee> findByStartDate(Date startDate);
+    List<Employee> findByStartDate(String startDate);
     
     Employee findByEmployeeID(Long id);
     

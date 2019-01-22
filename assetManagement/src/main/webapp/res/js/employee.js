@@ -1,6 +1,7 @@
-$(document).ready(function()
-{
+/*$(document).ready(function()
+{*/
 	var dataSet = [];
+	var count = 0;
 	
 	//Active data fields on start up
 //	showActive();
@@ -9,20 +10,46 @@ $(document).ready(function()
 	//Add temps html files
 	includeHTML();
 	
-	function showActive(){
-		$.ajax({
-			url:"/assetManagement/employee/findActivated/active", 
-			dataType: "json",
-			type: "GET",
-			success: function(data) {
-				console.log(JSON.stringify(data));
-				dataSet = data;
-				empList(dataSet);
-			}
-			});
-	}
-	//do to example template
-	$('#form-create-btn').click(function(event) {
+	//Show button if there is data in the local storage
+	showBtn();
+	
+	//Show button to assign if reassign is selected
+	showAssignBtn();
+	
+	//Create button
+	$('#create-btn').click(function(event) 
+	{
+		//Clear form red border css
+		clearFormBorder();
+		
+		//Clear form content if any
+		document.getElementById("create").reset();
+		$('.notifyjs-corner').remove();
+	});
+	
+	//Modal form close button
+	$('#form-close-btn').click(function(event) 
+	{
+		//Clear form red border css
+		clearFormBorder();
+		//Clear modal form data
+		document.getElementById("create").reset();
+	});
+	
+	//Clear local storage to cancel assign 
+	$('#cancel-btn').click(function(event) 
+	{
+		$('.notifyjs-corner').remove();
+		resetLocal();		
+	});
+	
+	//Modal create button
+	$('#form-create-btn').click(function(event) 
+	{
+		//Clear form red border css
+		clearFormBorder();
+		$('.notifyjs-corner').remove();
+		
 		event.preventDefault();
 		var data = validation();
 		
@@ -30,71 +57,443 @@ $(document).ready(function()
 		{
 			create();
 		}
+		
 	});
+	
 	function validation()
 	{
-		var name = $('#name').val();
-		var surname = $('#surname').val();
-		var email = $('#email').val();
-		var password = $('#empname').val();
-		var active = "Active";
+		var id = document.forms["create"]["id"].value;
+		var name = document.forms["create"]["name"].value;
+		var surname = document.forms["create"]["surname"].value;
+		var email = document.forms["create"]["email"].value;
+		var date = document.forms["create"]["dateStart"].value;
 		
-		if ( name=="" || surname=="" || email=="" || password ==""){
-			alert("Please fill in the blanks");
+		if (id == "" || name == "" || surname == "" || email == "" || date == "")
+		{
+			displayFormBorder(id, name, surname, email, date);
+			$.notify("Heads up! All fields must be filled out.", "error");
 			return false;
 		}
 		else
 		{
-			return true;
+			//Only allow numbers for the ID
+			if(validateId(id))
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
 		}	
 	}
 	
 	function create()
 	{
-		dataSet = [];
-		var table = $('#emp-table').DataTable();
-		table.draw();
         var table = $('#emp-table').DataTable();
+        
 		var employeeID = $('#id').val();
 		var name = $('#name').val();
 		var surname = $('#surname').val();
 		var email = $('#email').val();
-		var active = "Active";
+		var startDate = $('#dateStart').val();
 	
-		var emp = {employeeID, name, surname,email,active};
-		var emp_json = JSON.stringify(emp)
-		var condition = Existance();
+		var emp = {employeeID, name, surname, email, startDate};
 		
-		if(condition)
+		var emp_json = JSON.stringify(emp)
+		
+		var exists = findById(employeeID);
+		
+		if(exists.length == 0)
 		{
-			alert("Email exists");
-		}
-		else
-		{
-			$.ajax({
+			$.ajax(
+			{
 				headers: {
 			        'Accept': 'application/json',
 			        'Content-Type': 'application/json' 
 			    },
+			    url:'/assetManagement/employee/create',
+			    dataType: 'json',	
+				data: emp_json,
 			    type:'POST',
-				dataType: 'JSON',	
-				url:'/assetManagement/employee/create',
-				data:emp_json,
-				success: success(),
-				error: function(error){
-				alert("ERROR "+JSON.stringify(error));	
+				success: function(data)
+				{
+					table.row.add(emp).draw()
+					$.notify("Success! Employee " + employeeID + " has been created.", "success");
+					
+					//Clear data from the modal form
+					document.getElementById("create").reset();
+					$('#createModal').modal('hide');
+				},
+				error: function(error)
+				{
+					$.notify("ERROR " + JSON.stringify(error), "error");	
 				}
 			});
-			
-			function success()
+		}
+		else
+		{
+			$.notify("Error! The Employee " + employeeID + " you're trying to create already exists.", "error");
+		}
+	}
+	
+	function findById(id)
+    {
+		var dataSet = [];
+    	
+    	$.ajax({
+			url:"/assetManagement/employee/id/" + id, 
+			async: false,
+			dataType: "json",
+			type: "GET",
+			success: function(data) 
 			{
-			table.row.add(emp).draw()
-			alert("Employee is created");	
-			
-			/*var emp = Existance();
-			table.row.add(emp).draw()
-			alert("Employee is created");*/
+				dataSet = data;
+			},
+			error: function(data)
+			{
+				dataSet = [];
 			}
+		});
+    	
+    	return dataSet;
+    }
+		
+	//select
+    $('#emp-table tbody').on( 'click', 'tr', function () 
+    {
+    	$(this).toggleClass('selected');
+    });
+    
+  //delete button
+	$('#remove-btn').click( function () 
+	{
+		var table = $('#emp-table').DataTable();
+
+		//Returns an array of the selected rows
+		var rowToDelete = table.rows( '.selected' ).data();
+		
+		$('.notifyjs-corner').remove();
+		
+		if (rowToDelete.length == 0)
+		{
+			$.notify("Heads up! Please select an employee to remove.", "error");
+		}
+		else if (rowToDelete.length >= 2)
+		{
+			$.notify("Heads up! Please only select one employee to remove.", "error");
+		}
+		else
+		{
+			createNotifyD();
+			
+			$.notify({
+				  title: 'Are you sure you want to delete?',
+				  button: 'Confirm'
+				}, {
+				  style: 'foo',
+				  className: 'info',
+				  autoHide: false,
+				  clickToHide: false
+				});
+		}
+	});
+	
+	//listen for click events from this style
+	//If no
+	$(document).on('click', '.notifyjs-foo-base .noD', function() 
+	{
+		//programmatically trigger propogating hide event
+		$(this).trigger('notify-hide');
+		
+	});
+
+	//if Yes
+	$(document).on('click', '.notifyjs-foo-base .yesD', function() 
+	{	
+		//Function
+		checkRemove();
+		//hide notification
+		$(this).trigger('notify-hide');
+		
+	});
+	
+	//Soft delete
+	function checkRemove()
+	{
+		var table = $('#emp-table').DataTable();
+
+		//Returns an array of the selected rows
+		var rowToDelete = table.rows( '.selected' ).data();
+
+		var items = rowToDelete.length;
+		$('.notifyjs-corner').remove();
+		//For each row selected, delete
+		for (i = 0; i < items; i++)
+		{
+			//Check to see if the Emp is already assigned
+			var empSet = alreadySet(rowToDelete[i].employeeID);
+			
+			if(empSet.length != 0)
+			{
+				createNotify(empSet[i].employees.employeeID, i);
+				
+				$.notify({
+					  title: "Employee " + empSet[i].employees.employeeID + " is already assigned. This will unassign the employee from the asset, are you sure you want to delete?",
+					  button: 'Confirm'
+					}, {
+					  style: 'foo',
+					  autoHide: false,
+					  clickToHide: false
+					});
+			}
+			else
+			{
+				remove(rowToDelete[i].employeeID);
+			}
+		}
+	}
+	
+	function alreadySet(id)
+	{
+		var dataSet = [];
+
+		$.ajax({
+			url:"/assetManagement/assetAssigned/findAllEmp/" + id,
+			async: false,
+			dataType: "json",
+			type: "GET",
+			success: function(data)
+			{
+				dataSet = data
+			},
+			error: dataSet = null
+		});
+		
+		return dataSet;
+	}
+    
+    function createNotify(code, i, id)
+	{
+		//add a new style 'foo'
+
+		$.notify.addStyle('foo', {
+		  html: 
+		    "<div>" +
+		      "<div class='clearfix'>" +
+		        "<div class='title' data-notify-html='title'/>" +
+		        "<div class='buttons'>" +
+		          "<button onclick='chkNo("+code+","+i+")' class='btn btn-secondary no"+i+"'>Cancel</button> " +
+		          "<button onclick='chkYes("+code+","+i+","+id+")' class='btn btn-secondary yes"+i+"'>Confirm</button>" +
+		        "</div>" +
+		      "</div>" +
+		    "</div>"
+		});
+	}
+	
+	//toast Cancel button
+	function chkNo(code, i) 
+	{
+		$.notify("Success! Action was cancelled.", "success");
+		//programmatically trigger propogating hide event
+		$('.no'+i).trigger('notify-hide');
+	}
+
+	//Toast confirm button
+	function chkYes(code, i, id) 
+	{
+		//Get assigned emp data
+		var empSet = alreadySet(code);
+		
+		//remove items assigned to the emp
+		assignedRemove(empSet);
+		
+		remove(code);
+		
+		//hide notification
+		$('.yes'+i).trigger('notify-hide');
+	}
+	
+	function assignedRemove(assign)
+	{
+		var total = assign.length;
+		
+		for(i = 0; i < total; i++)
+		{
+			$.ajax({
+				url:"/assetManagement/assetAssigned/delete/" + assign[i].id,
+				dataType: "json",
+				type: "DELETE",
+				success: 
+					$.notify("Success! Employee " + assign[i].employees.employeeID + " and asset " + assign[i].assets.assetCode + " is now unassigned.", "success")
+			});
+		}
+		
+	}
+	
+	function remove(empId) 
+    {
+		var table = $('#emp-table').DataTable();
+
+		$.ajax({
+			url:"/assetManagement/employee/delete/" + empId, 
+			dataType: "json",
+			type: "DELETE",
+			success: success(empId)
+			/*,
+			error: function(error)
+			{
+				$.notify("Error! " + error, "error");
+//				console.log(error);
+			}*/
+			
+		});
+		
+		function success()
+		{
+			var table = $('#emp-table').DataTable();
+			
+			$.notify("Success! Employee " + empId + " was removed.", "success");
+			table.row("#"+empId).remove().draw( false );
+		}
+    }
+
+	$('#setEmp-btn').click( function () 
+	{
+		$('.notifyjs-corner').remove();
+		
+		var table = $('#emp-table').DataTable();
+		var empData = table.rows( '.selected' ).data();
+		if(empData.length == 0)
+		{
+			$.notify("Heads up! Please select an employee to assign to an asset.", "error");
+//			alert("Please select an employee to assign to an asset");
+			
+		}
+		else if(empData.length >= 2)
+		{
+			$.notify("Heads up! Please only select one employee.", "error");
+//			alert("Please only select one employee");
+		}
+		else
+		{
+			asset = JSON.parse(localStorage.getItem('asset0'));
+			if(asset)
+			{
+				//Create asset assigned table if there is asset data
+				selectEmp();
+				assign();
+			}
+			else
+			{
+				//Send to asset table if there is no asset data
+				clearLocal();
+				selectEmp();
+				window.location = "/assetManagement/pages/asset";
+				//alert("Please select an asset to assign to the selected employee");
+			}
+		}		
+    });
+	
+	function selectEmp()
+	{
+		var table = $('#emp-table').DataTable();
+		var empData = table.row( '.selected' ).data();
+		
+		if(empData)
+		{
+			localStorage.setItem('emp', JSON.stringify(empData));
+			
+//			var asset = JSON.parse(localStorage.getItem('asset'));
+			
+//			localStorage.removeItem('asset');
+		}
+		else
+		{
+			$.notify("Heads up! Please select a employee.", "error");
+//			alert("Please select a employee");
+		}
+	}
+	
+	function assign()
+	{
+		createTable();
+		if(count > 0)
+		{
+			$.notify("Success! Data successfully assigned.", "success");
+			window.location = "/assetManagement/pages/assetAssigned";
+		}
+
+		clearLocal();
+		$('#cancel-btn').hide();
+	}
+	
+	function clearLocal()
+	{
+		if(asset)
+		{
+			var assetStorage = localStorage.length - 1;
+		}
+		else
+		{
+			var assetStorage = localStorage.length;
+		}
+		
+		for(i = 0; i < assetStorage; i++)
+		{
+			localStorage.removeItem('asset' + [i]);
+		}
+		
+		localStorage.removeItem('emp');
+	}
+	
+	function clearFormBorder()
+	{
+		//create form
+		$('#id').removeClass("form-fill-error");
+		$('#name').removeClass("form-fill-error");
+		$('#surname').removeClass("form-fill-error");
+		$('#email').removeClass("form-fill-error");
+		$('#dateStart').removeClass("form-fill-error");
+		
+		//Update form
+		$('#uId').removeClass("form-fill-error");
+		$('#uName').removeClass("form-fill-error");
+		$('#uSurname').removeClass("form-fill-error");
+		$('#uEmail').removeClass("form-fill-error");
+		$('#uDateStart').removeClass("form-fill-error");
+	}
+	
+	function displayFormBorder(id, name, surname, email, date)
+	{
+		if(!id)
+		{
+			$('#id').addClass("form-fill-error");
+			$('#uId').addClass("form-fill-error");
+		}	
+		
+		if(!name)
+		{
+			$('#name').addClass("form-fill-error");
+			$('#uName').addClass("form-fill-error");
+		}
+		
+		if(!surname)
+		{
+			$('#surname').addClass("form-fill-error");
+			$('#uSurname').addClass("form-fill-error");
+		}
+		
+		if(!email)
+		{
+			$('#email').addClass("form-fill-error");
+			$('#uEmail').addClass("form-fill-error");
+		}
+		
+		if(!date)
+		{
+			$('#dateStart').addClass("form-fill-error");
+			$('#uDateStart').addClass("form-fill-error");
 		}
 	}
 	
@@ -118,6 +517,8 @@ $(document).ready(function()
 		var empTable = $("#emp-table").DataTable({
 			retrieve: true,
 			dom: '<f<t>lip>',
+			responsive: true,
+			rowId: 'employeeID',
 			select: true,
 			data: dataSet,
 			columns: 
@@ -131,198 +532,68 @@ $(document).ready(function()
 		});
 		return empTable;
 	}
-
-	function Existance()
-    {
-    	var email = $('#email').val();
-    	
-    	var dataSet;
-    	
-    	$.ajax({
-			url:"/assetManagement/employee/email/"+email, 
-			async: false,
-			dataType: "json",
-			type: "GET",
-			success: function(data) 
-			{
-//				dataSet = data;
-				dataSet = true;
-			},
-			error: function(data)
-			{
-				dataSet = false;
-			}
-			
-		});
-    	return dataSet;
-    }
-		
-    function findHistory() {
-		
-    	$.ajax({
-    		url:"/assetManagement/employee/findHistory",
-    		dataType: "json",
-    		type: "GET",
-    		success: function(data) {
-    			dataSet = data;
-    			empList(dataSet);
-    		}
-    	});
-    }
-	//select
-    $('#emp-table tbody').on( 'click', 'tr', function () {
-    	var table = $('#emp-table').DataTable();
-    	var selectedEmp = table.row(this).data();
-    	
-    	if(selectedEmp && selectedEmp.active == 'Active'){
-    		$('#change-btn').show();
-    		$('#change-btn').prop('value', 'Deactivate');
-    
-    	}else{
-    		$('#change-btn').show();
-    		$('#change-btn').prop('value', 'Activate');
-    		
-    	}if(selectedEmp && selectedEmp.active == ' '){
-    		selectedEmp && selectedEmp.active == 'Active';
-    	}
-        
-    	if ( $(this).hasClass('selected') ) {
-        	
-            $(this).removeClass('selected');
-            $('#change-btn').prop('disabled', true);
-       
-        }else {
-       	table.$('tr.selected').removeClass('selected');
-            $(this).addClass('selected');
-            $('#change-btn').prop('disabled', false);
-
-        }    
-    });
-   
-    function remove() {
-		var table = $('#emp-table').DataTable();
-
-		var rowToDelete = table.row( '.selected' ).data();
-		
-		if(rowToDelete && rowToDelete.active == "Deactivated"){
-			rowToDelete.active = 'Active';
-		}else{
-			rowToDelete.active = 'Deactivated';
-		}
-		
-		if (rowToDelete) {
-			$.ajax({
-				url:"/assetManagement/employee/delete/" + rowToDelete.employeeID + "/" + rowToDelete.active, 
-				dataType: "json",
-				type: "PUT",
-				success: function(response) {
-					
-					if(response.active && response.active=='Deactivated'){
-						rowToDelete.active = "Deactivated";
-					}else{
-						rowToDelete.active = "Active";
-					}
-				},
-			error : function(error){
-				console.log(error)
-			}
-			});
-			
-		}else{
-			alert("Please select a employee to remove");
-		}
 	
-		   $('#change-btn').hide();
-		   table.row( '.selected' ).data(rowToDelete).draw();
-    }
-
-    function findActivated(status){ //activated or Deactivated
-    	if(status == 'Show Active'){
-    		$.ajax({
-    			url:"/assetManagement/employee/findActivated/active", 
-    			dataType: "json",
-    			type: "GET",
-    			success: function(data) {
-    				dataSet = data;
-    				var table = $('#emp-table').DataTable();
-    				table.clear();
-    				table.rows.add(dataSet);
-    				table.rows(dataSet).draw();
-    				table.draw();
-    				$('#showActive-btn').prop('value', 'Show Not Active');
-    			}
-    		});
-    	}
-    	else{
-    		//Deactivated
-    		$.ajax({
-    			url:"/assetManagement/employee/findActivated/Deactivated", 
-    			dataType: "json",
-    			type: "GET",
-    			success: function(data) {
-    				dataSet = data;
-    				var table = $('#emp-table').DataTable();
-    				table.clear();
-    				table.rows.add(dataSet);
-    				table.rows(dataSet).draw();
-    				table.draw();
-    				$('#showActive-btn').prop('value', 'Show Active');
-    			}
-    		});
-    	}
-    }
-
-//activation button
-$('#change-btn').click( function () {
-	var table = $('#emp-table').DataTable();
-	remove();       
-});
-
-$('#showActive-btn').click(function(event) {
-	var status = $('#showActive-btn').val();
-	findActivated(status);
-});
-
-$('#setEmp-btn').click( function () 
+	function validateId(id)
+	{
+		var numbers = /^[0-9]+$/;
+		
+		if(id.match(numbers))
 		{
-			$('.notifyjs-corner').remove();
-			
-			var table = $('#emp-table').DataTable();
-			
-			//Get data from the selected row
-			var assetData = table.rows( '.selected' ).data();
-			
-			//Returns an array because there can be multiple rows selected
-			if(assetData.length != 0)
-			{
-				//Get data from the local storage
-				emp = JSON.parse(localStorage.getItem('emp'));
-				if(emp)
-				{
-					//Save selected rows to local storage and
-					//Create asset assigned table if there is employee data
-					selectAsset();
-					assign();
-				}
-				else
-				{
-					//Send to employee table if there is no employee data
-					clearLocal();
-					selectAsset();
-					window.location = "../pages/employee";
-					alert("Please select an employee to assign to the selected asset");
-				}
-			}
-			else
-			{
-				$.notify("Heads up! Please select an asset to assign to an employee.", "warn");
-				
-//				displayAlertT("Please select an asset to assign to an employee.", "warning", "Heads up!");
-
-				//alert("Please select an asset to assign to an employee");
-			}
-			
-	    } );	
+			return true;
+		}
+		else
+		{
+			$.notify("Heads up! Please input numeric characters only.", "error");
+			$('#id').addClass("form-fill-error");
+			return false;
+		}
+	}
+	
+	function resetLocal()
+	{
+		localStorage.clear();
+		
+		$.notify("Success! Assigning successfully cancelled", "success");
+		
+		$('#cancel-btn').removeClass('visible');
+	}
+	
+	//Notify class
+	function createNotifyD()
+	{
+		//add a new style 'foo'
+		$.notify.addStyle('foo', {
+		  html: 
+		    "<div>" +
+		      "<div class='clearfix'>" +
+		        "<div class='title' data-notify-html='title'/>" +
+		        "<div class='buttons'>" +
+		          "<button class='btn btn-secondary noD'>Cancel</button>" +
+		          "<button class='btn btn-secondary yesD' data-notify-text='button'></button>" +
+		        "</div>" +
+		      "</div>" +
+		    "</div>"
+		});
+	}
+	
+	//Make cancel button visible
+	function showBtn()
+	{
+		if(localStorage.length > 0)
+		{
+			$('#cancel-btn').addClass('visible');
+		}
+	}
+	
+	function showAssignBtn()
+	{
+		var assign = JSON.parse(localStorage.getItem('assign'));
+		
+		if(assign)
+		{
+			$('#reassign-btn').addClass('visible-r');
+		}
+	}
 		
 	function showActiveNav()
 	{
@@ -364,5 +635,55 @@ $('#setEmp-btn').click( function ()
 		  }
 		  showActiveNav();
 	}
+	
+/*	function showActive()
+	{
+		$.ajax({
+			url:"/assetManagement/employee/findActivated/active", 
+			dataType: "json",
+			type: "GET",
+			success: function(data) {
+				console.log(JSON.stringify(data));
+				dataSet = data;
+				empList(dataSet);
+			}
+			});
+	}*/
+	
+/*	function findActivated(status){ //activated or Deactivated
+    	if(status == 'Show Active'){
+    		$.ajax({
+    			url:"/assetManagement/employee/findActivated/active", 
+    			dataType: "json",
+    			type: "GET",
+    			success: function(data) {
+    				dataSet = data;
+    				var table = $('#emp-table').DataTable();
+    				table.clear();
+    				table.rows.add(dataSet);
+    				table.rows(dataSet).draw();
+    				table.draw();
+    				$('#showActive-btn').prop('value', 'Show Not Active');
+    			}
+    		});
+    	}
+    	else{
+    		//Deactivated
+    		$.ajax({
+    			url:"/assetManagement/employee/findActivated/Deactivated", 
+    			dataType: "json",
+    			type: "GET",
+    			success: function(data) {
+    				dataSet = data;
+    				var table = $('#emp-table').DataTable();
+    				table.clear();
+    				table.rows.add(dataSet);
+    				table.rows(dataSet).draw();
+    				table.draw();
+    				$('#showActive-btn').prop('value', 'Show Active');
+    			}
+    		});
+    	}
+    }*/
 
-});
+//});

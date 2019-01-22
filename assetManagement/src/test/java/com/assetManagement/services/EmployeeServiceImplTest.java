@@ -1,18 +1,9 @@
 package com.assetManagement.services;
 
-import static org.junit.Assert.assertNotNull;
-
-import java.util.Date;
-import java.util.List;
-
-import org.junit.Before;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import com.assetManagement.entities.Employee;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -21,7 +12,7 @@ public class EmployeeServiceImplTest{
 @Autowired
  private EmployeeService employeeService; 
 		
-	 	@Before
+	 	/*@Before
 	    public void CreateEmployee() {
 	        Employee employee1 = new Employee("Lutho", "Lwethu", "Lutho@gmail.com", new Date(), 15646);
 	        Employee employee2 = new Employee("Lindo", "Kuhle", "Lindo@gmail.com", new Date(), 45846);
@@ -51,4 +42,5 @@ public class EmployeeServiceImplTest{
 	 	List <Employee> employees = employeeService.findByStartDate(new Date());
 	 	assertNotNull(employees);
 	 	}
+	 	*/
 }

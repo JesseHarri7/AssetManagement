@@ -1,10 +1,11 @@
-$(document).ready(function() {
+$(document).ready(function() 
+{
 	
 	$('#change-btn').hide();
 	var dataSet = [];
 	
 	//All data fields on start up
-	showActive();
+	findAll();
 	
 	//Add temps html files
 	includeHTML();
@@ -135,79 +136,76 @@ $(document).ready(function() {
     }
 		
 	
-function findAll() 
-{
-	$.ajax({
-		url:"/assetManagement/user/findAll",
-		dataType: "json",
-		type: "GET",
-		success: function(data) 
-		{
-			dataSet = data;
-			userList(dataSet);
-		}
-	});
-}
-	
-	
-
-function findActivated(status){ //activated or deactivated
-	
-	
-	if(status == 'Show Active'){
+	function findAll() 
+	{
 		$.ajax({
-			url:"/assetManagement/user/findActivated/active", 
+			url:"/assetManagement/user/findAll",
 			dataType: "json",
 			type: "GET",
-			success: function(data) {
+			success: function(data) 
+			{
 				dataSet = data;
-				var table = $('#user-table').DataTable();
-				table.clear();
-				table.rows.add(dataSet);
-				table.rows(dataSet).draw();
-				table.draw();
-				$('#showActive-btn').prop('value', 'Show Not Active');
+				userList(dataSet);
 			}
 		});
 	}
-	else{
-		//deactive
-		$.ajax({
-			url:"/assetManagement/user/findActivated/Deactivated", 
-			dataType: "json",
-			type: "GET",
-			success: function(data) {
-				dataSet = data;
-				var table = $('#user-table').DataTable();
-				table.clear();
-				table.rows.add(dataSet);
-				table.rows(dataSet).draw();
-				table.draw();
-				$('#showActive-btn').prop('value', 'Show Active');
-			}
-		});
-	}
-}
-
-function userList(dataSet) {
+	
+	function userList(dataSet) {
 		
-	var userTable = $("#user-table").DataTable({
-		retrieve: true,
-		dom: '<f<t>lip>',
-		select: true,
-		data: dataSet,
-		columns: 
-		[
-			{data: 'userID'},
-			{data: 'email'},
-			{data: 'firstName'},
-			{data: 'lastName'},
-			{data: 'username'}
-			//{data: 'active'}
-		]
-	});
-	return userTable;
-}
+		var userTable = $("#user-table").DataTable({
+			retrieve: true,
+			dom: '<f<t>lip>',
+			select: true,
+			data: dataSet,
+			columns: 
+			[
+				{data: 'userID'},
+				{data: 'email'},
+				{data: 'firstName'},
+				{data: 'lastName'},
+				//{data: 'active'}
+			]
+		});
+		return userTable;
+	}
+	
+	function findActivated(status)
+	{ //activated or deactivated
+		if(status == 'Show Active'){
+			$.ajax({
+				url:"/assetManagement/user/findActivated/active", 
+				dataType: "json",
+				type: "GET",
+				success: function(data) {
+					dataSet = data;
+					var table = $('#user-table').DataTable();
+					table.clear();
+					table.rows.add(dataSet);
+					table.rows(dataSet).draw();
+					table.draw();
+					$('#showActive-btn').prop('value', 'Show Not Active');
+				}
+			});
+		}
+		else{
+			//deactive
+			$.ajax({
+				url:"/assetManagement/user/findActivated/Deactivated", 
+				dataType: "json",
+				type: "GET",
+				success: function(data) {
+					dataSet = data;
+					var table = $('#user-table').DataTable();
+					table.clear();
+					table.rows.add(dataSet);
+					table.rows(dataSet).draw();
+					table.draw();
+					$('#showActive-btn').prop('value', 'Show Active');
+				}
+			});
+		}
+	}
+
 	//select
     
     $('#user-table tbody').on( 'click', 'tr', function () {

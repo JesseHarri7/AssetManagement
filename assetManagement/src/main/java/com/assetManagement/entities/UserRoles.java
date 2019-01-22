@@ -17,7 +17,7 @@ public class UserRoles
 	private Long userRoleId;
 	
 	@OneToOne//(fetch = FetchType.LAZY)
-	@JoinColumn(name = "username", nullable = false, referencedColumnName="username")
+	@JoinColumn(name = "email", nullable = false, referencedColumnName="email")
 	private User email;
 	private String role;
 	

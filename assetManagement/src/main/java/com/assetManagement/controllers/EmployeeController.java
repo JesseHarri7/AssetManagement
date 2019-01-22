@@ -1,10 +1,8 @@
 package com.assetManagement.controllers;
 
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -62,7 +60,7 @@ public class EmployeeController
 	//delete
 	@RequestMapping(value = "delete/{id}", method = {RequestMethod.GET, RequestMethod.DELETE})
 	@ResponseStatus(HttpStatus.OK)
-	public void delete(@PathVariable("id") Long id)
+	public void deleteEmp(@PathVariable("id") Long id)
 	{
 		Employee deleteEmp = service.readById(id);
 		if (deleteEmp != null)
@@ -87,7 +85,7 @@ public class EmployeeController
 	
 	// find by start date
 	@RequestMapping(value = "startDate/{startDate}", method = RequestMethod.GET)
-	public List<Employee> findByStartDate(@PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate) 
+	public List<Employee> findByStartDate(@PathVariable String startDate)//@DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate) 
 	{
 		return service.findByStartDate(startDate);
 	}	
