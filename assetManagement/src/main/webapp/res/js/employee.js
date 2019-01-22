@@ -16,9 +16,14 @@
 	//Show button to assign if reassign is selected
 	showAssignBtn();
 	
+	//Show selected alert if asset is selected
+	showSelectAlert();
+	
 	//Create button
 	$('#create-btn').click(function(event) 
 	{
+		$('.notifyjs-corner').remove();
+		
 		//Clear form red border css
 		clearFormBorder();
 		
@@ -40,7 +45,11 @@
 	$('#cancel-btn').click(function(event) 
 	{
 		$('.notifyjs-corner').remove();
-		resetLocal();		
+		resetLocal();
+
+		$.notify("Success! Assigning successfully cancelled", "success");
+		
+		$('#cancel-btn').removeClass('visible');
 	});
 	
 	//Modal create button
@@ -254,6 +263,7 @@
 		}
 	}
 	
+	//Get emp data if it is assigned to assets
 	function alreadySet(id)
 	{
 		var dataSet = [];
@@ -428,6 +438,144 @@
 		$('#cancel-btn').hide();
 	}
 	
+	function createTable()
+	{
+		var assetStorage = localStorage.length - 1;
+		
+		asset = JSON.parse(localStorage.getItem('asset0'));
+		emp = JSON.parse(localStorage.getItem('emp'));
+		
+		if(asset && emp)
+		{
+			for(i = 0; i < assetStorage; i++)
+			{
+				asset = JSON.parse(localStorage.getItem('asset' + [i]));
+				
+				//Search by asset code to see if the asset is already set
+				var assetSet = findAssetAssigned(asset.assetCode);
+				var subComp = isSubComponent(asset);
+				
+				if(assetSet )
+				{
+					$.notify("Error! Asset " + asset.assetCode + " is already assigned to employee " + assetSet.employees.employeeID, "error");
+				}
+				else if(subComp)
+				{
+					$.notify("Error! You cannot assign a sub component to an employee", "error");
+				}
+				else
+				{
+					count++;
+					
+					//Find if the asset had a previous owner
+					var getAssigned = findByAssetCodesHist(asset.assetCode);
+					if(getAssigned != 0)
+					{
+						var lastAssigned = getAssigned.length - 1;
+						var prevOwner = getAssigned[lastAssigned].employees.employeeID + "_" + getAssigned[lastAssigned].employees.name + "_" + getAssigned[lastAssigned].employees.surname;
+					}
+					
+					var assetAssigned = {assets: asset, employees: emp, empName: emp.name, prevOwner};
+					
+					var today = new Date();
+					var dd = today.getDate();
+					var mm = today.getMonth()+1; 
+					var yyyy = today.getFullYear();
+					
+					today = dd + '-' + mm + '-' + yyyy;
+					assetAssigned.moveDate = today;
+					//assetAssigned.moveDate = new Date(dd,mm,yyyy);
+				
+					var data_json = JSON.stringify(assetAssigned);
+			
+					$.ajax(
+					{
+						headers: {
+					        'Accept': 'application/json',
+					        'Content-Type': 'application/json'
+					    },
+						url:"/assetManagement/assetAssigned/create",
+						dataType: "json",
+						data: data_json,
+						type: "POST",
+						success: success()
+					});
+					
+					function success()
+					{
+						$.notify("Success! Huzzah .", "success");
+					}
+				}
+			}
+				
+		}
+		else
+		{
+			$.notify("Error! Neither an asset or employee was selected", "error");
+		}
+	}
+	
+	function findAssetAssigned(id)
+	{
+		var dataSetA = [];
+
+		$.ajax({
+			url:"/assetManagement/assetAssigned/findAllAsset/" + id,
+			async: false,
+			dataType: "json",
+			type: "GET",
+			success: function(data)
+			{
+				dataSetA = data
+			},
+			error: dataSetA = null
+		});
+		
+		if(dataSetA)
+		{
+			return dataSetA;
+		}
+		else
+		{
+			return false;
+		}
+
+	}
+	
+	function findByAssetCodesHist(id)
+	{
+		var dataSet = [];
+
+		$.ajax({
+			url:"/assetManagement/assetAssigned/findAllAssetHistory/" + id,
+			async: false,
+			dataType: "json",
+			type: "GET",
+			success: function(data)
+			{
+				dataSet = data
+			},
+			error: dataSet = null
+		});
+		
+		return dataSet;
+	}
+	
+	function isSubComponent(asset)
+	{
+		var subComp = asset.subComp;
+		
+		if(subComp)
+		{
+			
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	
 	function clearLocal()
 	{
 		if(asset)
@@ -445,6 +593,99 @@
 		}
 		
 		localStorage.removeItem('emp');
+	}
+	
+	//select Employee for reassign
+	$('#reassign-btn').click( function () 
+	{
+		var assign = JSON.parse(localStorage.getItem('assign'));
+		
+		var table = $('#emp-table').DataTable();
+		var empData = table.rows( '.selected' ).data();
+		
+		if(empData.length == 0)
+		{
+			$.notify("Heads up! Please select an employee to reassign to an asset.", "error");
+		}
+		else if(empData.length >= 2)
+		{
+			$.notify("Heads up! Please only select one employee.", "error");
+		}
+		else
+		{
+			//Save new reassignment
+			selectEmp();
+			reassignAsset();
+//			localStorage.clear();
+			
+		}
+				
+    });
+	
+	function reassignAsset()
+	{
+		assign = JSON.parse(localStorage.getItem('assign'));
+		emp = JSON.parse(localStorage.getItem('emp'));
+		
+		var asset = assign.assets;
+		var id = assign.id;
+		var prevId = assign.employees.employeeID + "_" + assign.employees.name + "_" + assign.employees.surname;
+		
+		if(asset && emp)
+		{
+			var assetAssigned = {assets: asset, employees: emp, empName: emp.name, prevOwner: prevId};
+			
+			var today = new Date();
+			var dd = today.getDate();
+			var mm = today.getMonth()+1; 
+			var yyyy = today.getFullYear();
+			
+			today = dd + '-' + mm + '-' + yyyy;
+			assetAssigned.moveDate = today;
+//			assetAssigned.id = id;
+//			assetAssigned.moveDate = new Date(dd,mm,yyyy);
+		
+			var data_json = JSON.stringify(assetAssigned);
+	
+			$.ajax(
+			{
+				headers: {
+			        'Accept': 'application/json',
+			        'Content-Type': 'application/json'
+			    },
+				url:"/assetManagement/assetAssigned/create",
+				dataType: "json",
+				data: data_json,
+				type: "POST",
+				success: success()
+			});
+			
+			function success()
+			{
+				reassignRemove(id);
+				localStorage.setItem('reassigned', JSON.stringify("Reassigned"));
+//				alert("Data successfully assigned");
+				window.location = "/assetManagement/pages/assetAssigned";
+			}	
+				
+		}
+		else
+		{
+			$.notify("Heads up! Neither an asset or employee was selected.", "error");
+		}
+	}
+	
+	function reassignRemove(id)
+	{
+		$.ajax({
+			url:"/assetManagement/assetAssigned/delete/" + id, 
+			dataType: "json",
+			type: "DELETE",
+			success: function(data)
+			{
+				
+			}
+		});
 	}
 	
 	function clearFormBorder()
@@ -552,10 +793,6 @@
 	function resetLocal()
 	{
 		localStorage.clear();
-		
-		$.notify("Success! Assigning successfully cancelled", "success");
-		
-		$('#cancel-btn').removeClass('visible');
 	}
 	
 	//Notify class
@@ -592,6 +829,19 @@
 		if(assign)
 		{
 			$('#reassign-btn').addClass('visible-r');
+		}
+	}
+	
+	//Display selection alert if an employee is selected
+	function showSelectAlert()
+	{
+		var asset = JSON.parse(localStorage.getItem('asset0'));
+		if(asset)
+		{
+			$(document).ready(function()
+			{
+			    $.notify("Please select an employee to assign to the selected asset", "info");
+			});
 		}
 	}
 		

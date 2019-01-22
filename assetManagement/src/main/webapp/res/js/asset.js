@@ -231,7 +231,7 @@
 				{
 					selectAsset();
 					window.location = "../pages/employee";
-					alert("Please select an employee to assign to the selected asset");
+//					alert("Please select an employee to assign to the selected asset");
 				}
 				else
 				{
@@ -1074,8 +1074,8 @@
 		var assetStorage = localStorage.length - 1;
 		
 		//Get data from the local storage
-		asset = JSON.parse(localStorage.getItem('asset0'));
-		emp = JSON.parse(localStorage.getItem('emp'));
+		var asset = JSON.parse(localStorage.getItem('asset0'));
+		var emp = JSON.parse(localStorage.getItem('emp'));
 
 		//If there is data in the local storage then for each selected asset assign to the selected employee if the asset isn't already assigned
 		if(asset && emp)
