@@ -10,3 +10,4 @@ public interface UserRoleRepo extends CrudRepository<UserRoles, Long>
 	
 	UserRoles findByEmailEmail(String user);
 }
+	

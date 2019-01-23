@@ -112,7 +112,7 @@ $(document).ready(function()
 		
 		var user = {firstName, lastName,email,password};
 		var user_json = JSON.stringify(user);
-		var exists = findByEmail();
+		var exists = findByEmail(email);
 		
 		if(exists)
 		{
@@ -135,7 +135,7 @@ $(document).ready(function()
 					$.notify("Success! User " + email + " has been created.", "success");
 					
 					//Add user to user role table
-//					addUserRole(user, role);
+					addUserRole(email, role);
 					
 					//Clear data from the modal form
 					document.getElementById("create").reset();
@@ -149,10 +149,8 @@ $(document).ready(function()
 		}
 	}
 	
-	function findByEmail()
-    {
-    	var email = $('#email').val();
-    	
+	function findByEmail(email)
+    {    	
     	var dataSet = [];
     	
     	$.ajax({
@@ -174,8 +172,9 @@ $(document).ready(function()
     	return dataSet;
     }
 	
-	function addUserRole(user, role)
+	function addUserRole(email, role)
 	{
+		var user = findByEmail(email);
 		
 		var userRole = {email: user, role};
 		
@@ -266,11 +265,23 @@ $(document).ready(function()
 			
 			$.notify("Success! User " + rowToDelete.email + " was removed.", "success");
 			
+			//Remove role from user_role table
+			removeUserRole(rowToDelete.email);
+			
 			table.row( '.selected' ).remove().draw(false);
 //			table.row("#"+assetCode).remove().draw( false );
 		}
     }
 		
+	function removeUserRole(email)
+	{		
+		$.ajax({
+			url:"/assetManagement/userRole/delete/" + email,
+			dataType: "json",
+			type: "DELETE"/*,
+			success: success()*/
+		});
+	}
 	
 	function findAll() 
 	{

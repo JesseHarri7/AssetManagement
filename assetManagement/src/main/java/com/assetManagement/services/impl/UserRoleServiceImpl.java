@@ -83,4 +83,19 @@ public  class UserRoleServiceImpl implements UserRoleService
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public UserRoles findByEmail(String user) 
+	{
+		UserRoles userR = repo.findByEmailEmail(user);
+		
+		if(userR == null)
+		{
+			return null;
+		}
+		else
+		{
+			return userR;
+		}
+	}
 }

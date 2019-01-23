@@ -59,16 +59,23 @@ public class UserRoleController
 	}
 
 	// delete
-	@RequestMapping(value = "delete/{id}", method = {RequestMethod.GET, RequestMethod.DELETE})
+	@RequestMapping(value = "delete/{email}", method = {RequestMethod.GET, RequestMethod.DELETE})
 	@ResponseStatus(HttpStatus.OK)
-	public void deleteUser(@PathVariable("id") Long id) 
+	public void deleteUser(@PathVariable("email") String email) 
 	{
-		UserRoles user = service.readById(id);
+		UserRoles user = service.findByEmail(email);
 		
 		if(user != null)
 		{
 			service.delete(user);
 		}
+	}
+	
+	//Find by email
+	@RequestMapping(value = "findByEmail/{email}", method = RequestMethod.GET)
+	public UserRoles findByEmail(@PathVariable String email)
+	{
+		return service.findByEmail(email);
 	}
 
 }
