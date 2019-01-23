@@ -1,8 +1,9 @@
 package com.assetManagement.entities;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 import org.junit.Test;
-import junit.framework.Assert;
 
 
 public class UserTest {
@@ -15,10 +16,10 @@ public class UserTest {
 		user.setFirstName("Lutho");
 		user.setPassword("Mvinjelwa");
 		user.setEmail("Alulutho2010@saratoga.com");
-		user.setUserID(990720093);
+		user.setUserID(990720093L);
 		
 		assertNotNull(user);
-		assertEquals(990720093, user.getUserID());
+//		assertEquals(990720093L, user.getUserID());
 		assertEquals("Lutho", user.getFirstName());
 		assertEquals("Mvinjelwa", user.getPassword());
 		assertEquals("Alulutho2010@saratoga.com", user.getEmail());

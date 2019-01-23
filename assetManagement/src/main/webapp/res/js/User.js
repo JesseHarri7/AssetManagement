@@ -7,9 +7,21 @@ $(document).ready(function()
 	includeHTML();
 	
 	//Click to select row from the table
-	$('#asset-table tbody').on('click','tr', function()
+	$('#user-table tbody').on('click','tr', function()
 	{
 		$(this).toggleClass('selected');
+	});
+	
+	//Create button
+	$('#create-btn').click(function(event) 
+	{
+		$('.notifyjs-corner').remove();
+		
+		//Clear form red border css
+		clearFormBorder();
+		
+		//Clear form content if any
+		document.getElementById("create").reset();
 	});
 	
 	$('#form-create-btn').click(function(event) 
@@ -34,9 +46,28 @@ $(document).ready(function()
 		var email = $('#email').val();
 		var password = $('#password').val();
 		
-		if ( firstName=="" || lastName=="" || email=="" || password =="")
+		var adminRole = document.getElementById("adminRole");
+		var userRole = document.getElementById("userRole");
+		
+		var checked;
+		
+		//If none of the radio buttons are checked
+		if(adminRole.checked == false && userRole.checked == false)
 		{
-			displayFormBorder(id, name, surname, email, date);
+			notChecked = true; 
+		}
+		else if(adminRole.checked == true)
+		{
+			notChecked = false;
+		}
+		else
+		{
+			notChecked = false;
+		}
+		
+		if ( firstName == "" || lastName == "" || email == "" || password == "" || notChecked)
+		{
+			displayFormBorder(firstName, lastName, email, password, notChecked);
 			$.notify("Heads up! All fields must be filled out.", "error");
 			return false;
 		}
@@ -56,9 +87,7 @@ $(document).ready(function()
 	}	
 
 	function create()
-	{
-		var dataSet = [];
-		
+	{		
 		var table = $('#user-table').DataTable();
 		
 		var firstName = $('#firstname').val();
@@ -66,11 +95,26 @@ $(document).ready(function()
 		var email = $('#email').val();
 		var password = $('#password').val();
 		
+		var adminRole = document.getElementById("adminRole");
+		var userRole = document.getElementById("userRole");
+		
+		//For user_roles table
+		var role;
+		
+		if(adminRole.checked)
+		{
+			role = "ROLE_ADMIN";
+		}
+		else
+		{
+			role = "ROLE_USER";
+		}
+		
 		var user = {firstName, lastName,email,password};
 		var user_json = JSON.stringify(user);
 		var exists = findByEmail();
 		
-		if(exists )
+		if(exists)
 		{
 			$.notify("Error! The user " + email + " you're trying to create already exists.", "error");
 		}
@@ -89,6 +133,9 @@ $(document).ready(function()
 				{
 					table.row.add(user).draw()
 					$.notify("Success! User " + email + " has been created.", "success");
+					
+					//Add user to user role table
+//					addUserRole(user, role);
 					
 					//Clear data from the modal form
 					document.getElementById("create").reset();
@@ -126,6 +173,103 @@ $(document).ready(function()
 		});
     	return dataSet;
     }
+	
+	function addUserRole(user, role)
+	{
+		
+		var userRole = {email: user, role};
+		
+		var user_json = JSON.stringify(userRole);
+		
+		$.ajax({
+			headers: {
+		        'Accept': 'application/json',
+		        'Content-Type': 'application/json' 
+		    },
+		    url:'/assetManagement/userRole/create',
+			dataType: 'JSON',
+			data: user_json,
+			type:'POST'
+		});
+	}
+	
+	$('#remove-btn').click(function(event) 
+	{
+		var table = $('#user-table').DataTable();
+
+		//Returns an array of the selected rows
+		var rowToDelete = table.rows( '.selected' ).data();
+		
+		$('.notifyjs-corner').remove();
+		
+		if (rowToDelete.length == 0)
+		{
+			$.notify("Heads up! Please select an user to remove.", "error");
+		}
+		else if (rowToDelete.length >= 2)
+		{
+			$.notify("Heads up! Please only select one user to remove.", "error");
+		}
+		else
+		{
+			createNotifyD();
+			
+			$.notify({
+				  title: 'Are you sure you want to delete?',
+				  button: 'Confirm'
+				}, {
+				  style: 'foo',
+				  className: 'info',
+				  autoHide: false,
+				  clickToHide: false
+				});
+		}
+	});
+	
+	//listen for click events from this style
+	//If no
+	$(document).on('click', '.notifyjs-foo-base .noD', function() 
+	{
+		//programmatically trigger propogating hide event
+		$(this).trigger('notify-hide');
+		
+	});
+
+	//if Yes
+	$(document).on('click', '.notifyjs-foo-base .yesD', function() 
+	{	
+		//Function
+		remove();
+		//hide notification
+		$(this).trigger('notify-hide');
+		
+	});
+	
+	function remove() 
+	{
+		var table = $('#user-table').DataTable();
+
+		var rowToDelete = table.row( '.selected' ).data();
+
+		$.ajax({
+			url:"/assetManagement/user/delete/" + rowToDelete.userID, 
+			dataType: "json",
+			type: "DELETE",
+			success: success()
+		});
+		
+		function success()
+		{
+			var table = $('#user-table').DataTable();
+
+			var rowToDelete = table.row( '.selected' ).data();
+			
+			$.notify("Success! User " + rowToDelete.email + " was removed.", "success");
+			
+			table.row( '.selected' ).remove().draw(false);
+//			table.row("#"+assetCode).remove().draw( false );
+		}
+    }
 		
 	
 	function findAll() 
@@ -161,43 +305,6 @@ $(document).ready(function()
 		return userTable;
 	}
     
-    function remove() {
-		var table = $('#user-table').DataTable();
-
-		var rowToDelete = table.row( '.selected' ).data();
-		
-		if(rowToDelete && rowToDelete.active == "Deactivated"){
-			rowToDelete.active = 'Active';
-		}else{
-			rowToDelete.active = 'Deactivated';
-		}
-		
-		if (rowToDelete) {
-			$.ajax({
-				url:"assetManagement/user/delete/" + rowToDelete.userID + "/" + rowToDelete.active, 
-				dataType: "json",
-				type: "PUT",
-				success: function(response) {
-					
-					if(response.active && response.active=='Deactivated'){
-						rowToDelete.active = "Deactivated";
-					}else{
-						rowToDelete.active = "Active";
-					}
-				},
-			error : function(error){
-				console.log(error)
-			}
-			});
-			
-		}else{
-			alert("Please select a user to remove");
-		}
-	
-		   $('#change-btn').hide();
-		   table.row( '.selected' ).data(rowToDelete).draw();
-    }
-    
     function clearFormBorder()
 	{
 		//create form
@@ -205,15 +312,19 @@ $(document).ready(function()
 		$('#lastname').removeClass("form-fill-error");
 		$('#email').removeClass("form-fill-error");
 		$('#password').removeClass("form-fill-error");
-		
+		$('#admin-if-error').removeClass("red");
+		$('#user-if-error').removeClass("red");
+				
 		//Update form
 		$('#uFirstname').removeClass("form-fill-error");
 		$('#uLastname').removeClass("form-fill-error");
 		$('#uEmail').removeClass("form-fill-error");
 		$('#uPassword').removeClass("form-fill-error");
+		$('#u-admin-if-error').removeClass("red");
+		$('#u-user-if-error').removeClass("red");
 	}
 	
-	function displayFormBorder(name, surname, email, password)
+	function displayFormBorder(name, surname, email, password, role)
 	{		
 		if(!name)
 		{
@@ -238,6 +349,33 @@ $(document).ready(function()
 			$('#password').addClass("form-fill-error");
 			$('#uPassword').addClass("form-fill-error");
 		}
+
+		if(role)
+		{
+			$('#admin-if-error').addClass("red");
+			$('#user-if-error').addClass("red");
+			
+			$('#u-admin-if-error').addClass("red");
+			$('#u-user-if-error').addClass("red");
+		}
+	}
+	
+	//Notify class
+	function createNotifyD()
+	{
+		//add a new style 'foo'
+		$.notify.addStyle('foo', {
+		  html: 
+		    "<div>" +
+		      "<div class='clearfix'>" +
+		        "<div class='title' data-notify-html='title'/>" +
+		        "<div class='buttons'>" +
+		          "<button class='btn btn-secondary noD'>Cancel</button>" +
+		          "<button class='btn btn-secondary yesD' data-notify-text='button'></button>" +
+		        "</div>" +
+		      "</div>" +
+		    "</div>"
+		});
 	}
     
     function showActiveNav()
