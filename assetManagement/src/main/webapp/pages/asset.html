@@ -31,9 +31,9 @@
 
 		<input type="button" value="Create" id="create-btn" class="btn btn-primary" data-toggle="modal" data-target="#createModal">
 		<input type="button" value="Edit" id="edit-btn" class="btn btn-primary" data-target="#updateModal">
-		<input type="button" value="Delete" id="delete-btn" class="btn btn-primary">
+		<input type="button" value="Remove" id="delete-btn" class="btn btn-primary">
 		<input type="button" value="Assign Asset" id="setAsset-btn" class="btn btn-primary">
-		
+		&bull;
 		<input type="button" value="Show components" id="comp-btn" class="btn btn-primary">
 		<input type="button" value="Assign component" id="setAssetA-btn" class="btn btn-primary">
 		<input type="button" value="Assign component" id="setAssetATwo-btn" class="btn btn-primary hidden">
@@ -106,19 +106,17 @@
 						</div>
 						
 						<div class="form-group">
-<!-- 						<label for="component">Component:</label>  -->
 							<span class="span-left">
 								Main component:
 							</span>
-								<input type="checkbox" name="component" class="form-control chkBx" id="mainComp">
+								<input type="radio" name="component" class="form-control chkBx" id="mainComp">
 						</div>
 						
 						<div class="form-group">
-<!-- 						<label for="component">Component:</label>  -->
 							<span class="span-left">
 								Sub component:
 							</span>
-								<input type="checkbox" name="component" class="form-control chkBx" id="subComp">
+								<input type="radio" name="component" class="form-control chkBx" id="subComp">
 						</div>
 
 						<!-- <button type="submit" class="btn btn-primary">Submit</button> -->

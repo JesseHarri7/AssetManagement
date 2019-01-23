@@ -1,10 +1,11 @@
 package com.assetManagement.entities;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -16,10 +17,12 @@ public class UserRoles
 	@GeneratedValue
 	private Long userRoleId;
 	
-	@OneToOne//(fetch = FetchType.LAZY)
-	@JoinColumn(name = "email", nullable = false, referencedColumnName="email")
+	@OneToOne(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
+//	@JoinColumn(name = "email", nullable = false, referencedColumnName= "email")
+	@JoinColumn(name = "email", referencedColumnName= "email")
 	private User email;
 	private String role;
+	private int enabled = 1;
 	
 	public UserRoles() {}
 	
@@ -40,15 +43,6 @@ public class UserRoles
 		this.userRoleId = userRoleId;
 	}
 
-	public User getUsername() {
-		return email;
-	}
-
-	public void setUsername(User email) 
-	{
-		this.email = email;
-	}
-
 	public String getRole() 
 	{
 		return role;
@@ -58,6 +52,23 @@ public class UserRoles
 	{
 		this.role = role;
 	}
+
+	public User getEmail() {
+		return email;
+	}
+
+	public void setEmail(User email) {
+		this.email = email;
+	}
+
+	public int getEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(int enabled) {
+		this.enabled = enabled;
+	}
+	
 	
 	
 }

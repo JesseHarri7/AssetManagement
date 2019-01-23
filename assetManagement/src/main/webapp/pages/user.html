@@ -18,7 +18,8 @@
 	<div w3-include-html="../pages/temps/nav.html"></div>
 
 	<div id="nav-buttons">
-		<input type="button" value="Create" class="btn btn-primary" data-toggle="modal" data-target="#createModal">
+		<input type="button" value="Create" class="btn btn-primary" id="create-btn" data-toggle="modal" data-target="#createModal">
+		<input type="button" value="Remove" class="btn btn-primary" id="remove-btn">
 	</div>
 
 	<div class="table-width-outter">
@@ -69,6 +70,20 @@
 						<div class="form-group">
 							<label for="password">password:</label> <input type="password"
 								class="form-control" id="password" placeholder="Enter password" required>
+						</div>
+						
+						<div class="form-group">
+							<span class="span-left" id="user-if-error">
+								User role:
+							</span>
+								<input type="radio" name="role" class="form-control chkBx" id="userRole" value="user">
+						</div>
+						
+						<div class="form-group">
+							<span class="span-left" id="admin-if-error">
+								Admin role:
+							</span>
+								<input type="radio" name="role" class="form-control chkBx" id="adminRole" value="admin">
 						</div>
 
 					</form>

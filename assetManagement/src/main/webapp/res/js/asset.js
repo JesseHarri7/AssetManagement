@@ -149,6 +149,8 @@
 		
 		$('#setAssetATwo-btn').addClass('hidden');
 		$('#setAssetA-btn').removeClass('hidden');
+		
+	    $('#comp-btn').removeClass('hidden');
 	});
 	
 	//Form update button
@@ -1618,6 +1620,9 @@
 			$(document).ready(function()
 			{
 			    $.notify("Please select an asset to assign to the selected employee", "info");
+			    $('#setAssetATwo-btn').addClass('hidden');
+			    $('#setAssetA-btn').addClass('hidden');
+			    $('#comp-btn').addClass('hidden');
 			});
 		}
 	}
