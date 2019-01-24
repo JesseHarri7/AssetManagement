@@ -720,7 +720,7 @@
 			var assetId = assetObj.assetId;
 			var brand = assetObj.brand;
 			var date = assetObj.datePurchased;
-			var desc = assetObj.description;
+			var type = assetObj.description;
 			var name = assetObj.name;
 			var unassignDate = assetObj.unassignDate;
 			var state = "D";
@@ -728,7 +728,7 @@
 			var mainComp = assetObj.mainComp;
 			var subComp = assetObj.subComp;
 				
-			var asset = {assetCode: code, assetId, brand, datePurchased: date, description: desc, name, state, status: stat, unassignDate, mainComp, subComp};
+			var asset = {assetCode: code, assetId, brand, datePurchased: date, description: type, name, state, status: stat, unassignDate, mainComp, subComp};
 			
 			var data_json = JSON.stringify(asset);
 			
@@ -815,7 +815,7 @@
 		
 		var assetCode = $('#id').val();
 		var name = $('#name').val();
-		var description = $('#desc').val();
+		var description = $('#type').val();
 		var brand = $('#brand').val();
 		var datePurchased = [year, month, day].join('/');
 		
@@ -897,14 +897,14 @@
 	{
 		var id = document.forms["create"]["id"].value;
 		var name = document.forms["create"]["name"].value;
-		var desc = document.forms["create"]["desc"].value;
+		var type = document.forms["create"]["type"].value;
 		var brand = document.forms["create"]["brand"].value;
 		var date = document.forms["create"]["date"].value;
 //		var status = document.forms["create"]["status"].value;
 		 
-		if(id == "" || name == "" || desc == "" || brand == "" || date == "") 
+		if(id == "" || name == "" || type == "" || brand == "" || date == "") 
 		{
-			displayFormBorder(id, name, desc, brand, date);
+			displayFormBorder(id, name, type, brand, date);
 			$.notify("Heads up! All fields must be filled out.", "error");
 		    	
 //			displayAlertT("All fields must be filled out.", "warning", "Heads up!");
@@ -946,14 +946,14 @@
 	{
 		var id = document.forms["update"]["uId"].value;
 		var name = document.forms["update"]["uName"].value;
-		var desc = document.forms["update"]["uDesc"].value;
+		var type = document.forms["update"]["uType"].value;
 		var brand = document.forms["update"]["uBrand"].value;
 		var date = document.forms["update"]["uDate"].valueAsDate;
 //		var status = document.forms["update"]["uStatus"].value;
 		 
-	    if(id == "" || name == "" || desc == "" || brand == "" || date == "") 
+	    if(id == "" || name == "" || type == "" || brand == "" || date == "") 
 	    {
-	    	displayFormBorder(id, name, desc, brand, date);
+	    	displayFormBorder(id, name, type, brand, date);
 	    	$.notify("Heads up! All fields must be filled out.", "error");
 	    	
 //	    	displayAlertT("All fields must be filled out.", "warning", "Heads up!");
@@ -973,7 +973,7 @@
 		 
 		if(status == "") 
 		{
-			displayFormBorder("id", "name", "desc", "brand", "date", status);
+			displayFormBorder("id", "name", "type", "brand", "date", status);
 			$.notify("Error! Reason is required.", "error");
 		    	
 //			displayAlertT("All fields must be filled out.", "warning", "Heads up!");
@@ -1000,14 +1000,17 @@
 		
 		var assetCode = document.forms["update"]["uId"].value;
 		var name = document.forms["update"]["uName"].value;
-		var description = document.forms["update"]["uDesc"].value;
+		var description = document.forms["update"]["uType"].value;
 		var brand = document.forms["update"]["uBrand"].value;
+		
+		var mainComp = document.forms["update"]["uMainComp"].checked;
+		var subComp = document.forms["update"]["uSubComp"].checked;
 //		var status = document.forms["update"]["uStatus"].value;
 		
 		var assetObj = findId(assetCode);
 		var assetId = assetObj.assetId;
-		var mainComp = assetObj.mainComp;
-		var subComp = assetObj.subComp;
+		/*var mainComp = assetObj.mainComp;
+		var subComp = assetObj.subComp;*/
 		
 		var asset = {assetId, assetCode, name, description, brand, datePurchased, mainComp, subComp};
 		
@@ -1049,9 +1052,12 @@
 		
 		document.forms["update"]["uId"].value = asset.assetCode;
 		document.forms["update"]["uName"].value = asset.name;
-		document.forms["update"]["uDesc"].value = asset.description;
+		document.forms["update"]["uType"].value = asset.description;
 		document.forms["update"]["uBrand"].value = asset.brand;
 		document.forms["update"]["uDate"].valueAsDate = datePurchased;
+		
+		document.forms["update"]["uMainComp"].checked = asset.mainComp;
+		document.forms["update"]["uSubComp"].checked = asset.subComp;
 //		document.forms["update"]["uStatus"].value = asset.status;
 		
 	}
@@ -1689,19 +1695,19 @@
 		//create form
 		$('#id').removeClass("form-fill-error");
 		$('#name').removeClass("form-fill-error");
-		$('#desc').removeClass("form-fill-error");
+		$('#type').removeClass("form-fill-error");
 		$('#brand').removeClass("form-fill-error");
 		$('#datePurchased').removeClass("form-fill-error");
 		
 		//Update form
 		$('#uId').removeClass("form-fill-error");
 		$('#uName').removeClass("form-fill-error");
-		$('#uDesc').removeClass("form-fill-error");
+		$('#uType').removeClass("form-fill-error");
 		$('#uBrand').removeClass("form-fill-error");
 		$('#uDatePurchased').removeClass("form-fill-error");
 	}
 	
-	function displayFormBorder(id, name, desc, brand, date, status)
+	function displayFormBorder(id, name, type, brand, date, status)
 	{
 		if(!id)
 		{
@@ -1715,10 +1721,10 @@
 			$('#uName').addClass("form-fill-error");
 		}
 		
-		if(!desc)
+		if(!type)
 		{
-			$('#desc').addClass("form-fill-error");
-			$('#uDesc').addClass("form-fill-error");
+			$('#type').addClass("form-fill-error");
+			$('#uType').addClass("form-fill-error");
 		}
 		
 		if(!brand)
