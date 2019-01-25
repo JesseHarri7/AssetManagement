@@ -206,6 +206,14 @@ $(document).ready(function()
 			{
 				dataSet = data;
 				
+				//Date for file names
+				var today = new Date();
+				var dd = today.getDate();
+				var mm = today.getMonth()+1;
+				var yyyy = today.getFullYear();
+				
+				today = yyyy + '-' + mm + '-' + dd;
+				
 				var assetTable = $("#asset-table").DataTable({
 					dom: '<f<t>lip>',
 					buttons: [
@@ -213,7 +221,7 @@ $(document).ready(function()
 			           {
 			        	   extend: 'excel',
 			        	   title: 'Assets',
-			        	   filename: 'Assets'
+			        	   filename: 'Assets_' + today 
 			           }
 			        ],
 					responsive: true,
@@ -269,13 +277,21 @@ $(document).ready(function()
 			{
 				dataSet = data;
 				
+				//Date for file names
+				var today = new Date();
+				var dd = today.getDate();
+				var mm = today.getMonth()+1;
+				var yyyy = today.getFullYear();
+				
+				today = yyyy + '-' + mm + '-' + dd;
+				
 				var aaTable = $("#AA-table").DataTable({
 					dom: '<f<t>lip>',
 					buttons: [
 				           {
 				        	   extend: 'excel',
 				        	   title: 'Assigned',
-				        	   filename: 'Assigned Assets'
+				        	   filename: 'Assigned Assets_' + today
 				           }
 				        ],
 					retrieve: true,
@@ -328,13 +344,21 @@ $(document).ready(function()
 			{				
 				dataSet = data;
 				
+				//Date for file names
+				var today = new Date();
+				var dd = today.getDate();
+				var mm = today.getMonth()+1;
+				var yyyy = today.getFullYear();
+				
+				today = yyyy + '-' + mm + '-' + dd;
+				
 				var aaTable = $("#assetComp-table").DataTable({
 					dom: '<f<t>lip>',
 					buttons: [
 				           {
 				        	   extend: 'excel',
 				        	   title: 'Asset Components',
-				        	   filename: 'Asset Compnents'
+				        	   filename: 'Asset Compnents_' + today
 				           }
 				        ],
 					retrieve: true,

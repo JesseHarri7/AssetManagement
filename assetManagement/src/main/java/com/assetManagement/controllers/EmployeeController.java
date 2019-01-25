@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.assetManagement.entities.Employee;
 import com.assetManagement.services.EmployeeService;
 @RestController
-@RequestMapping("/employee/")
+@RequestMapping(value = "/employee/")
 public class EmployeeController 
 {
 	@Autowired

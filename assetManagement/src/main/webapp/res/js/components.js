@@ -84,7 +84,7 @@
 		}
 		else
 		{
-			$.notify("Heads up! Please select an asset Code.", "warn");
+			$.notify("Heads up! Please select an asset Code.", "error");
 		}
 	});
 	
@@ -125,7 +125,7 @@
 		}
 		else
 		{
-			$.notify("Heads up! Please select an asset Code.", "warn");
+			$.notify("Heads up! Please select an asset Code.", "error");
 		}
 	});
 	
@@ -154,7 +154,7 @@
 		}
 		else
 		{
-			$.notify("Heads up! Please select an item to unassign.", "warn");
+			$.notify("Heads up! Please select an item to unassign.", "error");
 		}
 		
 	});
@@ -218,7 +218,7 @@
 		}
 		else
 		{
-			$.notify("Heads up! Please select a item to unassign.", "warn");
+			$.notify("Heads up! Please select a item to unassign.", "error");
 		}
 		
 	}
@@ -240,7 +240,7 @@
 		}
 		else
 		{
-			$.notify("Heads up! Please select a item to reassign.", "warn");
+			$.notify("Heads up! Please select a item to reassign.", "error");
 		}	
 	});
 	
@@ -262,7 +262,7 @@
 		}
 		else
 		{
-			$.notify("Heads up! Please select a item to reassign.", "warn");
+			$.notify("Heads up! Please select a item to reassign.", "error");
 		}
 	}
 	

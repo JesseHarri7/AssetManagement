@@ -8,7 +8,6 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.assetManagement.entities.AssetAsset;
-import com.assetManagement.entities.AssetAssigned;
 
 @Repository
 public interface AssetAssetRepo extends CrudRepository<AssetAsset, Long>

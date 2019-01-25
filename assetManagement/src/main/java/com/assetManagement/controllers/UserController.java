@@ -15,7 +15,7 @@ import com.assetManagement.entities.User;
 import com.assetManagement.services.UserService;
 
 @RestController
-@RequestMapping("/user/")
+@RequestMapping(value = "/user/")
 public class UserController 
 {
 	@Autowired

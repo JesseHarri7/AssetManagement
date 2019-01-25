@@ -1,6 +1,5 @@
 package com.assetManagement.repositories;
 
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.Query;
@@ -21,10 +20,10 @@ public interface EmployeeRepo extends CrudRepository<Employee, Long>
     
     Employee findByEmployeeID(Long id);
     
-    @Query(value = "SELECT * FROM Employees", nativeQuery = true)
+    @Query(value = "SELECT * FROM employees", nativeQuery = true)
    	List<Employee> findAllHistory();
    	
-   	@Query(value = "SELECT * FROM Employees WHERE state = 'A'", nativeQuery = true)
+   	@Query(value = "SELECT * FROM employees WHERE state = 'A'", nativeQuery = true)
    	List<Employee> findAll();
 }
 

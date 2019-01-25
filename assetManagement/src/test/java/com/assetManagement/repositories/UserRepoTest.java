@@ -1,18 +1,8 @@
-package com.assetManagement.repositories;
+/*package com.assetManagement.repositories;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-
-import java.util.List;
-
-import org.junit.Assert;
-import org.junit.Before;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import com.assetManagement.entities.User;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -35,7 +25,7 @@ public class UserRepoTest {
 		Assert.assertNotNull(result);
 	}
 
-/*	@Test
+	@Test
 	public void testUpdateUser() throws Exception 
 	{
 		User user = userRepo.findByUsername("Lutho");
@@ -46,7 +36,7 @@ public class UserRepoTest {
 			Assert.assertEquals(updatedUser.getUsername(), "Lwethu");
 
 		}
-	}*/
+	}
 
 	public void testReadAllUser() throws Exception {
 		Iterable<User> user = userRepo.findAll();
@@ -64,3 +54,4 @@ public class UserRepoTest {
 	}
 
 }
+*/

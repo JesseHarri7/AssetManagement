@@ -46,7 +46,7 @@
 		}
 		else
 		{
-			$.notify("Heads up! Please select an asset Code.", "warn");
+			$.notify("Heads up! Please select an asset Code.", "error");
 			
 			//displayAlert("Please select an asset Code.", "warning", "Heads up!");
 			
@@ -70,7 +70,7 @@
 		}
 		else
 		{
-			$.notify("Heads up! Please select an Employee ID..", "warn");
+			$.notify("Heads up! Please select an Employee ID.", "error");
 			
 			//displayAlert("Please select an Employee ID.", "warning", "Heads up!");
 			
@@ -106,7 +106,7 @@
 		}
 		else
 		{
-			$.notify("Heads up! Please select an item to unassign.", "warn");
+			$.notify("Heads up! Please select an item to unassign.", "error");
 			
 			//displayAlert("Please select a item to unassign.", "warning", "Heads up!");
 			
@@ -170,7 +170,7 @@
 		}
 		else
 		{
-			$.notify("Heads up! Please select a item to reassign.", "warn");
+			$.notify("Heads up! Please select a item to reassign.", "error");
 			
 			//displayAlert("Please select a item to reassign.", "warning", "Heads up!");
 			
@@ -260,7 +260,7 @@
 		}
 		else
 		{
-			$.notify("Heads up! Please select a item to unassign.", "warn");
+			$.notify("Heads up! Please select a item to unassign.", "error");
 			
 			//displayAlert("Please select a item to unassign.", "warning", "Heads up!");
 			
@@ -341,7 +341,7 @@
 		}
 		else
 		{
-			$.notify("Heads up! Please select a item to reassign.", "warn");
+			$.notify("Heads up! Please select a item to reassign.", "error");
 			
 			//displayAlert("Please select a item to reassign.", "warning", "Heads up!");
 
