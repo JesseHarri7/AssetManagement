@@ -40,7 +40,7 @@
 		
 		if (rowToDelete.length == 0)
 		{
-			$.notify("Heads up! Please select an asset to remove.", "warn");
+			$.notify("Heads up! Please select an asset to remove.", "error");
 			//displayAlertT("Please select an asset to remove.", "warning", "Heads up!");
 			
 			//alert("Please select a asset to remove");
@@ -174,7 +174,7 @@
 		}
 		else
 		{	
-			$.notify("Heads up! Please select an asset to edit.", "warn");
+			$.notify("Heads up! Please select an asset to edit.", "error");
 //			displayAlertT("Please select an asset to edit.", "warning", "Heads up!");
 			
 			//alert("Please select an asset to edit");
@@ -222,7 +222,7 @@
 				}
 				else
 				{
-					$.notify("Heads up! You cannot assign a Sub component to an Employee.", "warn")
+					$.notify("Heads up! You cannot assign a Sub component to an Employee.", "error")
 				}
 			}
 			else
@@ -237,13 +237,13 @@
 				}
 				else
 				{
-					$.notify("Heads up! You cannot assign a Sub component to an Employee.", "warn")
+					$.notify("Heads up! You cannot assign a Sub component to an Employee.", "error")
 				}
 			}
 		}
 		else
 		{
-			$.notify("Heads up! Please select an asset to assign to an employee.", "warn");
+			$.notify("Heads up! Please select an asset to assign to an employee.", "error");
 			
 //			displayAlertT("Please select an asset to assign to an employee.", "warning", "Heads up!");
 
@@ -262,11 +262,11 @@
 		
 		if(assetData.length == 0)
 		{
-			$.notify("Heads up! Please select an asset to reassign.", "warn");
+			$.notify("Heads up! Please select an asset to reassign.", "error");
 		}
 		else if(assetData.length >= 2)
 		{
-			$.notify("Heads up! Please only select one employee.", "warn");
+			$.notify("Heads up! Please only select one asset.", "error");
 		}
 		else
 		{
@@ -286,7 +286,7 @@
 			}
 			else
 			{
-				$.notify("Heads up! You cannot reassign a Main component.", "warn")
+				$.notify("Heads up! You cannot reassign a Main component.", "error")
 			}
 			
 		}
@@ -356,7 +356,7 @@
 		}
 		else if(subComp != 0)
 		{
-			$.notify("Error! The sub component is already assigned.", "warn");
+			$.notify("Error! The sub component is already assigned.", "error");
 		}*/
 	}
 	
@@ -386,7 +386,7 @@
 		
 		if(subComp)
 		{
-//			$.notify("Heads up! You cannot assign a Sub component to an Employee.", "warn")
+//			$.notify("Heads up! You cannot assign a Sub component to an Employee.", "error")
 			return true;
 		}
 		else
@@ -793,7 +793,7 @@
 		}
 		else
 		{
-			$.notify("Heads up! Please select an asset.", "warn");
+			$.notify("Heads up! Please select an asset.", "error");
 			
 //			displayAlertT("Please select an asset.", "warning", "Heads up!");
 			
@@ -1258,7 +1258,7 @@
 		
 		if (asset.length == 0)
 		{
-			$.notify("Heads up! Please select an asset to assign.", "warn");
+			$.notify("Heads up! Please select an asset to assign.", "error");
 		}
 		else if (asset.length >= 2)
 		{
@@ -1295,7 +1295,7 @@
 		
 		if (assetTwo.length == 0)
 		{
-			$.notify("Heads up! Please select an asset to assign.", "warn");
+			$.notify("Heads up! Please select an asset to assign.", "error");
 		}
 		else if (assetTwo.length >= 2)
 		{
@@ -1356,7 +1356,7 @@
 		}
 		else
 		{
-			$.notify("Heads up! Please select a Main component or a Sub component.", "warn")
+			$.notify("Heads up! Please select a Main component or a Sub component.", "error")
 			return false;
 		}
 		
@@ -1458,11 +1458,11 @@
 		}
 		else if(subComp != 0)
 		{
-			$.notify("Error! The sub component is already assigned.", "warn");
+			$.notify("Error! The sub component is already assigned.", "error");
 		}
 		/*else
 		{
-			$.notify("Error! The Assets you're trying to assign are already assigned.", "warn");
+			$.notify("Error! The Assets you're trying to assign are already assigned.", "error");
 		}*/
 		
 		return reassign;
@@ -1499,7 +1499,7 @@
 			success: function(data)
 			{
 				dataSet = data;
-				$.notify("Error! The Assets you're trying to assign are already assigned.", "warn");
+				$.notify("Error! The Assets you're trying to assign are already assigned.", "error");
 			},
 			error: function(data)
 			{

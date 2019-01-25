@@ -1,19 +1,8 @@
-package com.assetManagement.repositories;
+/*package com.assetManagement.repositories;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
-import java.util.List;
-
-import org.junit.Before;
-import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import com.assetManagement.entities.Employee;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -77,7 +66,7 @@ public class EmployeeRepoTest {
 
 	}
 	
-	/*@Test
+	@Test
 	public void testFindByStartDate() 
 	{
 		Date startDate = new Date();		
@@ -85,5 +74,5 @@ public class EmployeeRepoTest {
 		assertNotNull(employees);
 		Employee employee = new Employee();
 		System.out.println("Employees: "+ employees);
-	}*/
-}
+	}
+}*/

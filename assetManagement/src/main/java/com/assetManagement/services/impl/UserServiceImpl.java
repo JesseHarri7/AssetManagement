@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -19,8 +20,14 @@ public  class UserServiceImpl implements UserService
 	@Autowired
 	private UserRepo repo;
 	
-	@Autowired
-	private BCryptPasswordEncoder bCryptPasswordEncoder;
+	/*@Autowired
+	private BCryptPasswordEncoder bCryptPasswordEncoder;*/
+	
+	@Bean
+    public BCryptPasswordEncoder passwordEncoder() {
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        return bCryptPasswordEncoder;
+    }
 	
 	@Override
 	public List<User> findByFirstName(String name) throws ResourceNotFoundException 
@@ -89,7 +96,7 @@ public  class UserServiceImpl implements UserService
 		
 		if(user == null)// && allAssets.size() == 0)
 		{
-			entity.setPassword(bCryptPasswordEncoder.encode(entity.getPassword()));
+			entity.setPassword(passwordEncoder().encode(entity.getPassword()));
 			return repo.save(entity);
 		}
 		else

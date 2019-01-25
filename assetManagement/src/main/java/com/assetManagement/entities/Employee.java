@@ -16,7 +16,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.SQLDelete;
 
 @Entity
-@Table(name = "Employees")
+@Table(name = "employees")
 @SQLDelete(sql = "UPDATE employees set state = 'D', term_date = CURDATE() WHERE id = ?")
 public class Employee implements Serializable 
 {
@@ -101,11 +101,11 @@ public class Employee implements Serializable
 		this.startDate = startDate;
 	}
 
-	public long getEmployeeID() {
+	public Long getEmployeeID() {
 		return employeeID;
 	}
 	
-	public void setEmployeeID(long employeeID) {
+	public void setEmployeeID(Long employeeID) {
 		this.employeeID = employeeID;
 	}
 	

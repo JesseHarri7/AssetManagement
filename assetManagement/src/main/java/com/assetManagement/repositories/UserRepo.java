@@ -19,10 +19,10 @@ public interface UserRepo extends CrudRepository<User, Long>
     
     User findByUserID(Long Id);
     
-    @Query(value = "SELECT * FROM User", nativeQuery = true)
+    @Query(value = "SELECT * FROM user", nativeQuery = true)
 	List<User> findAllHistory();
 	
-	@Query(value = "SELECT * FROM User WHERE state = 'A'", nativeQuery = true)
+	@Query(value = "SELECT * FROM user WHERE state = 'A'", nativeQuery = true)
 	List<User> findAll();
 	
 }

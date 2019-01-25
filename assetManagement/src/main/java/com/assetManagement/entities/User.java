@@ -17,7 +17,7 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.SQLDelete;
 
 @Entity
-@Table(name = "User")
+@Table(name = "user")
 @SQLDelete(sql = "UPDATE User set state = 'D' WHERE user_id = ?")
 public class User implements Serializable 
 {
