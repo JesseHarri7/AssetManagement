@@ -14,11 +14,10 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.SQLDelete;
 
 @Entity
 @Table(name = "user")
-@SQLDelete(sql = "UPDATE User set state = 'D' WHERE user_id = ?")
+//@SQLDelete(sql = "UPDATE user set state = 'D' WHERE user_id = ?")
 public class User implements Serializable 
 {
 
@@ -30,8 +29,8 @@ public class User implements Serializable
 	@Id
 	@GeneratedValue(generator="increment")
 	@GenericGenerator(name="increment", strategy = "increment")
-	@Column(name = "User_ID")
-	private Long userID;
+//	@Column(name = "User_ID")
+	private Long userId;
 
 	@Column(name = "Password")
 	private String password;
@@ -76,14 +75,14 @@ public class User implements Serializable
 		this.password = password;
 	}
 
-	public Long getUserID() 
+	public Long getUserId() 
 	{
-		return this.userID;
+		return this.userId;
 	}
 
-	public void setUserID(Long userID) 
+	public void setUserId(Long userID) 
 	{
-		this.userID = userID;
+		this.userId = userID;
 	}
 
 	public String getFirstName() {

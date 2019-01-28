@@ -17,7 +17,7 @@ public interface UserRepo extends CrudRepository<User, Long>
     
     User findByPassword(String password);
     
-    User findByUserID(Long Id);
+    User findByUserId(Long Id);
     
     @Query(value = "SELECT * FROM user", nativeQuery = true)
 	List<User> findAllHistory();
