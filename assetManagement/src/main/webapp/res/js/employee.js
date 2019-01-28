@@ -619,7 +619,6 @@
 			selectEmp();
 			reassignAsset();
 //			localStorage.clear();
-			
 		}
 				
     });
