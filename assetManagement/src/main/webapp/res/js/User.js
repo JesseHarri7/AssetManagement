@@ -302,6 +302,7 @@ $(document).ready(function()
 		var userTable = $("#user-table").DataTable({
 			retrieve: true,
 			dom: '<f<t>lip>',
+			responsive: true,
 			select: true,
 			data: dataSet,
 			columns: 
