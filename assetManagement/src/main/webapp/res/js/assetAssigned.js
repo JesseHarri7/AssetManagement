@@ -165,7 +165,7 @@
 		{
 			selectAA();
 			window.location = "../pages/employee";
-			alert("Please select an employee to reassign to this asset");
+//			alert("Please select an employee to reassign to this asset");
 			
 		}
 		else

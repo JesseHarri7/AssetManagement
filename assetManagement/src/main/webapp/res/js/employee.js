@@ -431,6 +431,8 @@
 		if(count > 0)
 		{
 			$.notify("Success! Data successfully assigned.", "success");
+			
+			localStorage.setItem('assigned', JSON.stringify("Assigned"));
 			window.location = "/assetManagement/pages/assetAssigned";
 		}
 
@@ -828,6 +830,7 @@
 		
 		if(assign)
 		{
+			$.notify("Heads up! Please select an employee to reassign to this asset.", "info");
 			$('#reassign-btn').addClass('visible-r');
 		}
 	}

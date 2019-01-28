@@ -251,7 +251,7 @@ $(document).ready(function()
 		var rowToDelete = table.row( '.selected' ).data();
 
 		$.ajax({
-			url:"/assetManagement/user/delete/" + rowToDelete.userID, 
+			url:"/assetManagement/user/delete/" + rowToDelete.userId, 
 			dataType: "json",
 			type: "DELETE",
 			success: success()
@@ -306,7 +306,7 @@ $(document).ready(function()
 			data: dataSet,
 			columns: 
 			[
-//				{data: 'userID'},
+//				{data: 'userId'},
 				{data: 'email'},
 				{data: 'firstName'},
 				{data: 'lastName'},

@@ -92,7 +92,7 @@ public  class UserServiceImpl implements UserService
 	@Override
 	public User create(User entity)
 	{
-		User user = repo.findByUserID(entity.getUserID());
+		User user = repo.findByUserId(entity.getUserId());
 		
 		if(user == null)// && allAssets.size() == 0)
 		{
@@ -130,7 +130,7 @@ public  class UserServiceImpl implements UserService
 	@Override
 	public User readById(Long id) throws ResourceNotFoundException 
 	{
-		User user = repo.findByUserID(id);
+		User user = repo.findByUserId(id);
 		
 		if (user == null)
 		{
@@ -145,7 +145,7 @@ public  class UserServiceImpl implements UserService
 	@Override
 	public User update(User entity) 
 	{
-		User user = repo.findByUserID(entity.getUserID());
+		User user = repo.findByUserId(entity.getUserId());
 		
 		if (user == null)
 		{
