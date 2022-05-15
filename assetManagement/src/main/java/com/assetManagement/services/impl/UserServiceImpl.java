@@ -14,157 +14,124 @@ import com.assetManagement.repositories.UserRepo;
 import com.assetManagement.services.UserService;
 
 @Service
-public  class UserServiceImpl implements UserService 
-{
+public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private UserRepo repo;
-	
-	/*@Autowired
-	private BCryptPasswordEncoder bCryptPasswordEncoder;*/
-	
+
+	/*
+	 * @Autowired private BCryptPasswordEncoder bCryptPasswordEncoder;
+	 */
+
 	@Bean
-    public BCryptPasswordEncoder passwordEncoder() {
-        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-        return bCryptPasswordEncoder;
-    }
-	
+	public BCryptPasswordEncoder passwordEncoder() {
+		BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+		return bCryptPasswordEncoder;
+	}
+
 	@Override
-	public List<User> findByFirstName(String name) throws ResourceNotFoundException 
-	{
+	public List<User> findByFirstName(String name) throws ResourceNotFoundException {
 		List<User> user = repo.findByFirstName(name);
-		
-		if (user != null && !user.isEmpty()) 
-		{
+
+		if (user != null && !user.isEmpty()) {
 			return user;
-		}
-		else 
-		{
+		} else {
 			return null;
-		}
-	}
-	
-	@Override
-	public List<User> findByLastName(String name) throws ResourceNotFoundException 
-	{
-		List<User> user = repo.findByLastName(name);
-		
-		if (user != null && !user.isEmpty()) 
-		{
-			return user;
-		}
-		else 
-		{
-			return null;
-		}
-	}
-	
-	@Override
-	public User findByEmail(String email) throws ResourceNotFoundException 
-	{
-		User user=  repo.findByEmail(email);
-		
-		if (email != null) 
-		{
-			return user;
-		}
-		else 
-		{
-			throw new ResourceNotFoundException("Cannot find user by email");	
-		}
-	}
-	
-	@Override
-	public User findByPassword(String password) throws ResourceNotFoundException 
-	{
-		User user=  repo.findByPassword(password);
-		
-		if (password != null) 
-		{
-			return user;
-		}
-		else 
-		{
-			throw new ResourceNotFoundException("Cannot find user by password");	
 		}
 	}
 
 	@Override
-	public User create(User entity)
-	{
+	public List<User> findByLastName(String name) throws ResourceNotFoundException {
+		List<User> user = repo.findByLastName(name);
+
+		if (user != null && !user.isEmpty()) {
+			return user;
+		} else {
+			return null;
+		}
+	}
+
+	@Override
+	public User findByEmail(String email) throws ResourceNotFoundException {
+		User user = repo.findByEmail(email);
+
+		if (email != null) {
+			return user;
+		} else {
+			throw new ResourceNotFoundException("Cannot find user by email");
+		}
+	}
+
+	@Override
+	public User findByPassword(String password) throws ResourceNotFoundException {
+		User user = repo.findByPassword(password);
+
+		if (password != null) {
+			return user;
+		} else {
+			throw new ResourceNotFoundException("Cannot find user by password");
+		}
+	}
+
+	@Override
+	public User create(User entity) {
 		User user = repo.findByUserId(entity.getUserId());
-		
-		if(user == null)// && allAssets.size() == 0)
+
+		if (user == null)// && allAssets.size() == 0)
 		{
 			entity.setPassword(passwordEncoder().encode(entity.getPassword()));
 			return repo.save(entity);
-		}
-		else
-		{
+		} else {
 			return null;
 		}
-		
+
 	}
-	
-	public List<User> readAll() 
-	{
+
+	public List<User> readAll() {
 		List<User> userList = new ArrayList<User>();
 		Iterable<User> users = repo.findAll();
-		
-		for (User u : users)
-		{
+
+		for (User u : users) {
 			userList.add(u);
 		}
 		return userList;
 	}
- 
+
 	@Override
-	public void delete(User entity) 
-	{
-		if (entity != null)
-		{
+	public void delete(User entity) {
+		if (entity != null) {
 			repo.delete(entity);
 		}
 	}
 
 	@Override
-	public User readById(Long id) throws ResourceNotFoundException 
-	{
+	public User readById(Long id) throws ResourceNotFoundException {
 		User user = repo.findByUserId(id);
-		
-		if (user == null)
-		{
+
+		if (user == null) {
 			throw new ResourceNotFoundException("Cannot find user by UserId");
-		}
-		else
-		{	
+		} else {
 			return user;
 		}
 	}
 
 	@Override
-	public User update(User entity) 
-	{
+	public User update(User entity) {
 		User user = repo.findByUserId(entity.getUserId());
-		
-		if (user == null)
-		{
+
+		if (user == null) {
 			throw new ResourceNotFoundException("Cannot find user to update");
-		}
-		else
-		{
+		} else {
 			return repo.save(entity);
 		}
 	}
 
 	@Override
-	public List<User> findAllHistory() 
-	{
+	public List<User> findAllHistory() {
 		List<User> userList = new ArrayList<User>();
 		Iterable<User> users = repo.findAllHistory();
-		
-		for (User u : users)
-		{
+
+		for (User u : users) {
 			userList.add(u);
 		}
 		return userList;

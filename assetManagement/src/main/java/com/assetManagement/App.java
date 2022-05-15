@@ -9,7 +9,7 @@ public class App
    public static void main(String args[])
    {
 	   SpringApplication.run(App.class, args); 
-	   System.out.print("SERVER ON");
+	   System.out.println("SERVER ON");
 	   System.out.println("http://localhost:8080/assetManagement/pages/index");
    }
 }

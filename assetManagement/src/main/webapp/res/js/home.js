@@ -1,5 +1,4 @@
-$(document).ready(function()
-{
+$(document).ready(function() {
 	//Add template files
 	includeHTML();
 	
@@ -37,8 +36,7 @@ $(document).ready(function()
 	document.getElementById("reportComp").innerHTML = allComponents.length;
 	
 	//Find all assets from the database
-	function findAllAssets()
-	{
+	function findAllAssets() {
 		var dataSet = [];
 		
 		$.ajax({
@@ -60,8 +58,7 @@ $(document).ready(function()
 	}
 	
 	//Find all Employees from the database
-	function findAllEmp()
-	{
+	function findAllEmp() {
 		var dataSet = [];
 		
 		$.ajax({
@@ -83,8 +80,7 @@ $(document).ready(function()
 	}
 	
 	//Find all assigned assets
-	function findAllAA()
-	{
+	function findAllAA() {
 		var dataSet = [];
 		
 		$.ajax({
@@ -106,8 +102,7 @@ $(document).ready(function()
 	}
 	
 	// Data
-	data = 
-	{
+	data = {
 		// These labels appear in the legend and in the tooltips when hovering different arcs
 	    labels: [
 	        'Assets',
@@ -151,13 +146,11 @@ $(document).ready(function()
 	    	}
 	});
 	
-	function showActiveNav()
-	{
+	function showActiveNav() {
 		$('#hNav').addClass('active');
 	}
 	
-	function includeHTML() 
-	{
+	function includeHTML() {
 		  var z, i, elmnt, file, xhttp;
 		  /*loop through a collection of all HTML elements:*/
 		  z = document.getElementsByTagName("*");
@@ -193,8 +186,7 @@ $(document).ready(function()
 	////////////////////////////////////////////////////////////////REPORTING////////////////////////////////////////////////////////////////
 	
 	//Find all assets from the database
-	function reportAssets()
-	{
+	function reportAssets() {
 		var dataSet = [];
 		
 		$.ajax({
@@ -252,8 +244,7 @@ $(document).ready(function()
 		return dataSet;
 	}
 	
-	$(document).on('click', '.reportAssets', function() 
-	{
+	$(document).on('click', '.reportAssets', function() {
 		var assets = $("#asset-table").DataTable();
 		
 		//var data = test.buttons.exportData();
@@ -263,8 +254,7 @@ $(document).ready(function()
 	});
 	
 	//Find all Assigned assets from the database
-	function reportAssigned()
-	{
+	function reportAssigned() {
 		
 		var dataSet = [];
 		
@@ -321,8 +311,7 @@ $(document).ready(function()
 		return dataSet;
 	}
 
-	$(document).on('click', '.reportAssign', function() 
-	{		
+	$(document).on('click', '.reportAssign', function() {		
 		var assigned = $("#AA-table").DataTable();
 		
 		//var data = test.buttons.exportData();
@@ -331,8 +320,7 @@ $(document).ready(function()
 		
 	});
 	
-	function reportComp()
-	{
+	function reportComp() {
 		var dataSet = [];
 		
 		$.ajax({
@@ -387,8 +375,7 @@ $(document).ready(function()
 		return dataSet;
 	}
 	
-	$(document).on('click', '.reportComp', function() 
-	{
+	$(document).on('click', '.reportComp', function() {
 		var components = $("#assetComp-table").DataTable();
 		
 		//var data = test.buttons.exportData();

@@ -16,86 +16,64 @@ import com.assetManagement.services.UserService;
 
 @RestController
 @RequestMapping(value = "/user/")
-public class UserController 
-{
+public class UserController {
 	@Autowired
 	UserService service;
 
-	// find by ID
 	@RequestMapping(value = "{userID}", method = RequestMethod.GET)
-	public User findByID(@PathVariable Long userID) 
-	{
+	public User findByID(@PathVariable Long userID) {
 		return service.readById(userID);
 	}
-		
-	// create
+
 	@RequestMapping(value = "create", method = RequestMethod.POST)
 	@ResponseStatus(code = HttpStatus.CREATED)
-	public User create(@RequestBody User user) 
-	{
+	public User create(@RequestBody User user) {
 		return service.create(user);
 	}
-	
-	//update
+
 	@RequestMapping(value = "update", method = RequestMethod.PUT)
 	@ResponseStatus(HttpStatus.OK)
-	public void update(@RequestBody User user)
-	{
+	public void update(@RequestBody User user) {
 		service.update(user);
 	}
-	
-	// find All
+
 	@RequestMapping(value = "findAll", method = RequestMethod.GET)
-	public List<User> findAll() 
-	{
+	public List<User> findAll() {
 		return service.readAll();
 	}
-	
-	//Find All History
+
 	@RequestMapping(value = "findAllHistory", method = RequestMethod.GET)
-	public List<User> findAllHistory()
-	{
+	public List<User> findAllHistory() {
 		return service.findAllHistory();
 	}
 
-	// delete
-	@RequestMapping(value = "delete/{id}", method = {RequestMethod.GET, RequestMethod.DELETE})
+	@RequestMapping(value = "delete/{id}", method = { RequestMethod.GET, RequestMethod.DELETE })
 	@ResponseStatus(HttpStatus.OK)
-	public void deleteUser(@PathVariable("id") Long id) 
-	{
+	public void deleteUser(@PathVariable("id") Long id) {
 		User user = service.readById(id);
-		
-		if(user != null)
-		{
+
+		if (user != null) {
 			service.delete(user);
 		}
 	}
-		
-	// find by email
+
 	@RequestMapping(value = "email/{email}", method = RequestMethod.GET)
-	public User findByEmail(@PathVariable String email) 
-	{
+	public User findByEmail(@PathVariable String email) {
 		return service.findByEmail(email);
 	}
 
-	// find by Firstname
 	@RequestMapping(value = "firstName/{name}", method = RequestMethod.GET)
-	public List<User> findByFirstName(@PathVariable String name) 
-	{
+	public List<User> findByFirstName(@PathVariable String name) {
 		return service.findByFirstName(name);
 	}
-	
-	// find by Lastname
+
 	@RequestMapping(value = "LastName/{name}", method = RequestMethod.GET)
-	public List<User> findByLastName(@PathVariable String name) 
-	{
+	public List<User> findByLastName(@PathVariable String name) {
 		return service.findByLastName(name);
 	}
 
-	// find by password
 	@RequestMapping(value = "password/{password}", method = RequestMethod.GET)
-	public User findByPassword(@PathVariable String password) 
-	{
+	public User findByPassword(@PathVariable String password) {
 		return service.findByPassword(password);
 	}
 
