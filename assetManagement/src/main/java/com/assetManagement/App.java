@@ -10,5 +10,6 @@ public class App
    {
 	   SpringApplication.run(App.class, args); 
 	   System.out.print("SERVER ON");
+	   System.out.println("http://localhost:8080/assetManagement/pages/index");
    }
 }
